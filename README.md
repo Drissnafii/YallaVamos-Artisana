@@ -45,7 +45,7 @@ An interactive web guide for the FIFA World Cup 2030 co-hosted by Morocco, provi
 
 ## 📝 License
 
-[MIT License](LICENSE) (if you choose to use one)
+[MIT License](LICENSE)
 
 ## 🤝 Acknowledgements
 
