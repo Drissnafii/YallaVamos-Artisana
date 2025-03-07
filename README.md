@@ -55,7 +55,7 @@ An interactive web guide for the FIFA World Cup 2030 co-hosted by Morocco, provi
 
 Based on the details of your project, "Guide de la Coupe du Monde au Maroc," here’s a structured and detailed README file for your application:
 
-```markdown
+
 # Guide de la Coupe du Monde au Maroc
 
 **Un guide web interactif pour la Coupe du Monde FIFA 2030 co-organisée par le Maroc.**
