@@ -34,7 +34,11 @@ Route::get('/travel', [TravelController::class, 'index']);
 Route::get('/news', [NewsController::class, 'index']);
 
 Route::get('/login', function () {
-    return view('pages.login.index');
+    return view('auth.login');
+});
+
+Route::get('/register', function () {
+    return view('auth.register');
 });
 
 // 404 fallback
