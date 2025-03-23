@@ -1,51 +1,43 @@
 <?php
 
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MatchScheduleController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\StadiumsController;
+use App\Http\Controllers\TravelController;
 use Illuminate\Support\Facades\Route;
 
 // Home page
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [HomeController::class, 'index']);
 
-// Main pages
-Route::get('/cities', function () {
-    return view('cities');
-});
+// Cities
+Route::get('/cities', [CityController::class, 'index']);
+Route::get('/cities/{city}', [CityController::class, 'show']);
 
-Route::get('/stadiums', function () {
-    return view('stadiums');
-});
+// Stadiums
+Route::get('/stadiums', [StadiumsController::class, 'index'])->name('stadiums.index');
+Route::get('/stadiums/{id}', [StadiumsController::class, 'show'])->name('stadiums.show');
 
-Route::get('/match-schedule', function () {
-    return view('match-schedule');
-});
+Route::get('/match-schedule', [MatchScheduleController::class, 'index'])->name('match-schedule.index');
+Route::get('/match-schedule/{id}', [MatchScheduleController::class, 'show'])->name('match-schedule.show');
 
-Route::get('/travel', function () {
-    return view('travel');
-});
+// routes/web.php
+Route::get('/favorites', [FavoritesController::class, 'index'])->name('stadiums.index');
+Route::get('/favorites/{id}', [FavoritesController::class, 'show'])->name('stadiums.show');
 
-Route::get('/news', function () {
-    return view('news');
-});
+
+
+Route::get('/travel', [TravelController::class, 'index']);
+
+Route::get('/news', [NewsController::class, 'index']);
 
 Route::get('/login', function () {
-    return view('login');
-});
-
-// Dynamic routes
-Route::get('/cities/{city}', function ($city) {
-    return view('cities', ['city' => $city]);
-});
-
-Route::get('/stadiums/{stadium}', function ($stadium) {
-    return view('stadiums', ['stadium' => $stadium]);
-});
-
-Route::get('/news/{news}', function ($news) {
-    return view('news', ['news' => $news]);
+    return view('pages.login.index');
 });
 
 // 404 fallback
 Route::fallback(function () {
-    return view('404');
+    return view('errors.404');
 });

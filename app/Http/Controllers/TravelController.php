@@ -8,6 +8,6 @@ class TravelController extends Controller
 {
     public function index()
     {
-        return view('travel');
+        return view('pages.travel.index');
     }
-} 
+}

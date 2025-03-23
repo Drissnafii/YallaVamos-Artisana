@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="bg-background text-foreground antialiased min-h-screen flex flex-col">
     <header class="sticky top-0 z-50 w-full">
         <nav class="glass border-b border-border/40 bg-white/90 backdrop-blur-md">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,7 +42,7 @@
                                 Favorites
                             </a>
                             <div class="ml-4">
-                                <a href="/login" class="btn-primary">
+                                <a href="/login" class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90">
                                     Login
                                 </a>
                             </div>
@@ -60,7 +60,7 @@
             <!-- Mobile menu -->
             <div id="mobile-menu" class="hidden md:hidden">
                 <div class="space-y-1 px-4 pb-3 pt-2">
-                    <a href="/" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('/') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
+                    <a href="/" class="block px-3 py-2 rounded-md text-base font-medium {{ request() ->is('/') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                         Home
                     </a>
                     <a href="/cities" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('cities*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">

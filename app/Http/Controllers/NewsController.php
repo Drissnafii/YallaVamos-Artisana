@@ -8,11 +8,11 @@ class NewsController extends Controller
 {
     public function index()
     {
-        return view('news');
+        return view('pages.news.index');
     }
 
     public function show($news)
     {
         return view('news', ['news' => $news]);
     }
-} 
+}
