@@ -12,7 +12,8 @@
                 Or <a href="/login" class="font-medium text-primary hover:text-primary/90">sign in to your existing account</a>
             </p>
         </div>
-        <form class="mt-8 space-y-6" action="#" method="POST">
+        <form class="mt-8 space-y-6" action="{{route('register')}}" method="POST">
+            @csrf
             <div class="rounded-md shadow-sm -space-y-px">
                 <div>
                     <label for="name" class="sr-only">Full name</label>

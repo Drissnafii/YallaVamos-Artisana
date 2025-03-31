@@ -12,7 +12,8 @@
                 Or <a href="/register" class="font-medium text-primary hover:text-primary/90">create a new account</a>
             </p>
         </div>
-        <form class="mt-8 space-y-6" action="#" method="POST">
+        <form class="mt-8 space-y-6" action="{{route('login')}}" method="POST">
+            @csrf
             <div class="rounded-md shadow-sm -space-y-px">
                 <div>
                     <label for="email-address" class="sr-only">Email address</label>
