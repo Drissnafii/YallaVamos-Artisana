@@ -44,7 +44,7 @@ Route::middleware('jwt.auth')->group(function () {
 });
 
 // Admin Routes
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['jwt.auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
 });
 
