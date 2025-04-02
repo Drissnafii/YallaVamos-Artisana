@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -58,24 +59,58 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+
     public function register(RegisterRequest $request): RedirectResponse
     {
         try {
-            $user = $this->authService->register($request->validated());
-            $this->authService->login([
-                'email' => $request->email,
-                'password' => $request->password
-            ]);
+            // 1. Register the user using the service. It returns an array.
+            $registrationResult = $this->authService->register($request->validated());
 
-            // Check user role and redirect accordingly
-            if (Auth::user()->role === 'admin') {
-                return redirect()->route('admin.dashboard');
-            } elseif (Auth::user()->role === 'member') {
-                return redirect()->route('member.dashboard');
+            // --- Handle JWT ---
+            $user = $registrationResult['user'];
+            $token = $registrationResult['token'];
+
+            // Defensive check: Ensure service returned valid data
+            if (!$user instanceof User || !$token) {
+                Log::error('AuthService::register did not return a valid user object or token.');
+                return back()->withErrors(['error' => 'Registration failed: Could not initialize session.'])->withInput();
             }
-            return redirect('/dashboard');
+
+            // 2. Store the JWT token in the session (CRUCIAL STEP)
+            // Use the service's method | directly call session()
+            session(['jwt_token' => $token]);
+            // OR if you want to keep it encapsulated:
+            // $this->authService->storeTokenInSession($token); // Assumes storeTokenInSession is public or protected and called via $this
+
+            Log::info('User registered and JWT token stored in session.', ['user_id' => $user->id]);
+            // --- End JWT Handling ---
+
+
+            // 3. Redirect based on the user's role (use the $user object we just got)
+            // DO NOT use Auth::user() here, as the JWT state is primary
+            Log::info('Redirecting user after registration:', ['role' => $user->role]);
+
+            if ($user->role === 'admin') { // This case might be unlikely right after registration if role is hardcoded to 'member'
+                Log::warning('Admin user registered directly.', ['user_id' => $user->id]); // Log if this happens
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'member') {
+                return redirect()->route('member.dashboard');
+            } else {
+                // Fallback if role is somehow different
+                Log::warning('User registered with unexpected role:', ['user_id' => $user->id, 'role' => $user->role]);
+                return redirect()->route('member.dashboard'); // Default redirect
+            }
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::warning('Registration validation failed.', ['errors' => $e->errors()]);
+            return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            Log::error('Registration process failed:', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+            return back()->withErrors(['error' => 'An unexpected error occurred during registration.'])->withInput();
         }
     }
 

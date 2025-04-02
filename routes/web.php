@@ -8,61 +8,129 @@ use App\Http\Controllers\MatchScheduleController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StadiumsController;
 use App\Http\Controllers\TravelController;
+// Add other necessary controller imports here (e.g., Admin controllers, Profile controller)
 use Illuminate\Support\Facades\Route;
 
-// Home page
-Route::get('/', [HomeController::class, 'index']);
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| These routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group (handles session start, CSRF, etc.).
+|
+*/
 
-// Authentication Routes
+//=================================
+// Public Routes (No Auth Needed)
+//=================================
+
+// Home page
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Authentication Views & Processing
+// Grouping auth routes under a controller is fine
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'showLoginForm')->name('login');
-    Route::post('/login', 'login');
-    Route::get('/register', 'showRegisterForm')->name('register');
-    Route::post('/register', 'register');
-    Route::post('/logout', 'logout')->name('logout');
+    // Show Login Form (Public)
+    Route::get('login', 'showLoginForm')->name('login');
+    // Process Login Attempt (Public - redirects on success)
+    Route::post('login', 'login');
+    // Show Registration Form (Public)
+    Route::get('register', 'showRegisterForm')->name('register');
+    // Process Registration Attempt (Public - redirects on success)
+    Route::post('register', 'register');
+    // Process Logout - Requires Auth, but often placed here for grouping.
+    // The JwtMiddleware will protect it implicitly if accessed directly,
+    // or the controller logic handles it if called via a form from an auth'd page.
+    Route::post('logout', 'logout')->name('logout');
 });
 
-// Public Routes
-Route::get('/cities', [CityController::class, 'index']);
-Route::get('/cities/{city}', [CityController::class, 'show']);
+// Publicly viewable content
+Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
+Route::get('/cities/{city}', [CityController::class, 'show'])->name('cities.show'); // Use a model binding key if applicable
 
 Route::get('/stadiums', [StadiumsController::class, 'index'])->name('stadiums.index');
-Route::get('/stadiums/{id}', [StadiumsController::class, 'show'])->name('stadiums.show');
+Route::get('/stadiums/{stadium}', [StadiumsController::class, 'show'])->name('stadiums.show'); // Use a model binding key if applicable
 
 Route::get('/match-schedule', [MatchScheduleController::class, 'index'])->name('match-schedule.index');
-Route::get('/match-schedule/{id}', [MatchScheduleController::class, 'show'])->name('match-schedule.show');
+Route::get('/match-schedule/{match}', [MatchScheduleController::class, 'show'])->name('match-schedule.show'); // Use a model binding key if applicable
 
-Route::get('/favorites', [FavoritesController::class, 'index'])->name('favorites.index');
-Route::get('/favorites/{id}', [FavoritesController::class, 'show'])->name('favorites.show');
+Route::get('/travel', [TravelController::class, 'index'])->name('travel.index');
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+// Consider adding a route for individual news articles: Route::get('/news/{article}', [NewsController::class, 'show'])->name('news.show');
 
-Route::get('/travel', [TravelController::class, 'index']);
-Route::get('/news', [NewsController::class, 'index']);
 
-// Authenticated User Routes
-Route::middleware('jwt.auth')->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'memberDashboard'])->name('dashboard');
+//===========================================
+// Authenticated Routes (Members and Admins)
+//===========================================
+
+// Apply your custom JWT middleware ('jwt.auth') to protect these routes.
+// This middleware should check session first, then header, and throw AuthenticationException on failure.
+Route::middleware(['jwt.auth'])->group(function () {
+
+    // Member Dashboard (also accessible by Admin by default, unless AdminMiddleware redirects admins)
+    Route::get('/member/dashboard', [AuthController::class, 'memberDashboard'])->name('member.dashboard');
+    // Favorites Management (Example)
+    Route::get('/favorites', [FavoritesController::class, 'index'])->name('favorites.index');
+    // Add POST/DELETE routes here for managing favorites
+    // Route::post('/favorites/add/{type}/{id}', [FavoritesController::class, 'store'])->name('favorites.store');
+    // Route::delete('/favorites/remove/{favorite}', [FavoritesController::class, 'destroy'])->name('favorites.destroy');
+
+    // Example: User Profile Management
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Routes specifically for 'members' if needed (though often covered by the general authenticated group)
+
 });
 
-// Admin Routes
-Route::middleware(['jwt.auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
+
+//=================================
+// Admin Only Routes
+//=================================
+
+// Apply both JWT authentication AND the Admin role check middleware.
+// Grouping with prefix and name is good practice.
+Route::middleware(['jwt.auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('/dashboard', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
+
+    // Add other admin resource routes here
+    // Example:
+    // Route::resource('cities', AdminCityController::class); // Assumes you have an AdminCityController
+    // Route::resource('stadiums', AdminStadiumController::class);
+    // Route::resource('users', AdminUserController::class);
+    // Route::resource('articles', AdminNewsController::class);
+    // ... etc.
+
 });
 
-// 404 fallback
+
+//=================================
+// Test Routes (Optional)
+//=================================
+// Keep these commented out or remove them in production.
+// If testing authenticated features, apply the relevant middleware.
+
+// Route::get('/test-middleware', function () {
+//     return 'Admin Middleware OK';
+// })->middleware(['jwt.auth', 'admin']);
+
+// Route::get('/test-session', function () {
+//     session()->put('test', 'works');
+//     return response()->json([
+//         'session_id' => session()->getId(),
+//         'test_value' => session('test'),
+//         'jwt_token_in_session' => session('jwt_token'), // Useful for debugging
+//         'all_session' => session()->all()
+//     ]);
+// }); // No auth needed for basic session check
+
+
+//=================================
+// Fallback Route (404)
+//=================================
 Route::fallback(function () {
-    return view('errors.404');
-});
-
-// Test Routes
-Route::get('/test-middleware', function () {
-    return 'OK';
-})->middleware('admin');
-
-Route::get('/test-session', function () {
-    session()->put('test', 'works');
-    return response()->json([
-        'session_id' => session()->getId(),
-        'test_value' => session('test'),
-        'all_session' => session()->all()
-    ]);
+    // Ensure you have a 'resources/views/errors/404.blade.php' view
+    return response()->view('errors.404', [], 404);
 });

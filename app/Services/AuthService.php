@@ -15,14 +15,14 @@ class AuthService
      * Register a new user.
      *
      * @param array $data
-     * @return \App\Models\User
+     * @return array
      */
-    public function register(array $data): array
+    public function register($data)
     {
         $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
-            'role'    => $data['role'],
+            'role'     => 'member', // default !
             'password' => Hash::make($data['password']),
         ]);
 
