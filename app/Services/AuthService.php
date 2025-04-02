@@ -22,6 +22,7 @@ class AuthService
         $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
+            'role'    => $data['role'],
             'password' => Hash::make($data['password']),
         ]);
 
@@ -122,7 +123,7 @@ class AuthService
              if (!$newToken) {
                  throw new JWTException('Could not refresh token.');
              }
-             $this->storeTokenInSession($newToken); // 
+             $this->storeTokenInSession($newToken); //
              return $newToken;
         } catch (\Exception $e) {
              throw new JWTException('Could not refresh token: ' . $e->getMessage());
@@ -140,7 +141,7 @@ class AuthService
         $token = session('jwt_token') ?? JWTAuth::getToken();
 
         if (!$token) {
-            throw new \Tymon\JWTAuth\Exceptions\JWTException('Token not provided.');
+            throw new JWTException('Token not provided.');
         }
 
         return JWTAuth::setToken($token)->authenticate();

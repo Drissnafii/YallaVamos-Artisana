@@ -39,26 +39,30 @@ Route::get('/travel', [TravelController::class, 'index']);
 Route::get('/news', [NewsController::class, 'index']);
 
 // Authenticated User Routes
-Route::middleware('auth')->group(function () {
-    // User Dashboard
-    Route::get('/dashboard', [AuthController::class, 'userDashboard'])
-        ->name('dashboard');
+Route::middleware('jwt.auth')->group(function () {
+    Route::get('/dashboard', [AuthController::class, 'memberDashboard'])->name('dashboard');
 });
 
-
-Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])
-        ->name('admin.dashboard');
+// Admin Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
 });
-
-
-
 
 // 404 fallback
 Route::fallback(function () {
     return view('errors.404');
 });
 
+// Test Routes
 Route::get('/test-middleware', function () {
     return 'OK';
 })->middleware('admin');
+
+Route::get('/test-session', function () {
+    session()->put('test', 'works');
+    return response()->json([
+        'session_id' => session()->getId(),
+        'test_value' => session('test'),
+        'all_session' => session()->all()
+    ]);
+});

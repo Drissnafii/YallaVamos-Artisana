@@ -8,6 +8,7 @@ use App\Services\AuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -38,20 +39,15 @@ class AuthController extends Controller
     public function login(LoginRequest $request): RedirectResponse
     {
         try {
+            // dd(Auth::user());
             $credentials = $request->validated();
 
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
-
-                // Check user role and redirect accordingly
-                if (Auth::user()->role === 'admin') {
-                    return redirect()->intended('/admin/dashboard');
-                }
-
-                return redirect()->intended('/dashboard');
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif (Auth::user()->role === 'member') {
+                return redirect()->route('member.dashboard');
             }
-
-            return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
+            return redirect('/dashboard');
         } catch (\Exception $e) {
             return back()->withErrors(['email' => $e->getMessage()]);
         }
@@ -73,9 +69,10 @@ class AuthController extends Controller
 
             // Check user role and redirect accordingly
             if (Auth::user()->role === 'admin') {
-                return redirect('/admin/dashboard');
+                return redirect()->route('admin.dashboard');
+            } elseif (Auth::user()->role === 'member') {
+                return redirect()->route('member.dashboard');
             }
-
             return redirect('/dashboard');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => $e->getMessage()]);
@@ -94,10 +91,10 @@ class AuthController extends Controller
         return view('dashboard', compact('user'));
     }
 
-    public function userDashboard(): View
+    public function memberDashboard(): View
     {
         $user = $this->authService->me();
-        return view('dashboard.user', compact('user'));
+        return view('dashboard.member', compact('user'));
     }
 
 
@@ -108,3 +105,6 @@ class AuthController extends Controller
     }
 
 }
+// Log::info('User after registration:', ['user' => $user->toArray()]);
+// Log::info('Auth::user():', Auth::user() ? Auth::user()->toArray() : null);
+// Log::info('JWT Token:', ['token' => $token]);
