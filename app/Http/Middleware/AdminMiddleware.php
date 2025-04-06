@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -18,14 +19,17 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
+         if (!Auth::check()) {
+            // Ajout de journalisation pour surveiller les tentatives d'accès non autorisées.
+             Log::warning('Accès non authentifié tenté.');
+             return redirect()->route('login');
+         }
 
-        if (Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized action. Admin access required.');
-        }
+         if (Auth::user()->role !== 'admin') {
+             Log::warning('Accès interdit : utilisateur avec rôle ' . Auth::user()->role);
+             abort(403, 'Action non autorisée. Accès administrateur requis.');
+         }
 
-        return $next($request);
+         return $next($request);
     }
 }
