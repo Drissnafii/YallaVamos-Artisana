@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MatchScheduleController;
+use App\Http\Controllers\MatcheController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StadiumsController;
 use App\Http\Controllers\TravelController;
@@ -34,12 +34,19 @@ Route::get('/stadiums', [StadiumsController::class, 'index'])->name('stadiums.in
 Route::get('/stadiums/{stadium}', [StadiumsController::class, 'show'])->name('stadiums.show');
 
 // Match Schedule
-Route::get('/match-schedule', [MatchScheduleController::class, 'index'])->name('match-schedule.index');
-Route::get('/match-schedule/{match}', [MatchScheduleController::class, 'show'])->name('match-schedule.show');
+Route::get('/matches', [MatcheController::class, 'index'])->name('matches.index');
+Route::get('/matches/{match}', [MatcheController::class, 'show'])->name('matches.show');
 
 // Travel and News
 Route::get('/travel', [TravelController::class, 'index'])->name('travel.index');
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+
+Route::get('/accommodations', function () {
+    // You can return a view, redirect, or any other response here
+    return view('accommodations.index'); // Assuming you have a view named 'accommodations.index'
+})->name('accommodations.index');
+
+Route::post('/newsletter/subscribe', [NewsController::class, 'subscribe'])->name('newsletter.subscribe');
 
 //=================================
 // Authenticated Routes

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MatchScheduleController extends Controller
+class MatcheController extends Controller
 {
     /**
      * Display the match schedule page.
@@ -61,7 +61,7 @@ class MatchScheduleController extends Controller
         ];
 
         // Pass the data to the view
-        return view('pages.match-schedule.index', compact('groupMatches'));
+        return view('pages.matches.index', compact('groupMatches'));
     }
 
     /**
