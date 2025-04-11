@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class IsAdmin
 {
     /**
-     * Gérer une requête entrante.
+     * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -17,14 +17,12 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
+        // Check if user is logged in and has admin role
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return $next($request);
         }
 
-        if (Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized access. Admin privileges required.');
-        }
-
-        return $next($request);
+        // Redirect non-admins to member dashboard
+        return redirect()->route('member.dashboard')->with('error', 'You do not have admin access.');
     }
 }

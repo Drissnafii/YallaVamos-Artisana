@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log; // Import the Log facade
 use App\Models\User;
 
 class AuthController extends Controller
@@ -57,9 +57,15 @@ class AuthController extends Controller
             // Automatically log in the user after registration
             Auth::login($user);
 
+            // Debug logging
+            Log::info('User registered', [
+                'role' => $user->role,
+                'user_id' => $user->id,
+                'redirect_route' => $user->role === 'admin' ? 'admin.dashboard' : 'member.dashboard'
+            ]);
+
             // Redirect based on role
             if ($user->role === 'admin') {
-                Log::info('Admin registered: ', ['user_id' => $user->id]);
                 return redirect()->route('admin.dashboard');
             }
 
