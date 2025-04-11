@@ -14,8 +14,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => Authenticate::class,
-        'jwt.auth' => \App\Http\Middleware\JwtMiddleware::class,
         'role' => \App\Http\Middleware\CheckRole::class,
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'admin' => \App\Http\Middleware\IsAdmin::class,
     ];
 }
