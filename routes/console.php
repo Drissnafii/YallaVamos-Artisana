@@ -2,7 +2,12 @@
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Console\Scheduling\Schedule;
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('auth:clear-resets', function () {
+    $this->comment('Password resets cleared!');
+})->describe('Flush expired password reset tokens');
