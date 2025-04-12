@@ -11,10 +11,7 @@
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-4 relative">
                         <!-- Hover Indicator -->
-                        <div
-                            class="absolute rounded-md bg-[#FDE8E9]/40 transition-all duration-300 ease-out opacity-0 z-0"
-                            id="hover-indicator">
-                        </div>
+                        <div class="absolute rounded-md bg-[#FDE8E9]/40 transition-all duration-300 ease-out opacity-0 z-0" id="hover-indicator"></div>
 
                         <a href="/" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('/') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                             Home
@@ -37,8 +34,9 @@
                         <a href="/favorites" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('favorites*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                             Favorites
                         </a>
+                        <!-- Modified Login Button (Desktop) -->
                         <div class="ml-4 z-10">
-                            <a href="/login" class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-all duration-300 hover:bg-primary/90 hover:shadow-lg transform hover:-translate-y-0.5">
+                            <a href="/login" class="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 transition-colors duration-150 hover:bg-[#E9272E] hover:text-white">
                                 Login
                             </a>
                         </div>
@@ -77,14 +75,13 @@
                 <a href="/favorites" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('favorites*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
                     Favorites
                 </a>
-                
             </div>
+            <!-- Modified Login Button (Mobile) -->
             <div class="ml-4 z-10">
-<a href="/login"
- class="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 transition-colors duration-300 hover:bg-pink-100 hover:text-pink-600">
-Login
-</a>
-</div>
+                <a href="/login" class="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 transition-colors duration-150 hover:bg-[#E9272E] hover:text-white">
+                    Login
+                </a>
+            </div>
         </div>
     </nav>
 </header>

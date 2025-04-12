@@ -1,0 +1,34 @@
+<svg viewBox="0 0 240 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background shapes -->
+  <defs>
+    <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E9272E" />
+      <stop offset="100%" stop-color="#C41C24" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Stylized pentagram (from Moroccan flag) -->
+  <g transform="translate(120, 60)">
+    <!-- Base pentagon shape -->
+    <polygon 
+      points="0,-40 38,-12 23,32 -23,32 -38,-12" 
+      fill="none" 
+      stroke="url(#redGradient)" 
+      stroke-width="2.5" 
+      stroke-linejoin="round"
+    />
+    
+    <!-- Star lines -->
+    <path 
+      d="M0,-40 L23,32 M0,-40 L-23,32 M38,-12 L-38,-12 M38,-12 L-23,32 M-38,-12 L23,32" 
+      stroke="url(#redGradient)" 
+      stroke-width="1.5" 
+      fill="none"
+      stroke-opacity="0.7"
+    />
+    
+    
+    <!-- Central element - slightly larger without text -->
+    <circle cx="0" cy="0" r="10" fill="#E9272E" />
+  </g>
+</svg>

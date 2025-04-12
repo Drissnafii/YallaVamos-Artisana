@@ -81,7 +81,13 @@
         <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-3xl font-bold mb-4">Ready for the World Cup?</h2>
             <p class="text-xl text-muted-foreground mb-8">Create an account to save your favorite matches, stadiums, and plan your trip to Morocco.</p>
-            <a href="/register" class="btn-primary">Sign Up Now</a>
+            
+            <!-- Updated button -->
+            <a href="/register"
+            class="inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-medium text-gray-600 bg-white border border-gray-300 transition-colors duration-150 hover:bg-pink-100 hover:text-pink-600">
+            Sign Up Now
+            </a>
+
         </div>
     </div>
 </div>
