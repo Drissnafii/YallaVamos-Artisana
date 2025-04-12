@@ -290,7 +290,7 @@
                                     </div>
                                     <div class="bg-gray-50 px-4 py-4 sm:px-6">
                                         <div class="text-sm">
-                                            <a href="{{ url('/admin/articles') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                                            <a href="{{ route('admin.articles.index') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
                                                 Manage Articles
                                             </a>
                                         </div>

@@ -1,4 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
+@section('title', 'Manage Articles')
+
+@section('header', 'Article Management')
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
@@ -41,7 +45,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @forelse($articles ?? [] as $article)
+                @forelse($articles as $article)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
@@ -52,18 +56,18 @@
                             @endif
                             <div class="ml-4">
                                 <div class="text-sm font-medium text-gray-900">{{ $article->title }}</div>
-                                <div class="text-sm text-gray-500">{{ Str::limit($article->excerpt ?? $article->content, 60) }}</div>
+                                <div class="text-sm text-gray-500">{{ Str::limit($article->content, 60) }}</div>
                             </div>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                            {{ $article->status == 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                            {{ ucfirst($article->status ?? 'draft') }}
+                            {{ $article->published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                            {{ $article->published ? 'Published' : 'Draft' }}
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ $article->author->name ?? 'Unknown' }}
+                        {{ $article->user ? $article->user->name : 'Unknown' }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {{ $article->created_at ? $article->created_at->format('M d, Y') : 'N/A' }}
@@ -95,9 +99,7 @@
         </table>
 
         <div class="px-6 py-4">
-            @if(isset($articles) && method_exists($articles, 'links'))
-                {{ $articles->links() }}
-            @endif
+            {{ $articles->links() }}
         </div>
     </div>
 </div>
