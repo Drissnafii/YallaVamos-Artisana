@@ -1,119 +1,106 @@
-// Main JavaScript entry point for the Morocco 2030 World Cup website
-// This file initializes all the necessary functionality for the site
-
-// Import CSS
-import '../css/app.css';
-
-// Initialize mobile menu functionality
+// Header Animation
 document.addEventListener('DOMContentLoaded', function() {
-  // Mobile menu toggle
-  const mobileMenuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
+    // Variables
+    const header = document.getElementById('main-header');
+    const navContainer = document.getElementById('nav-container');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hoverIndicator = document.getElementById('hover-indicator');
+    let lastScrollY = window.scrollY;
+    let isMenuOpen = false;
 
-  if (mobileMenuButton && mobileMenu) {
-    mobileMenuButton.addEventListener('click', function() {
-      mobileMenu.classList.toggle('hidden');
-    });
-  }
+    // Handle hover effect for navigation items
+    navLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            const rect = this.getBoundingClientRect();
+            const navRect = this.parentElement.getBoundingClientRect();
 
-  // Initialize tab functionality on favorites page
-  initializeTabs();
-
-  // Initialize any other interactive elements
-  initializeTooltips();
-  initializeDropdowns();
-});
-
-/**
- * Initialize tab functionality for pages that use tabs (like Favorites)
- */
-function initializeTabs() {
-  const tabButtons = document.querySelectorAll('[id^="tab-"]');
-
-  tabButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const tabId = this.id;
-      const contentId = tabId.replace('tab-', 'content-');
-
-      // Hide all tab contents
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.add('hidden');
-      });
-
-      // Remove active state from all tabs
-      tabButtons.forEach(btn => {
-        btn.classList.remove('border-primary', 'text-primary');
-        btn.classList.add('border-transparent');
-      });
-
-      // Show selected tab content
-      const selectedContent = document.getElementById(contentId);
-      if (selectedContent) {
-        selectedContent.classList.remove('hidden');
-      }
-
-      // Set active state on selected tab
-      this.classList.add('border-primary', 'text-primary');
-      this.classList.remove('border-transparent');
-    });
-  });
-}
-
-/**
- * Initialize tooltip functionality
- */
-function initializeTooltips() {
-  // Simple tooltip implementation
-  const tooltipTriggers = document.querySelectorAll('[data-tooltip]');
-
-  tooltipTriggers.forEach(trigger => {
-    trigger.addEventListener('mouseenter', function() {
-      const tooltipText = this.getAttribute('data-tooltip');
-
-      if (!tooltipText) return;
-
-      const tooltip = document.createElement('div');
-      tooltip.className = 'absolute z-50 px-2 py-1 text-xs text-white bg-gray-900 rounded shadow-lg';
-      tooltip.textContent = tooltipText;
-      tooltip.style.bottom = '100%';
-      tooltip.style.left = '50%';
-      tooltip.style.transform = 'translateX(-50%) translateY(-5px)';
-
-      this.style.position = 'relative';
-      this.appendChild(tooltip);
+            hoverIndicator.style.width = `${rect.width}px`;
+            hoverIndicator.style.height = `${rect.height}px`;
+            hoverIndicator.style.left = `${rect.left - navRect.left}px`;
+            hoverIndicator.style.opacity = '1';
+        });
     });
 
-    trigger.addEventListener('mouseleave', function() {
-      const tooltip = this.querySelector('div');
-      if (tooltip) {
-        tooltip.remove();
-      }
-    });
-  });
-}
+    // Hide hover effect when mouse leaves nav container
+    const navParent = document.querySelector('.flex.items-center.space-x-4.relative');
+    if (navParent) {
+        navParent.addEventListener('mouseleave', function() {
+            hoverIndicator.style.opacity = '0';
+        });
+    }
 
-/**
- * Initialize dropdown functionality
- */
-function initializeDropdowns() {
-  const dropdownTriggers = document.querySelectorAll('[data-dropdown]');
+    // Handle header shrink on scroll
+    window.addEventListener('scroll', function() {
+        const currentScrollY = window.scrollY;
 
-  dropdownTriggers.forEach(trigger => {
-    trigger.addEventListener('click', function() {
-      const dropdownId = this.getAttribute('data-dropdown');
-      const dropdown = document.getElementById(dropdownId);
-
-      if (!dropdown) return;
-
-      dropdown.classList.toggle('hidden');
-
-      // Close dropdown when clicking outside
-      document.addEventListener('click', function closeDropdown(event) {
-        if (!trigger.contains(event.target) && !dropdown.contains(event.target)) {
-          dropdown.classList.add('hidden');
-          document.removeEventListener('click', closeDropdown);
+        if (currentScrollY > 30) {
+            navContainer.classList.add('h-14');
+            navContainer.classList.remove('h-16');
+        } else {
+            navContainer.classList.add('h-16');
+            navContainer.classList.remove('h-14');
         }
-      });
+
+        // Hide header when scrolling down, show when scrolling up
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            header.style.transform = 'translateY(-100%)';
+        } else {
+            header.style.transform = 'translateY(0)';
+        }
+
+        lastScrollY = currentScrollY;
     });
-  });
-}
+
+    // Mobile menu toggle
+    if (mobileMenuButton) {
+        mobileMenuButton.addEventListener('click', function() {
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                // Use setTimeout to ensure the browser recognizes the element is no longer hidden
+                // before setting the maxHeight
+                setTimeout(() => {
+                    mobileMenu.style.maxHeight = `${mobileMenu.scrollHeight}px`;
+                }, 10);
+
+                this.innerHTML = `
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                `;
+            } else {
+                mobileMenu.style.maxHeight = '0px';
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 500); // Delay to match the transition duration
+
+                this.innerHTML = `
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                `;
+            }
+        });
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        // Reset mobile menu on resize to desktop
+        if (window.innerWidth >= 768 && isMenuOpen && mobileMenuButton) {
+            isMenuOpen = false;
+            mobileMenu.style.maxHeight = '0px';
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden');
+            }, 500);
+
+            mobileMenuButton.innerHTML = `
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            `;
+        }
+    });
+});

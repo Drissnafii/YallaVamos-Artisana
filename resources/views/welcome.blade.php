@@ -8,41 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body class="antialiased bg-neutral-50 text-gray-800">
-    <!-- Header/Navigation -->
-    <header class="bg-gradient-to-r from-red-700 to-red-900 text-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z" />
-                </svg>
-                <span class="text-xl font-bold">Morocco 2030</span>
-            </div>
-
-            <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#" class="py-1 border-b-2 border-transparent hover:border-white transition duration-300">Home</a>
-                <a href="#" class="py-1 border-b-2 border-transparent hover:border-white transition duration-300">Cities</a>
-                <a href="#" class="py-1 border-b-2 border-transparent hover:border-white transition duration-300">Stadiums</a>
-                <a href="#" class="py-1 border-b-2 border-transparent hover:border-white transition duration-300">Matches</a>
-                <a href="#" class="py-1 border-b-2 border-transparent hover:border-white transition duration-300">Teams</a>
-                <a href="#" class="py-1 border-b-2 border-transparent hover:border-white transition duration-300">News</a>
-                <a href="#" class="py-1 border-b-2 border-transparent hover:border-white transition duration-300">Travel Info</a>
-            </nav>
-
-            <div class="flex items-center space-x-4">
-                <a href="#" class="bg-white text-red-700 px-4 py-1 rounded-full text-sm font-bold hover:bg-red-100 transition">Sign In</a>
-                <button class="md:hidden text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </header>
-
+    @include('components.header')
     <!-- Hero Section -->
     <section class="relative h-screen bg-cover bg-center hero-pattern flex items-center justify-center" style="background-image: url('https://source.unsplash.com/1600x900/?stadium');">
         <div class="absolute inset-0 bg-gradient-to-r from-red-900/70 to-green-900/70"></div>
