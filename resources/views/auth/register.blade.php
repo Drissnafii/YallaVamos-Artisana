@@ -6,7 +6,7 @@
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         <div class="text-center">
-            <img class="mx-auto h-12 w-auto" src="{{ asset('resourses/images/logo.png') }}" alt="Morocco 2030">
+            <img class="mx-auto h-12 w-auto" src="{{ asset('images/morocco-logo.svg') }}" alt="Morocco 2030">
             <h2 class="mt-6 text-3xl font-bold">Create a new account</h2>
             <p class="mt-2 text-sm text-muted-foreground">
                 Or <a href="/login" class="font-medium text-primary hover:text-primary/90">sign in to your existing account</a>
