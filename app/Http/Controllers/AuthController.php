@@ -36,7 +36,7 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard');
             }
 
-            return redirect()->route('member.dashb  oard');
+            return redirect()->route('member.dashboard');
         }
 
         return back()->withErrors([
