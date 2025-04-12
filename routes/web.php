@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'adminDashboard'])->name('dashboard');
+
 });
 
 //=================================

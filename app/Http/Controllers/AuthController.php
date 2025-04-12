@@ -33,10 +33,10 @@ class AuthController extends Controller
             $user = Auth::user();
 
             if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('dashboard.admin.index');
             }
 
-            return redirect()->route('member.dashboard');
+            return redirect()->route('dashboard.member.index');
         }
 
         return back()->withErrors([
@@ -61,15 +61,15 @@ class AuthController extends Controller
             Log::info('User registered', [
                 'role' => $user->role,
                 'user_id' => $user->id,
-                'redirect_route' => $user->role === 'admin' ? 'admin.dashboard' : 'member.dashboard'
+                'redirect_route' => $user->role === 'admin' ? 'dashboard.admin.index' : 'dashboard.member.index'
             ]);
 
             // Redirect based on role
             if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('dashboard.admin.index');
             }
 
-            return redirect()->route('member.dashboard');
+            return redirect()->route('dashboard.member.index');
         } catch (\Exception $e) {
             Log::error('Registration failed: ' . $e->getMessage());
             return back()->withErrors(['error' => 'Registration failed. Please try again.'])->withInput();
@@ -87,11 +87,11 @@ class AuthController extends Controller
 
     public function memberDashboard(): View
     {
-        return view('dashboard.member', ['user' => Auth::user()]);
+        return view('dashboard.member.index', ['user' => Auth::user()]);
     }
 
     public function adminDashboard(): View
     {
-        return view('dashboard.admin', ['user' => Auth::user()]);
+        return view('dashboard.admin.index', ['user' => Auth::user()]);
     }
 }
