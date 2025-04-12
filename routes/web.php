@@ -79,10 +79,8 @@ Route::fallback(function () {
 });
 
 
-// Password Reset Routes
-Route::middleware('guest')->group(function () {
-    Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
-    Route::post('reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
-});
+// Routes pour la réinitialisation de mot de passe
+Route::get('forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->middleware('guest')->name('password.request');
+Route::post('forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
+Route::get('reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->middleware('guest')->name('password.reset');
+Route::post('reset-password', [PasswordResetController::class, 'reset'])->middleware('guest')->name('password.update');

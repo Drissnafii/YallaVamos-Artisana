@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 class PasswordResetController extends Controller {
     // Afficher le formulaire de demande
     public function showLinkRequestForm() {
-        dd("test");
         return view('auth.forgot-password');
     }
 
@@ -49,8 +48,13 @@ class PasswordResetController extends Controller {
             }
         );
 
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => __($status)]);
+        if ($status === Password::PASSWORD_RESET) {
+            return redirect()->route('login')->with('status', __($status));
+        }
+
+        // If we get here, there was an error. Return to the reset form with the token and email
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => __($status)]);
     }
 }
