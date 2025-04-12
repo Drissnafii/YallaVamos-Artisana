@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\Auth\PasswordResetController;
@@ -68,6 +69,8 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'adminDashboard'])->name('dashboard');
+
+    Route::resource('articles', ArticleController::class);
 
 });
 
