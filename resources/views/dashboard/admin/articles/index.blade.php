@@ -16,12 +16,6 @@
         </a>
     </div>
 
-    @if(session('success'))
-    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
-        <p>{{ session('success') }}</p>
-    </div>
-    @endif
-
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="p-4 border-b">
             <form action="{{ route('admin.articles.index') }}" method="GET" class="flex items-center">
