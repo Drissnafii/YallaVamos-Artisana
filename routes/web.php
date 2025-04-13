@@ -8,7 +8,7 @@ use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatcheController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\StadiumsController;
+use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\TravelController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +32,8 @@ Route::controller(AuthController::class)->group(function () {
 Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
 Route::get('/cities/{city}', [CityController::class, 'show'])->name('cities.show');
 
-Route::get('/stadiums', [StadiumsController::class, 'index'])->name('stadiums.index');
-Route::get('/stadiums/{stadium}', [StadiumsController::class, 'show'])->name('stadiums.show');
+Route::get('/stadiums', [StadiumController::class, 'index'])->name('stadiums.index');
+Route::get('/stadiums/{stadium}', [StadiumController::class, 'show'])->name('stadiums.show');
 
 // Match Schedule
 Route::get('/matches', [MatcheController::class, 'index'])->name('matches.index');
@@ -79,6 +79,14 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
     Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
     Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+
+    Route::get('/stadiums', [StadiumController::class, 'index'])->name('stadiums.index');
+    Route::get('/stadiums/create', [StadiumController::class, 'create'])->name('stadiums.create');
+    Route::post('/stadiums', [StadiumController::class, 'store'])->name('stadiums.store');
+    Route::get('/stadiums/{stadium}', [StadiumController::class, 'show'])->name('stadiums.show');
+    Route::get('/stadiums/{stadium}/edit', [StadiumController::class, 'edit'])->name('stadiums.edit');
+    Route::put('/stadiums/{stadium}', [StadiumController::class, 'update'])->name('stadiums.update');
+    Route::delete('/stadiums/{stadium}', [StadiumController::class, 'destroy'])->name('stadiums.destroy');
 });
 
 //=================================
