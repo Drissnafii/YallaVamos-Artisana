@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MatchX extends Model
 {
+
+    protected $table = 'matches';
     protected $fillable = [
         'date',
         'team1_id',

@@ -87,6 +87,22 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('/stadiums/{stadium}/edit', [StadiumController::class, 'edit'])->name('stadiums.edit');
     Route::put('/stadiums/{stadium}', [StadiumController::class, 'update'])->name('stadiums.update');
     Route::delete('/stadiums/{stadium}', [StadiumController::class, 'destroy'])->name('stadiums.destroy');
+
+    Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
+    Route::get('/cities/create', [CityController::class, 'create'])->name('cities.create');
+    Route::post('/cities', [CityController::class, 'store'])->name('cities.store');
+    Route::get('/cities/{city}', [CityController::class, 'show'])->name('cities.show');
+    Route::get('/cities/{city}/edit', [CityController::class, 'edit'])->name('cities.edit');
+    Route::put('/cities/{city}', [CityController::class, 'update'])->name('cities.update');
+    Route::delete('/cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
+
+    Route::get('/matches', [MatcheController::class, 'index'])->name('matches.index');
+    Route::get('/matches/create', [MatcheController::class, 'create'])->name('matches.create');
+    Route::post('/matches', [MatcheController::class, 'store'])->name('matches.store');
+    Route::get('/matches/{match}', [MatcheController::class, 'show'])->name('matches.show');
+    Route::get('/matches/{match}/edit', [MatcheController::class, 'edit'])->name('matches.edit');
+    Route::put('/matches/{match}', [MatcheController::class, 'update'])->name('matches.update');
+    Route::delete('/matches/{match}', [MatcheController::class, 'destroy'])->name('matches.destroy');
 });
 
 //=================================

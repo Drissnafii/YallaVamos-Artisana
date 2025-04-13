@@ -2,94 +2,190 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\MatchX;
+use App\Models\Stadium;
+use App\Models\Team;
 use Illuminate\Http\Request;
 
 class MatcheController extends Controller
 {
     /**
-     * Display the match schedule page.
+     * Display a listing of the matches.
      *
-     * @return \Illuminate\View\View
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Create sample data for group matches
-        // this gonna come from the database ...
-        $groupMatches = [
-            'June 15, 2030' => [
-                [
-                    'time' => '18:00',
-                    'stadium' => 'Grand Stade de Casablanca',
-                    'teams' => 'Morocco vs. Spain',
-                    'group' => 'Group A'
-                ],
-                [
-                    'time' => '21:00',
-                    'stadium' => 'Stade Mohammed V',
-                    'teams' => 'Brazil vs. Germany',
-                    'group' => 'Group B'
-                ]
-            ],
-            'June 16, 2030' => [
-                [
-                    'time' => '15:00',
-                    'stadium' => 'Stade de Marrakech',
-                    'teams' => 'France vs. Argentina',
-                    'group' => 'Group C'
-                ],
-                [
-                    'time' => '18:00',
-                    'stadium' => 'Stade Ibn Batouta',
-                    'teams' => 'England vs. Italy',
-                    'group' => 'Group D'
-                ]
-            ],
-            'June 17, 2030' => [
-                [
-                    'time' => '18:00',
-                    'stadium' => 'Stade Adrar',
-                    'teams' => 'Portugal vs. Netherlands',
-                    'group' => 'Group E'
-                ],
-                [
-                    'time' => '21:00',
-                    'stadium' => 'Grand Stade de Fez',
-                    'teams' => 'Belgium vs. Croatia',
-                    'group' => 'Group F'
-                ]
-            ]
-        ];
+        $query = MatchX::with(['stadium', 'team1', 'team2']);
 
-        // Pass the data to the view
-        return view('pages.matches.index', compact('groupMatches'));
+        // Handle search
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('team1', function ($teamQuery) use ($search) {
+                      $teamQuery->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('team2', function ($teamQuery) use ($search) {
+                      $teamQuery->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('stadium', function ($stadiumQuery) use ($search) {
+                      $stadiumQuery->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        // Filter by status
+        if ($request->has('status') && $request->input('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        // Filter by stadium
+        if ($request->has('stadium') && $request->input('stadium')) {
+            $query->where('stadium_id', $request->input('stadium'));
+        }
+
+        // Get stadiums for filter dropdown
+        $stadiums = Stadium::orderBy('name')->get();
+
+        // Execute query with pagination
+        $matches = $query->orderBy('date', 'desc')->paginate(10);
+
+        return view('dashboard.admin.matches.index', compact('matches', 'stadiums'));
     }
 
     /**
-     * Display a specific match.
+     * Show the form for creating a new match.
      *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View
      */
-    public function show($id)
+    public function create()
     {
-        // In a real application, you would fetch the match by ID from your database
-        $match = [
-            'id' => $id,
-            'date' => 'June 15, 2030',
-            'time' => '18:00',
-            'stadium' => 'Grand Stade de Casablanca',
-            'teams' => 'Morocco vs. Spain',
-            'group' => 'Group A',
-            'status' => 'Upcoming',
-            'description' => 'Opening match of the 2030 FIFA World Cup',
-            'venue_details' => [
-                'name' => 'Grand Stade de Casablanca',
-                'capacity' => '93,000',
-                'location' => 'Casablanca, Morocco',
-                'image' => '/images/stadiums/casablanca.jpg'
-            ]
-        ];
+        $stadiums = Stadium::where('status', 'active')->orderBy('name')->get();
+        $teams = Team::orderBy('name')->get();
 
-        return view('pages.match-schedule.show', compact('match'));
+        return view('dashboard.admin.matches.create', compact('stadiums', 'teams'));
+    }
+
+    /**
+     * Store a newly created match in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'team1_id' => 'required|exists:teams,id',
+            'team2_id' => 'required|exists:teams,id|different:team1_id',
+            'stadium_id' => 'required|exists:stadiums,id',
+            'status' => 'required|in:scheduled,in_progress,completed,postponed,cancelled',
+            'score_team1' => 'nullable|integer|min:0',
+            'score_team2' => 'nullable|integer|min:0',
+        ]);
+
+        // Only include scores if the match is in progress or completed
+        if ($validated['status'] !== 'in_progress' && $validated['status'] !== 'completed') {
+            $validated['score_team1'] = null;
+            $validated['score_team2'] = null;
+        }
+
+        $match = MatchX::create($validated);
+
+        return redirect()->route('admin.matches.index')
+            ->with('success', 'Match scheduled successfully.');
+    }
+
+    /**
+     * Display the specified match.
+     *
+     * @param  \App\Models\MatchX  $match
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function show(MatchX $match)
+    {
+        $match->load(['stadium', 'stadium.city', 'team1', 'team2']);
+
+        return view('dashboard.admin.matches.show', compact('match'));
+    }
+
+    /**
+     * Show the form for editing the specified match.
+     *
+     * @param  \App\Models\MatchX  $match
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function edit(MatchX $match)
+    {
+        $stadiums = Stadium::orderBy('name')->get();
+        $teams = Team::orderBy('name')->get();
+
+        return view('dashboard.admin.matches.edit', compact('match', 'stadiums', 'teams'));
+    }
+
+    /**
+     * Update the specified match in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\MatchX  $match
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, MatchX $match)
+    {
+        // If we're just changing status (from quick actions)
+        if ($request->has('status') && count($request->all()) === 3) { // status + _token + _method
+            $validated = $request->validate([
+                'status' => 'required|in:scheduled,in_progress,completed,postponed,cancelled',
+            ]);
+
+            $match->update($validated);
+
+            return redirect()->route('admin.matches.show', $match)
+                ->with('success', 'Match status updated successfully.');
+        }
+
+        // Full update
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'team1_id' => 'required|exists:teams,id',
+            'team2_id' => 'required|exists:teams,id|different:team1_id',
+            'stadium_id' => 'required|exists:stadiums,id',
+            'status' => 'required|in:scheduled,in_progress,completed,postponed,cancelled',
+            'score_team1' => 'nullable|integer|min:0',
+            'score_team2' => 'nullable|integer|min:0',
+        ]);
+
+        // Only include scores if the match is in progress or completed
+        if ($validated['status'] !== 'in_progress' && $validated['status'] !== 'completed') {
+            $validated['score_team1'] = null;
+            $validated['score_team2'] = null;
+        }
+
+        $match->update($validated);
+
+        return redirect()->route('admin.matches.index')
+            ->with('success', 'Match updated successfully.');
+    }
+
+    /**
+     * Remove the specified match from storage.
+     *
+     * @param  \App\Models\MatchX  $match
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(MatchX $match)
+    {
+        // Check if the match has associated favorite_matches
+        if ($match->favoriteMatches()->exists()) {
+            return redirect()->route('admin.matches.index')
+                ->with('error', 'Cannot delete this match because users have saved it as a favorite. Consider marking it as cancelled instead.');
+        }
+
+        $match->delete();
+
+        return redirect()->route('admin.matches.index')
+            ->with('success', 'Match deleted successfully.');
     }
 }
