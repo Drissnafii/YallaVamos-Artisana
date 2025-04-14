@@ -8,9 +8,12 @@ use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatcheController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PublicCityController;
+use App\Http\Controllers\PublicStadiumController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\TravelController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\AccommodationController;
 use Illuminate\Support\Facades\Route;
 
 //=================================
@@ -29,12 +32,13 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout')->name('logout');
 });
 
-// Cities and Stadiums
-Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
-Route::get('/cities/{city}', [CityController::class, 'show'])->name('cities.show');
+// Public Cities Routes
+Route::get('/cities', [PublicCityController::class, 'index'])->name('cities.index');
+Route::get('/cities/{city}', [PublicCityController::class, 'show'])->name('cities.show');
 
-Route::get('/stadiums', [StadiumController::class, 'index'])->name('stadiums.index');
-Route::get('/stadiums/{stadium}', [StadiumController::class, 'show'])->name('stadiums.show');
+
+Route::get('/stadiums', [PublicStadiumController::class, 'index'])->name('stadiums.index');
+Route::get('/stadiums/{stadium}', [PublicStadiumController::class, 'show'])->name('stadiums.show');
 
 // Match Schedule
 Route::get('/matches', [MatcheController::class, 'index'])->name('matches.index');
@@ -69,49 +73,62 @@ Route::middleware(['auth'])->group(function () {
 //=================================
 
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'adminDashboard'])->name('dashboard');
+    // Admin Dashboard
+    Route::get('dashboard', [AuthController::class, 'adminDashboard'])->name('dashboard');
 
+    // Articles Management
+    Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
+    Route::get('articles/create', [ArticleController::class, 'create'])->name('articles.create');
+    Route::post('articles', [ArticleController::class, 'store'])->name('articles.store');
+    Route::get('articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+    Route::get('articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+    Route::put('articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+    Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 
-    // Individual article routes
-    Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
-    Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
-    Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
-    Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
-    Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
-    Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
-    Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+    // Stadiums Management
+    Route::get('stadiums', [StadiumController::class, 'index'])->name('stadiums.index');
+    Route::get('stadiums/create', [StadiumController::class, 'create'])->name('stadiums.create');
+    Route::post('stadiums', [StadiumController::class, 'store'])->name('stadiums.store');
+    Route::get('stadiums/{stadium}', [StadiumController::class, 'show'])->name('stadiums.show');
+    Route::get('stadiums/{stadium}/edit', [StadiumController::class, 'edit'])->name('stadiums.edit');
+    Route::put('stadiums/{stadium}', [StadiumController::class, 'update'])->name('stadiums.update');
+    Route::delete('stadiums/{stadium}', [StadiumController::class, 'destroy'])->name('stadiums.destroy');
 
-    Route::get('/stadiums', [StadiumController::class, 'index'])->name('stadiums.index');
-    Route::get('/stadiums/create', [StadiumController::class, 'create'])->name('stadiums.create');
-    Route::post('/stadiums', [StadiumController::class, 'store'])->name('stadiums.store');
-    Route::get('/stadiums/{stadium}', [StadiumController::class, 'show'])->name('stadiums.show');
-    Route::get('/stadiums/{stadium}/edit', [StadiumController::class, 'edit'])->name('stadiums.edit');
-    Route::put('/stadiums/{stadium}', [StadiumController::class, 'update'])->name('stadiums.update');
-    Route::delete('/stadiums/{stadium}', [StadiumController::class, 'destroy'])->name('stadiums.destroy');
+    // Cities Management
+    Route::get('cities', [CityController::class, 'index'])->name('cities.index');
+    Route::get('cities/create', [CityController::class, 'create'])->name('cities.create');
+    Route::post('cities', [CityController::class, 'store'])->name('cities.store');
+    Route::get('cities/{city}', [CityController::class, 'show'])->name('cities.show');
+    Route::get('cities/{city}/edit', [CityController::class, 'edit'])->name('cities.edit');
+    Route::put('cities/{city}', [CityController::class, 'update'])->name('cities.update');
+    Route::delete('cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
 
-    Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
-    Route::get('/cities/create', [CityController::class, 'create'])->name('cities.create');
-    Route::post('/cities', [CityController::class, 'store'])->name('cities.store');
-    Route::get('/cities/{city}', [CityController::class, 'show'])->name('cities.show');
-    Route::get('/cities/{city}/edit', [CityController::class, 'edit'])->name('cities.edit');
-    Route::put('/cities/{city}', [CityController::class, 'update'])->name('cities.update');
-    Route::delete('/cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
+    // Accommodations Management
+    Route::get('accommodations', [AccommodationController::class, 'index'])->name('accommodations.index');
+    Route::get('accommodations/create', [AccommodationController::class, 'create'])->name('accommodations.create');
+    Route::post('accommodations', [AccommodationController::class, 'store'])->name('accommodations.store');
+    Route::get('accommodations/{accommodation}', [AccommodationController::class, 'show'])->name('accommodations.show');
+    Route::get('accommodations/{accommodation}/edit', [AccommodationController::class, 'edit'])->name('accommodations.edit');
+    Route::put('accommodations/{accommodation}', [AccommodationController::class, 'update'])->name('accommodations.update');
+    Route::delete('accommodations/{accommodation}', [AccommodationController::class, 'destroy'])->name('accommodations.destroy');
 
-    Route::get('/matches', [MatcheController::class, 'index'])->name('matches.index');
-    Route::get('/matches/create', [MatcheController::class, 'create'])->name('matches.create');
-    Route::post('/matches', [MatcheController::class, 'store'])->name('matches.store');
-    Route::get('/matches/{match}', [MatcheController::class, 'show'])->name('matches.show');
-    Route::get('/matches/{match}/edit', [MatcheController::class, 'edit'])->name('matches.edit');
-    Route::put('/matches/{match}', [MatcheController::class, 'update'])->name('matches.update');
-    Route::delete('/matches/{match}', [MatcheController::class, 'destroy'])->name('matches.destroy');
+    // Matches Management
+    Route::get('matches', [MatcheController::class, 'index'])->name('matches.index');
+    Route::get('matches/create', [MatcheController::class, 'create'])->name('matches.create');
+    Route::post('matches', [MatcheController::class, 'store'])->name('matches.store');
+    Route::get('matches/{match}', [MatcheController::class, 'show'])->name('matches.show');
+    Route::get('matches/{match}/edit', [MatcheController::class, 'edit'])->name('matches.edit');
+    Route::put('matches/{match}', [MatcheController::class, 'update'])->name('matches.update');
+    Route::delete('matches/{match}', [MatcheController::class, 'destroy'])->name('matches.destroy');
 
-    Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
-    Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
-    Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
-    Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
-    Route::get('/teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
-    Route::put('/teams/{team}', [TeamController::class, 'update'])->name('teams.update');
-    Route::delete('/teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
+    // Teams Management
+    Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
+    Route::get('teams/create', [TeamController::class, 'create'])->name('teams.create');
+    Route::post('teams', [TeamController::class, 'store'])->name('teams.store');
+    Route::get('teams/{team}', [TeamController::class, 'show'])->name('teams.show');
+    Route::get('teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
+    Route::put('teams/{team}', [TeamController::class, 'update'])->name('teams.update');
+    Route::delete('teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
 });
 
 //=================================

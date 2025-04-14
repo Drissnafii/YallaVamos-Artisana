@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controller as BaseController;
 
-class CityController extends Controller
+class CityController extends BaseController
 {
+    /**
+     * Ensure admin access
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'isAdmin']);
+    }
+
     /**
      * Display a listing of the cities.
      *
@@ -55,7 +63,7 @@ class CityController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,webp,png,jpg,gif|max:2048',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
         ]);
@@ -108,7 +116,7 @@ class CityController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,webp,png,jpg,gif|max:2048',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
         ]);
@@ -153,8 +161,6 @@ class CityController extends Controller
         if ($city->image) {
             Storage::disk('public')->delete($city->image);
         }
-
-        $city->delete();
 
         return redirect()->route('admin.cities.index')
             ->with('success', 'City deleted successfully.');

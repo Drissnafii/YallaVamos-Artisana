@@ -78,9 +78,8 @@
                 <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status <span class="text-red-500">*</span></label>
                 <select name="status" id="status" class="form-select rounded-md shadow-sm w-full @error('status') border-red-500 @enderror" required>
                     <option value="scheduled" {{ old('status') == 'scheduled' ? 'selected' : '' }}>Scheduled</option>
-                    <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                    <option value="live" {{ old('status') == 'live' ? 'selected' : '' }}>Live</option>
                     <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="postponed" {{ old('status') == 'postponed' ? 'selected' : '' }}>Postponed</option>
                     <option value="cancelled" {{ old('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                 </select>
                 @error('status')

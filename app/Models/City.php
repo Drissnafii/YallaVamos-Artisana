@@ -17,6 +17,14 @@ class City extends Model
         'longitude',
     ];
 
+    // Accessors
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+        return null;
+    }
 
     // Relationships
     public function stadiums()

@@ -36,6 +36,6 @@ class MatchX extends Model
 
     public function favoriteMatches()
     {
-        return $this->hasMany(FavoriteMatch::class);
+        return $this->hasMany(FavoriteMatch::class, 'match_id');
     }
 }

@@ -8,8 +8,20 @@ use App\Models\Stadium;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @mixin \Illuminate\Routing\Controller
+ * @method \Illuminate\Routing\ControllerMiddlewareOptions middleware(string|array $middleware, array $options = [])
+ */
 class StadiumController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        // Middleware is already applied at the route level
+    }
+
     /**
      * Display a listing of the stadiums.
      *
@@ -42,12 +54,15 @@ class StadiumController extends Controller
     /**
      * Show the form for creating a new stadium.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
         $cities = City::orderBy('name')->get();
-        return view('dashboard.admin.stadiums.create', compact('cities'));
+        $selectedCityId = $request->input('city_id');
+        
+        return view('dashboard.admin.stadiums.create', compact('cities', 'selectedCityId'));
     }
 
     /**
@@ -58,6 +73,13 @@ class StadiumController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'latitude.between' => 'Latitude must be between -90 and 90 degrees.',
+            'latitude.regex' => 'Latitude must be a valid decimal number with up to 8 decimal places.',
+            'longitude.between' => 'Longitude must be between -180 and 180 degrees.',
+            'longitude.regex' => 'Longitude must be a valid decimal number with up to 8 decimal places.',
+        ];
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'city_id' => 'required|exists:cities,id',
@@ -67,9 +89,19 @@ class StadiumController extends Controller
             'address' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-        ]);
+            'latitude' => [
+                'nullable',
+                'numeric',
+                'between:-90,90',
+                'regex:/^-?\d{1,2}(\.\d{1,8})?$/'
+            ],
+            'longitude' => [
+                'nullable',
+                'numeric',
+                'between:-180,180',
+                'regex:/^-?\d{1,3}(\.\d{1,8})?$/'
+            ],
+        ], $messages);
 
         // Handle the image upload
         if ($request->hasFile('image')) {
@@ -77,10 +109,22 @@ class StadiumController extends Controller
             $validated['image'] = $imagePath;
         }
 
-        Stadium::create($validated);
-
-        return redirect()->route('admin.stadiums.index')
-            ->with('success', 'Stadium created successfully.');
+        try {
+            Stadium::create($validated);
+            
+            // Check if we came from a city view
+            if ($request->has('from_city')) {
+                return redirect()->route('admin.cities.show', $validated['city_id'])
+                    ->with('success', 'Stadium created successfully.');
+            }
+            
+            return redirect()->route('admin.stadiums.index')
+                ->with('success', 'Stadium created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'An error occurred while creating the stadium. Please try again.');
+        }
     }
 
     /**

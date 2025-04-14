@@ -37,7 +37,9 @@
                     <select name="city_id" id="city_id" class="form-select rounded-md shadow-sm w-full @error('city_id') border-red-500 @enderror" required>
                         <option value="">Select a city</option>
                         @foreach($cities as $city)
-                            <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                            <option value="{{ $city->id }}" {{ (old('city_id', $selectedCityId ?? '') == $city->id) ? 'selected' : '' }}>
+                                {{ $city->name }}
+                            </option>
                         @endforeach
                     </select>
                     @error('city_id')

@@ -43,9 +43,9 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
-                            @if($city->image)
+                            @if($city->image_url)
                             <div class="flex-shrink-0 h-10 w-10">
-                                <img class="h-10 w-10 rounded-sm object-cover" src="{{ asset('storage/' . $city->image) }}" alt="{{ $city->name }}">
+                                <img class="h-10 w-10 rounded-sm object-cover" src="{{ $city->image_url }}" alt="{{ $city->name }}">
                             </div>
                             @endif
                             <div class="ml-4">

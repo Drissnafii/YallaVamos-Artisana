@@ -11,6 +11,14 @@ use Illuminate\Validation\Rule;
 class TeamController extends Controller
 {
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        // Middleware is already applied at the route level
+    }
+
+    /**
      * Display a listing of the teams.
      *
      * @param  \Illuminate\Http\Request  $request
