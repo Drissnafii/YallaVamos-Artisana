@@ -22,9 +22,8 @@
         <div class="absolute bottom-0 left-0 w-full h-2/5 bg-gradient-to-t from-black/70 to-transparent"></div>
         <h1 class="absolute bottom-6 left-6 text-white text-2xl md:text-3xl font-bold max-w-[70%] leading-tight">{{ $accommodation->name }}</h1>
     </div>
-
     <!-- Sticky Action Bar -->
-    <div class="sticky top-0 z-10 bg-white shadow-md flex justify-between items-center p-4 mt-1 rounded-lg">
+    <div id="stickyActionBar" class="sticky top-16 z-9 backdrop-blur-md bg-white/70 shadow-md flex justify-between items-center p-4 mt-1 rounded-lg transition-all duration-500">
         <a href="{{ route('admin.accommodations.index') }}" class="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
@@ -32,16 +31,23 @@
             <span>Back</span>
         </a>
 
-        <div class="flex space-x-2">
-            <!-- Tags -->
-            <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                {{ ucfirst($accommodation->type) }}
-            </span>
-            <span class="px-3 py-1 text-xs font-medium rounded-full
-                {{ $accommodation->price_range === 'luxury' ? 'bg-purple-100 text-purple-800' :
-                   ($accommodation->price_range === 'mid-range' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800') }}">
-                {{ ucfirst($accommodation->price_range) }}
-            </span>
+        <div class="flex space-x-2 relative h-8 overflow-hidden">
+            <!-- Tags (visible by default) -->
+            <div id="accommodationTags" class="flex space-x-2 absolute inset-0 transition-all duration-500 ease-in-out opacity-100 transform translate-y-0">
+                <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                    {{ ucfirst($accommodation->type) }}
+                </span>
+                <span class="px-3 py-1 text-xs font-medium rounded-full
+                    {{ $accommodation->price_range === 'luxury' ? 'bg-purple-100 text-purple-800' :
+                    ($accommodation->price_range === 'mid-range' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800') }}">
+                    {{ ucfirst($accommodation->price_range) }}
+                </span>
+            </div>
+
+            <!-- Accommodation Name (hidden by default) -->
+            <div id="accommodationName" class="transition-all duration-500 delay-100 ease-in-out opacity-0 transform -translate-y-4 absolute left-1/2 transform -translate-x-1/2 font-semibold whitespace-nowrap max-w-[250px] truncate">
+                {{ $accommodation->name }}
+            </div>
         </div>
 
         <div class="flex space-x-2">
@@ -166,5 +172,88 @@
         </svg>
     </button>
 </div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const headerImageContainer = document.querySelector('.relative.overflow-hidden.rounded-lg');
+        const headerImage = document.querySelector('.h-64.md\\:h-80 img') || document.querySelector('.h-64.md\\:h-80 div');
+        const accommodationTags = document.getElementById('accommodationTags');
+        const accommodationName = document.getElementById('accommodationName');
+        const stickyActionBar = document.getElementById('stickyActionBar');
+
+        // Extract dominant color from the header image
+        function extractDominantColor() {
+            // Default fallback colors if we can't extract
+            let bgColor = 'rgba(255, 255, 255, 0.7)';
+            let textColor = 'rgb(30, 64, 175)'; // blue-800
+
+            // If it's a gradient div (no image), use its color
+            if (headerImage && headerImage.classList.contains('bg-gradient-to-r')) {
+                // Extract blue color from the gradient
+                bgColor = 'rgba(96, 165, 250, 0.7)'; // blue-400 with opacity
+                // Set the sticky bar style immediately
+                applyColorToStickyBar(bgColor, textColor);
+                return;
+            }
+
+            // For actual images, we'll use a lightweight approach
+            // since we can't directly analyze the image without a canvas
+            // This is a simplified implementation - for production, consider
+            // extracting the dominant color server-side
+            if (headerImage && headerImage.tagName === 'IMG') {
+                // Set the sticky bar style with default blue-tinted background
+                // as a fallback since we can't easily extract image colors
+                bgColor = 'rgba(219, 234, 254, 0.8)'; // blue-100 with opacity
+                applyColorToStickyBar(bgColor, textColor);
+            }
+        }
+
+        function applyColorToStickyBar(bgColor, textColor) {
+            // Apply the extracted/default color to the sticky bar
+            stickyActionBar.style.backgroundColor = bgColor;
+            accommodationName.style.color = textColor;
+        }
+
+        // Call once on page load
+        extractDominantColor();
+
+        window.addEventListener('scroll', function() {
+            // Get the position and dimensions of the header image
+            const headerRect = headerImageContainer.getBoundingClientRect();
+
+            // Calculate how much of the image has scrolled out (0 to 1)
+            const scrollProgress = Math.min(1, Math.max(0, 1 - (headerRect.bottom / headerRect.height)));
+
+            // Apply blur effect proportional to scroll
+            const blurAmount = Math.min(16, Math.floor(scrollProgress * 20));
+            stickyActionBar.style.backdropFilter = `blur(${blurAmount}px)`;
+
+            // Check if the header image has scrolled out of view (when bottom of image is above viewport)
+            if (headerRect.bottom <= 0) {
+                // Show accommodation name, hide tags with enhanced animations
+                accommodationTags.classList.remove('opacity-100', 'translate-y-0');
+                accommodationTags.classList.add('opacity-0', 'translate-y-4');
+
+                // Slight delay for staggered effect
+                setTimeout(() => {
+                    accommodationName.classList.remove('opacity-0', '-translate-y-4');
+                    accommodationName.classList.add('opacity-100', 'translate-y-0');
+                }, 50);
+            } else {
+                // Show tags, hide accommodation name
+                accommodationName.classList.remove('opacity-100', 'translate-y-0');
+                accommodationName.classList.add('opacity-0', '-translate-y-4');
+
+                // Slight delay for staggered effect
+                setTimeout(() => {
+                    accommodationTags.classList.remove('opacity-0', 'translate-y-4');
+                    accommodationTags.classList.add('opacity-100', 'translate-y-0');
+                }, 50);
+            }
+        });
+    });
+</script>
+@endpush
 
 @endsection
