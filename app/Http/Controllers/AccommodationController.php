@@ -62,7 +62,7 @@ class AccommodationController extends BaseController
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'type' => 'required|string|in:hotel,apartment,Riads,guesthouse,other',
+            'type' => 'required|string|in:hotel,apartment,riad,guesthouse,other',
             'price_range' => 'required|string|in:budget,mid-range,luxury',
             'price_min' => 'required|numeric|min:0',
             'price_max' => 'required|numeric|min:0|gte:price_min',
@@ -111,7 +111,7 @@ class AccommodationController extends BaseController
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'type' => 'required|string|in:hotel,apartment,Riads,guesthouse,other',
+            'type' => 'required|string|in:hotel,apartment,riad,guesthouse,other',
             'price_range' => 'required|string|in:budget,mid-range,luxury',
             'price_min' => 'required|numeric|min:0',
             'price_max' => 'required|numeric|min:0|gte:price_min',
