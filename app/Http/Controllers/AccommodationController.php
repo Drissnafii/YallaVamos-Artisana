@@ -25,6 +25,8 @@ class AccommodationController extends BaseController
     public function index(Request $request)
     {
         $query = Accommodation::with('city');
+        $accommodations = Accommodation::with('city')->paginate(10);
+        $cities = City::all(); // Add this line to get all cities
 
         // Handle search
         if ($request->has('search')) {
@@ -40,7 +42,7 @@ class AccommodationController extends BaseController
 
         $accommodations = $query->orderBy('name')->paginate(10);
 
-        return view('dashboard.admin.accommodations.index', compact('accommodations'));
+        return view('dashboard.admin.accommodations.index', compact('accommodations', 'cities'));
     }
 
     /**

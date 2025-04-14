@@ -18,6 +18,10 @@ class MatchX extends Model
         'stadium_id',
     ];
 
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
     // Relationships
     public function stadium()
     {

@@ -162,6 +162,9 @@ class CityController extends BaseController
             Storage::disk('public')->delete($city->image);
         }
 
+        // Actually delete the city
+        $city->delete();
+
         return redirect()->route('admin.cities.index')
             ->with('success', 'City deleted successfully.');
     }
