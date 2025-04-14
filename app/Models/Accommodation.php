@@ -13,8 +13,12 @@ class Accommodation extends Model
         'type',
         'price_min',
         'price_max',
+        'price_range',
         'description',
         'image',
+        'phone',
+        'email',
+        'website',
     ];
 
     // Relationships

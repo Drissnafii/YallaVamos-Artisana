@@ -38,9 +38,11 @@
             <!-- Accommodation Image -->
             <div class="md:w-1/3 bg-blue-50">
                 @if($accommodation->image)
-                    <img src="{{ asset('storage/' . $accommodation->image) }}" alt="{{ $accommodation->name }}" class="w-full h-full object-cover">
+                    <div class="relative h-full min-h-[250px]">
+                        <img src="{{ asset('storage/' . $accommodation->image) }}" alt="{{ $accommodation->name }}" class="w-full h-full object-cover absolute inset-0">
+                    </div>
                 @else
-                    <div class="h-full flex items-center justify-center p-8 bg-blue-100">
+                    <div class="h-full min-h-[250px] flex items-center justify-center p-8 bg-blue-100">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
@@ -56,8 +58,8 @@
                         <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
                             {{ ucfirst($accommodation->type) }}
                         </span>
-                        <span class="px-2 py-1 text-xs font-semibold rounded-full 
-                            {{ $accommodation->price_range === 'luxury' ? 'bg-purple-100 text-purple-800' : 
+                        <span class="px-2 py-1 text-xs font-semibold rounded-full
+                            {{ $accommodation->price_range === 'luxury' ? 'bg-purple-100 text-purple-800' :
                                ($accommodation->price_range === 'mid-range' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800') }}">
                             {{ ucfirst($accommodation->price_range) }}
                         </span>
@@ -98,4 +100,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection
