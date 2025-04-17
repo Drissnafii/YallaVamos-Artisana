@@ -19,10 +19,10 @@
     <link rel="preload" href="{{ asset('images/morocco-logo.svg') }}" as="image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
+
     <!-- Add favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/morocco-logo.svg') }}">
-    
+
     <!-- Add manifest for PWA support -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
 </head>
@@ -37,11 +37,11 @@
             @if(session('success'))
                 <x-flash-message type="success" :message="session('success')" />
             @endif
-            
+
             @if(session('error'))
                 <x-flash-message type="error" :message="session('error')" />
             @endif
-            
+
             @yield('content')
         </div>
     </main>
