@@ -95,7 +95,9 @@
                             <select name="city_id" id="city_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500">
                                 <option value="">All Cities</option>
                                 @foreach($cities ?? [] as $city)
-                                <option value="{{ $city->id }}" {{ request('city_id') == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                                @if(is_object($city))
+                                    <option value="{{ $city->id }}" {{ request('city_id') == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>
