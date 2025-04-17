@@ -325,24 +325,24 @@
         const quickActionBar = document.getElementById('quickActionBar');
         let lastScrollTop = 0;
 
-        window.addEventListener('scroll', function() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    // Alternative approach
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const adminHeaderHeight = 64; // 16 * 4 = 64px typically
 
-            if (scrollTop > 200) {
-                quickActionBar.classList.add('sticky', 'top-0', 'z-10', 'shadow-sm', 'bg-white/95', 'backdrop-blur-md');
+        if (scrollTop > 200) {
+            // Position it with a margin from the top that clears the admin header
+            quickActionBar.classList.add('sticky', 'z-9', 'shadow-sm', 'bg-white/95', 'backdrop-blur-md');
+            quickActionBar.style.top = adminHeaderHeight + 'px';
 
-                // Hide on scroll down, show on scroll up (Google behavior)
-                if (scrollTop > lastScrollTop) {
-                    quickActionBar.classList.add('-translate-y-full', 'transition-transform', 'duration-300');
-                } else {
-                    quickActionBar.classList.remove('-translate-y-full');
-                }
-            } else {
-                quickActionBar.classList.remove('sticky', 'top-0', 'z-10', 'shadow-sm', 'bg-white/95', 'backdrop-blur-md', '-translate-y-full');
-            }
+            // Rest of your code
+        } else {
+            quickActionBar.classList.remove('sticky', 'z-9', 'shadow-sm', 'bg-white/95', 'backdrop-blur-md', '-translate-y-full');
+            quickActionBar.style.top = '';
+        }
 
-            lastScrollTop = scrollTop;
-        });
+        lastScrollTop = scrollTop;
+    });
 
         // Share functionality example
         const shareButton = document.getElementById('shareButton');
@@ -377,21 +377,21 @@
         const dropdownButton = document.getElementById('dropdown-button');
         const dropdownContent = document.getElementById('dropdown-content');
         const dropdownMenu = document.getElementById('dropdown-menu');
-        
+
         if (dropdownButton && dropdownContent) {
             // Toggle dropdown when button is clicked
             dropdownButton.addEventListener('click', function(e) {
                 e.stopPropagation();
                 dropdownContent.classList.toggle('hidden');
             });
-            
+
             // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 if (!dropdownMenu.contains(e.target)) {
                     dropdownContent.classList.add('hidden');
                 }
             });
-            
+
             // Close dropdown when pressing escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
