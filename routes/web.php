@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\FavoritesController;
@@ -85,6 +86,15 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::put('articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
     Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 
+    // Categories Management
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::get('categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
     // Stadiums Management
     Route::get('stadiums', [StadiumController::class, 'index'])->name('stadiums.index');
     Route::get('stadiums/create', [StadiumController::class, 'create'])->name('stadiums.create');
@@ -129,6 +139,18 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('teams/{team}', [TeamController::class, 'update'])->name('teams.update');
     Route::delete('teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
+});
+
+//=================================
+// Test Route (For Development)
+//=================================
+
+Route::get('/test-category', function () {
+    return \App\Models\Category::create([
+        'name' => 'Test Category',
+        'slug' => 'test-category',
+        'description' => 'This is a test category'
+    ]);
 });
 
 //=================================

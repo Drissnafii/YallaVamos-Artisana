@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('dashboard.admin.articles.create');
+        $categories = Category::all();
+        return view('dashboard.admin.articles.create', compact('categories'));
     }
 
     /**
@@ -38,6 +40,7 @@ class ArticleController extends Controller
             'publication_date' => 'nullable|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'published' => 'boolean',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         // Generate slug from title
@@ -70,7 +73,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('dashboard.admin.articles.edit', compact('article'));
+        $categories = Category::all();
+        return view('dashboard.admin.articles.edit', compact('article', 'categories'));
     }
 
     /**
@@ -84,6 +88,7 @@ class ArticleController extends Controller
             'publication_date' => 'nullable|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'published' => 'boolean',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         // Update slug if title changed

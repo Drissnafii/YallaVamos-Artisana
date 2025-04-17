@@ -13,7 +13,8 @@ class Article extends Model
         'publication_date',
         'image',
         'slug',
-        'published'
+        'published',
+        'category_id'
     ];
 
     // Relationships
@@ -26,4 +27,14 @@ class Article extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * Get the category that owns the article.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    
 }
