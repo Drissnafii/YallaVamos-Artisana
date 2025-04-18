@@ -15,8 +15,8 @@ use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\TravelController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\AccommodationController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatbotController;
+use Illuminate\Support\Facades\Route;
 
 //=================================
 // Public Routes (No Authentication Required)
