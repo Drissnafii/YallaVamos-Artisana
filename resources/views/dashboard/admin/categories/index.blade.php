@@ -1,44 +1,43 @@
 @extends('layouts.admin')
 
 @section('title', 'Categories')
-
 @section('header', 'Categories')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
+<div class="container mx-auto max-w-5xl px-4 py-5">
     <!-- Top action bar with page title and create button -->
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-medium text-gray-800">Categories</h1>
-        <a href="{{ route('admin.categories.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-semibold text-gray-800">Categories</h1>
+        <a href="{{ route('admin.categories.create') }}" class="px-4 py-2 bg-white text-gray-600 border border-gray-300 rounded-full hover:shadow-md transition-all flex items-center font-medium text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
             New Category
         </a>
     </div>
 
-    <!-- Main content card with shadow -->
-    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <!-- Main content card -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
         <!-- Table of categories -->
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Articles</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Articles</th>
+                        <th scope="col" class="px-5 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($categories as $category)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-5 py-3">
                             <div class="text-sm font-medium text-gray-900">{{ $category->name }}</div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-5 py-3">
                             <div class="text-sm text-gray-500">{{ $category->articles->count() }}</div>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <td class="px-5 py-3 text-right">
                             <div class="flex justify-end space-x-2">
                                 <a href="{{ route('admin.categories.edit', $category) }}" class="text-blue-600 hover:text-blue-900">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,7 +58,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">
+                        <td colspan="3" class="px-5 py-4 text-center text-sm text-gray-500">
                             No categories found. <a href="{{ route('admin.categories.create') }}" class="text-blue-600 hover:underline">Create your first category</a>.
                         </td>
                     </tr>
@@ -69,9 +68,11 @@
         </div>
 
         <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-gray-200">
+        @if($categories->count() > 0)
+        <div class="px-5 py-3 border-t border-gray-200">
             {{ $categories->links() }}
         </div>
+        @endif
     </div>
 </div>
-@endsection
+@endsection 
