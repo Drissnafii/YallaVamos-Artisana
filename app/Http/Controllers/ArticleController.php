@@ -21,8 +21,15 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        // Get paginated articles for the table
         $articles = Article::latest()->simplePaginate(10);
-        return view('dashboard.admin.articles.index', compact('articles'));
+        
+        // Calculate statistics for the cards
+        $articlesCount = Article::count();
+        $publishedCount = Article::where('published', true)->count();
+        $draftCount = Article::where('published', false)->count();
+        
+        return view('dashboard.admin.articles.index', compact('articles', 'articlesCount', 'publishedCount', 'draftCount'));
     }
 
     /**
