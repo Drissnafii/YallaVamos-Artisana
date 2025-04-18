@@ -94,6 +94,13 @@
                         Accommodations
                     </a>
 
+                    <a href="{{ url('/admin/chat') }}" class="{{ request()->is('admin/chat*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <svg class="text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                        AI Assistant
+                    </a>
+
                     <div class="pt-4 mt-4 border-t border-gray-200">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

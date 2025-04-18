@@ -16,6 +16,7 @@ use App\Http\Controllers\TravelController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\AccommodationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatbotController;
 
 //=================================
 // Public Routes (No Authentication Required)
@@ -142,6 +143,11 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('teams/{team}', [TeamController::class, 'update'])->name('teams.update');
     Route::delete('teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
+    
+    // AI Chat Interface
+    Route::get('chat', function () {
+        return view('dashboard.admin.chat.index');
+    })->name('chat');
 });
 
 //=================================
@@ -170,3 +176,8 @@ Route::get('forgot-password', [PasswordResetController::class, 'showLinkRequestF
 Route::post('forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
 Route::get('reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->middleware('guest')->name('password.reset');
 Route::post('reset-password', [PasswordResetController::class, 'reset'])->middleware('guest')->name('password.update');
+
+
+// ChatBoot
+
+Route::post('/chatbot-query', [ChatbotController::class, 'handleQuery'])->name('chatbot.query');
