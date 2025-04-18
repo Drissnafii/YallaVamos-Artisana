@@ -86,6 +86,9 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::put('articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
     Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 
+    // Toggle Article Status
+    Route::patch('articles/{article}/toggle-status', [ArticleController::class, 'toggleStatus'])->name('articles.toggle-status');
+
     // Categories Management
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');

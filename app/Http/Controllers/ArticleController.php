@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+// requestes
+use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
+
+
 class ArticleController extends Controller
 {
     /**
@@ -32,16 +37,9 @@ class ArticleController extends Controller
     /**
      * Store a newly created article in storage.
      */
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'publication_date' => 'nullable|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'published' => 'boolean',
-            'category_id' => 'nullable|exists:categories,id',
-        ]);
+        $validated = $request->validated();
 
         // Generate slug from title
         $validated['slug'] = Str::slug($validated['title']);
@@ -53,7 +51,12 @@ class ArticleController extends Controller
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('articles', 'public');
             $validated['image'] = $imagePath;
+        } else {
+            $validated['image'] = null;
         }
+        
+        // Properly handle the published status checkbox
+        $validated['published'] = isset($validated['published']) ? true : false;
 
         Article::create($validated);
 
@@ -80,32 +83,31 @@ class ArticleController extends Controller
     /**
      * Update the specified article in storage.
      */
-    public function update(Request $request, Article $article)
+    // Change Request to UpdateArticleRequest here
+    public function update(UpdateArticleRequest $request, Article $article)
     {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'publication_date' => 'nullable|date',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'published' => 'boolean',
-            'category_id' => 'nullable|exists:categories,id',
-        ]);
+        // Get the validated data:
+        $validated = $request->validated();
 
-        // Update slug if title changed
-        if ($request->title !== $article->title) {
+        // Access validated title directly
+        if (isset($validated['title']) && $validated['title'] !== $article->title) {
             $validated['slug'] = Str::slug($validated['title']);
         }
 
-        // Handle image upload if present
+        // Handle image upload
         if ($request->hasFile('image')) {
             // Remove old image if exists
             if ($article->image) {
                 Storage::disk('public')->delete($article->image);
             }
-
+            // Use the validated image data if needed, but hasFile checks the original request
             $imagePath = $request->file('image')->store('articles', 'public');
             $validated['image'] = $imagePath;
         }
+
+        // Properly handle the published status checkbox
+        // If the checkbox is not checked, the value won't be in the request
+        $validated['published'] = isset($validated['published']) ? true : false;
 
         $article->update($validated);
 
@@ -125,5 +127,18 @@ class ArticleController extends Controller
         $article->delete();
 
         return redirect()->route('admin.articles.index')->with('success', 'Article deleted successfully!');
+    }
+    
+    /**
+     * Toggle the publication status of the article.
+     */
+    public function toggleStatus(Article $article)
+    {
+        // Toggle the published status
+        $article->published = !$article->published;
+        $article->save();
+        
+        $status = $article->published ? 'published' : 'set to draft';
+        return redirect()->route('admin.articles.index')->with('success', "Article {$status} successfully!");
     }
 }
