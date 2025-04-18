@@ -13,22 +13,29 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 
+// Traits for authorization
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class ArticleController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the articles.
      */
     public function index()
     {
+        $this->authorize('viewAny', Article::class);
+
         // Get paginated articles for the table
         $articles = Article::latest()->simplePaginate(10);
-        
+
         // Calculate statistics for the cards
         $articlesCount = Article::count();
         $publishedCount = Article::where('published', true)->count();
         $draftCount = Article::where('published', false)->count();
-        
+
         return view('dashboard.admin.articles.index', compact('articles', 'articlesCount', 'publishedCount', 'draftCount'));
     }
 
@@ -37,6 +44,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
+
+        $this->authorize('create', Article::class);
+
         $categories = Category::all();
         return view('dashboard.admin.articles.create', compact('categories'));
     }
@@ -46,6 +56,9 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
+
+        $this->authorize('create', Article::class);
+
         $validated = $request->validated();
 
         // Generate slug from title
@@ -61,7 +74,7 @@ class ArticleController extends Controller
         } else {
             $validated['image'] = null;
         }
-        
+
         // Properly handle the published status checkbox
         $validated['published'] = isset($validated['published']) ? true : false;
 
@@ -75,6 +88,9 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
+
+        $this->authorize('view', $article);
+
         return view('dashboard.admin.articles.show', compact('article'));
     }
 
@@ -83,6 +99,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
+        $this->authorize('update', $article);
+
         $categories = Category::all();
         return view('dashboard.admin.articles.edit', compact('article', 'categories'));
     }
@@ -93,6 +111,8 @@ class ArticleController extends Controller
     // Change Request to UpdateArticleRequest here
     public function update(UpdateArticleRequest $request, Article $article)
     {
+        $this->authorize('update', $article);
+
         // Get the validated data:
         $validated = $request->validated();
 
@@ -126,6 +146,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+        
         // Delete the image if exists
         if ($article->image) {
             Storage::disk('public')->delete($article->image);
@@ -135,7 +157,7 @@ class ArticleController extends Controller
 
         return redirect()->route('admin.articles.index')->with('success', 'Article deleted successfully!');
     }
-    
+
     /**
      * Toggle the publication status of the article.
      */
@@ -144,7 +166,7 @@ class ArticleController extends Controller
         // Toggle the published status
         $article->published = !$article->published;
         $article->save();
-        
+
         $status = $article->published ? 'published' : 'set to draft';
         return redirect()->route('admin.articles.index')->with('success', "Article {$status} successfully!");
     }
