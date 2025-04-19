@@ -47,7 +47,7 @@
                         <svg class="text-gray-500 mr-3 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                         </svg>
-                        Dashboard                       
+                        Dashboard
                     </a>
 
                     <a href="{{ url('/admin/cities') }}" class="{{ request()->is('admin/cities*') ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }} group flex items-center px-2 py-2 text-sm font-medium rounded-md">
@@ -129,8 +129,8 @@
                     <!-- User profile -->
                     <div class="ml-3 relative">
                         <div class="flex items-center">
-                            <span class="text-sm text-gray-700 mr-2">{{ Auth::user()->name ?? 'Admin User' }}</span>
-                            <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'Admin User') }}&color=7F9CF5&background=EBF4FF" alt="User profile">
+                            <span class="text-sm text-gray-700 mr-2">Driss Nafii</span>
+                            <img class="h-8 w-8 rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/5/59/IG_Metall_logo.svg" alt="User profile">
                         </div>
                     </div>
                 </div>

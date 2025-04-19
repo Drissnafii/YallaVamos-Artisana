@@ -4,11 +4,11 @@
 @section('header', 'AI Assistant')
 
 @section('content')
-<div class="h-full w-full">
+<div class="h-full w-full flex flex-col">
     <!-- Main chat container with simplified design and smooth edges -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-[calc(100vh-275px)]">
         <!-- Header -->
-        <div class="bg-primary p-3 flex items-center gap-3 rounded-t-2xl">
+        <div class="bg-primary p-3 flex items-center gap-3 rounded-t-2xl z-5">
             <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
                 <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -17,8 +17,8 @@
             <h3 class="font-medium text-white">Morocco 2030 World Cup Assistant</h3>
         </div>
 
-        <!-- Chat messages container - Fixed scrollable container -->
-        <div id="chat-output" class="flex-1 p-4 space-y-4 bg-gray-50 overflow-y-auto">
+        <!-- Chat messages container - Fixed scrollable container with flex-grow -->
+        <div id="chat-output" class="flex-1 p-4 space-y-4 bg-gray-50 overflow-y-auto" style="height: calc(100vh - 380px); min-height: 300px;">
             <!-- Bot message - Welcome -->
             <div class="message bot-message">
                 <div class="flex items-start gap-3 max-w-[85%]">
@@ -52,38 +52,58 @@
                 <span class="text-base">🍽️</span> Local Cuisine
             </button>
         </div>
+    </div>
 
-        <!-- Chat input (centered at bottom) -->
-        <div class="border-t border-gray-200 p-4 bg-white rounded-b-2xl flex justify-center">
-            <form id="chat-form" class="relative w-full max-w-3xl">
-                <input
-                    type="text"
-                    id="chat-input"
-                    class="w-full bg-gray-50 border border-gray-200 rounded-full py-3 pl-5 pr-12 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-gray-800 placeholder-gray-500"
-                    placeholder="Ask something about Morocco or the 2030 World Cup..."
-                    autocomplete="off"
-                >
-                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
-                    <div id="typing-indicator" class="hidden mr-2">
-                        <div class="flex gap-1">
-                            <div class="h-2 w-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0s"></div>
-                            <div class="h-2 w-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
-                            <div class="h-2 w-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
-                        </div>
-                    </div>
-                    <button
-                        type="button"
-                        id="send-button"
-                        class="bg-primary text-white p-2 rounded-full transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                        aria-label="Send message"
-                    >
-                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                    </button>
-                </div>
-            </form>
+    <!-- New Tailwind Chat Input - Positioned below the main chat window -->
+    <div class="mt-10 flex justify-center relative">
+        <!-- Typing indicator positioned above the input -->
+        <div id="typing-indicator" class="hidden items-center gap-2 mb-2 px-3 py-2 bg-white rounded-lg shadow-sm border border-gray-200 w-fit absolute -top-10 left-1/2 transform -translate-x-1/2">
+            <div class="flex space-x-1">
+                <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+            </div>
+            <span class="text-xs font-medium text-primary">Typing a response...</span>
         </div>
+
+        <!-- Chat input form - Simplified without emoji buttons, width reduced by 50% -->
+        <form id="chat-form" class="flex items-center w-1/2">
+            <div class="flex items-center w-full bg-white rounded-full border border-gray-200 shadow-sm overflow-hidden">
+                <!-- Chat input field with auto-height adjustment -->
+                <div class="flex-1 px-4 py-2 min-h-[40px] max-h-[120px] relative">
+                    <textarea
+                        id="chat-input"
+                        rows="1"
+                        class="block w-full bg-transparent border-none focus:outline-none focus:ring-0 text-gray-700 text-sm resize-none overflow-hidden py-0 m-0 h-auto"
+                        placeholder="Ask me anything about the World Cup 2030..."
+                        style="height: 24px; max-height: 100px; min-height: 24px;"
+                    ></textarea>
+                </div>
+
+                <!-- Send button -->
+                <button
+                    type="submit"
+                    id="send-button"
+                    class="bg-primary hover:bg-primary-dark text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors mr-1"
+                    disabled
+                >
+                    <svg
+                        class="h-4 w-4 transform rotate-90"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
@@ -97,6 +117,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatOutput = document.getElementById('chat-output');
     const chatForm = document.getElementById('chat-form');
     const typingIndicator = document.getElementById('typing-indicator');
+
+    // Auto-resize textarea logic
+    function autoResizeTextarea() {
+        // Reset height to auto to calculate the new height based on content
+        chatInput.style.height = '24px';
+
+        // Calculate new height (scrollHeight is content height + padding)
+        const newHeight = Math.min(chatInput.scrollHeight, 100); // Maximum height is 100px
+
+        // Set the new height
+        chatInput.style.height = newHeight + 'px';
+
+        // Enable/disable send button based on content
+        sendButton.disabled = chatInput.value.trim() === '';
+    }
+
+    // Apply auto-resize on input
+    chatInput.addEventListener('input', autoResizeTextarea);
 
     // Get CSRF token from meta tag
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
@@ -177,6 +215,9 @@ document.addEventListener('DOMContentLoaded', function() {
         chatInput.disabled = true; // Disable input while waiting
         sendButton.disabled = true; // Disable button while waiting
 
+        // Reset textarea height
+        chatInput.style.height = '24px';
+
         // Show typing indicator
         typingIndicator.classList.remove('hidden');
         typingIndicator.classList.add('flex');
@@ -216,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             // Re-enable input/button
             chatInput.disabled = false;
-            sendButton.disabled = false;
+            sendButton.disabled = true; // Button remains disabled until text is entered
             chatInput.focus(); // Focus back on the input field
         }
     }
@@ -226,12 +267,15 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const buttonText = this.textContent.trim();
             chatInput.value = buttonText;
+            // Trigger the autoResize for the new content
+            autoResizeTextarea();
             sendMessage();
         });
     });
 
     // Event Listeners
-    sendButton.addEventListener('click', function() {
+    sendButton.addEventListener('click', function(e) {
+        e.preventDefault();
         sendMessage();
     });
 
@@ -240,12 +284,16 @@ document.addEventListener('DOMContentLoaded', function() {
         sendMessage();
     });
 
-    chatInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
+    chatInput.addEventListener('keydown', function(event) {
+        // Allow Enter to send, but Shift+Enter for new line
+        if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             sendMessage();
         }
     });
+
+    // Initialize - disable send button until text is entered
+    sendButton.disabled = true;
 
     // Initial focus
     chatInput.focus();
