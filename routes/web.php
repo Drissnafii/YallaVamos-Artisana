@@ -144,6 +144,14 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     // Teams Management
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
     Route::get('teams/create', [TeamController::class, 'create'])->name('teams.create');
+
+    // Users Management
+    Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
+    Route::get('users/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
+    Route::post('users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
+    Route::get('users/{user}/edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('users.update');
+    Route::delete('users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
     Route::post('teams', [TeamController::class, 'store'])->name('teams.store');
     Route::get('teams/{team}', [TeamController::class, 'show'])->name('teams.show');
     Route::get('teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
