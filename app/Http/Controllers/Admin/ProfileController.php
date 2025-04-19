@@ -77,6 +77,9 @@ class ProfileController extends Controller
         $user = User::find(Auth::id());
         $validated = $request->validated();
 
+        // Track what was updated
+        $updatedPassword = false;
+
         // Update basic info
         $user->name = $validated['name'];
         $user->email = $validated['email'];
@@ -103,10 +106,16 @@ class ProfileController extends Controller
             }
 
             $user->password = Hash::make($validated['password']);
+            $updatedPassword = true;
         }
 
         $user->save();
 
-        return redirect()->route('admin.profile.edit')->with('status', 'Profile updated successfully.');
+        // Show appropriate success message
+        $message = $updatedPassword
+            ? 'Password updated successfully.'
+            : 'Profile updated successfully.';
+
+        return redirect()->route('admin.profile.edit')->with('status', $message);
     }
 }
