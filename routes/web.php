@@ -16,6 +16,7 @@ use App\Http\Controllers\TravelController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\AccommodationController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 //=================================
@@ -77,6 +78,11 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     // Admin Dashboard
     Route::get('dashboard', [AuthController::class, 'adminDashboard'])->name('dashboard');
+
+    // Admin Profile Management
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // Articles Management
     Route::get('articles', [ArticleController::class, 'index'])->name('articles.index');
@@ -143,7 +149,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::get('teams/{team}/edit', [TeamController::class, 'edit'])->name('teams.edit');
     Route::put('teams/{team}', [TeamController::class, 'update'])->name('teams.update');
     Route::delete('teams/{team}', [TeamController::class, 'destroy'])->name('teams.destroy');
-    
+
     // AI Chat Interface
     Route::get('chat', function () {
         return view('dashboard.admin.chat.index');
