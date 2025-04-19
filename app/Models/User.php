@@ -66,6 +66,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all articles authored by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'author_id');
+    }
+
+    /**
      * Get the identifier that will be stored in the JWT.
      *
      * @return mixed

@@ -69,6 +69,15 @@ Route::middleware(['auth'])->group(function () {
     // Favorites Management
     Route::get('/favorites', [FavoritesController::class, 'index'])->name('favorites.index');
     // Add POST and DELETE routes for favorites if required
+
+    // Member Article Routes
+    Route::get('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'index'])->name('member.my-articles.index');
+    Route::get('my-articles/create', [\App\Http\Controllers\Member\MemberArticleController::class, 'create'])->name('member.my-articles.create');
+    Route::post('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'store'])->name('member.my-articles.store');
+    Route::get('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'show'])->name('member.my-articles.show');
+    Route::get('my-articles/{article}/edit', [\App\Http\Controllers\Member\MemberArticleController::class, 'edit'])->name('member.my-articles.edit');
+    Route::put('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'update'])->name('member.my-articles.update');
+    Route::delete('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'destroy'])->name('member.my-articles.destroy');
 });
 
 //=================================
