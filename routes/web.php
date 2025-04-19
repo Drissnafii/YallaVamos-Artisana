@@ -63,21 +63,26 @@ Route::post('/newsletter/subscribe', [NewsController::class, 'subscribe'])->name
 //=================================
 
 Route::middleware(['auth'])->group(function () {
-    // Member Dashboard
-    Route::get('/member/dashboard', [AuthController::class, 'memberDashboard'])->name('member.dashboard');
-
     // Favorites Management
     Route::get('/favorites', [FavoritesController::class, 'index'])->name('favorites.index');
     // Add POST and DELETE routes for favorites if required
+});
 
+Route::middleware(['auth', 'verified'])->prefix('member')->name('member.')->group(function () {
+    // Member Dashboard
+    Route::get('dashboard', [AuthController::class, 'memberDashboard'])->name('dashboard');
+    
+    // Member Profile
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    
     // Member Article Routes
-    Route::get('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'index'])->name('member.my-articles.index');
-    Route::get('my-articles/create', [\App\Http\Controllers\Member\MemberArticleController::class, 'create'])->name('member.my-articles.create');
-    Route::post('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'store'])->name('member.my-articles.store');
-    Route::get('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'show'])->name('member.my-articles.show');
-    Route::get('my-articles/{article}/edit', [\App\Http\Controllers\Member\MemberArticleController::class, 'edit'])->name('member.my-articles.edit');
-    Route::put('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'update'])->name('member.my-articles.update');
-    Route::delete('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'destroy'])->name('member.my-articles.destroy');
+    Route::get('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'index'])->name('my-articles.index');
+    Route::get('my-articles/create', [\App\Http\Controllers\Member\MemberArticleController::class, 'create'])->name('my-articles.create');
+    Route::post('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'store'])->name('my-articles.store');
+    Route::get('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'show'])->name('my-articles.show');
+    Route::get('my-articles/{article}/edit', [\App\Http\Controllers\Member\MemberArticleController::class, 'edit'])->name('my-articles.edit');
+    Route::put('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'update'])->name('my-articles.update');
+    Route::delete('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'destroy'])->name('my-articles.destroy');
 });
 
 //=================================

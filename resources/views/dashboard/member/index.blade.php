@@ -1,67 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.member')
 
-@section('title', 'User Dashboard')
+@section('title', 'Member Dashboard')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 text-gray-800">
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-10 bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <img class="h-8 w-auto" src="{{ asset('images/morocco-logo.svg') }}" alt="Morocco 2030">
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="hidden md:flex md:space-x-6">
-                        <a href="{{ route('member.dashboard') }}" class="text-green-600 font-medium">
-                            Dashboard
-                        </a>
-                        <a href="#" class="text-gray-600 hover:text-green-600 font-medium">
-                            Applications
-                        </a>
-                        <a href="{{ route('member.my-articles.index') }}" class="text-gray-600 hover:text-green-600 font-medium">
-                            My Articles
-                        </a>
-                        <a href="#" class="text-gray-600 hover:text-green-600 font-medium">
-                            Documents
-                        </a>
-                        <a href="#" class="text-gray-600 hover:text-green-600 font-medium">
-                            Support
-                        </a>
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <button type="button" class="relative bg-gray-100 p-1 rounded-full text-gray-500 hover:text-gray-700">
-                            <span class="sr-only">View notifications</span>
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                            <span class="absolute top-0 right-0 h-4 w-4 rounded-full bg-green-500 flex items-center justify-center text-xs text-white">5</span>
-                        </button>
-                        <div>
-                            <button type="button" class="flex items-center space-x-2 bg-gray-100 rounded-full py-1 pl-1 pr-3 hover:bg-gray-200">
-                                <img class="h-7 w-7 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                <span class="text-sm font-medium text-gray-700">User</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+<div class="bg-gray-50 text-gray-800">
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         <!-- Search Section -->
         <div class="mb-8 bg-white rounded-lg shadow-md p-4">
             <div class="flex flex-wrap space-x-2 mb-4 border-b">
-                <button class="px-4 py-2 text-sm font-medium text-green-600 border-b-2 border-green-600">Tout rechercher</button>
-                <button class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Hôtels</button>
-                <button class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Activités</button>
-                <button class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Restaurants</button>
-                <button class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Documents</button>
+                <a href="{{ route('member.dashboard') }}" class="px-4 py-2 text-sm font-medium text-green-600 border-b-2 border-green-600">Tout rechercher</a>
+                <a href="{{ route('member.dashboard') }}?type=hotel" class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Hôtels</a>
+                <a href="{{ route('member.dashboard') }}?type=activity" class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Activités</a>
+                <a href="{{ route('member.dashboard') }}?type=restaurant" class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Restaurants</a>
             </div>
             <div class="relative">
                 <form role="search" action="/search">
@@ -238,4 +190,6 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
 @endsection

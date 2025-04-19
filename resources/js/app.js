@@ -271,3 +271,45 @@ document.addEventListener('DOMContentLoaded', function() {
         animate();
     }
 });
+
+
+// Handle mobile menu toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+            } else {
+                mobileMenu.style.maxHeight = '0';
+                setTimeout(function() {
+                    mobileMenu.classList.add('hidden');
+                }, 500);
+            }
+        });
+    }
+
+    // Handle hover indicator for desktop navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    const hoverIndicator = document.getElementById('hover-indicator');
+
+    if (navLinks.length && hoverIndicator) {
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                const rect = this.getBoundingClientRect();
+                hoverIndicator.style.width = rect.width + 'px';
+                hoverIndicator.style.height = rect.height + 'px';
+                hoverIndicator.style.left = (rect.left - this.parentElement.getBoundingClientRect().left) + 'px';
+                hoverIndicator.style.top = (rect.top - this.parentElement.getBoundingClientRect().top) + 'px';
+                hoverIndicator.style.opacity = '1';
+            });
+
+            link.addEventListener('mouseleave', function() {
+                hoverIndicator.style.opacity = '0';
+            });
+        });
+    }
+});
