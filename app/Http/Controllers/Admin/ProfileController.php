@@ -13,15 +13,25 @@ use Illuminate\Support\Facades\Storage;
 class ProfileController extends Controller
 {
     /**
-     * Show the admin profile edit form
+     * Show the profile edit form (works for both admin and member)
      *
      * @return \Illuminate\View\View
      */
     public function edit()
     {
-        return view('dashboard.admin.profile.edit', [
-            'user' => Auth::user(),
-        ]);
+        $user = Auth::user();
+
+        // Check if the user is an admin and show the appropriate view
+        if ($user->role === 'admin') {
+            return view('dashboard.admin.profile.edit', [
+                'user' => $user,
+            ]);
+        } else {
+            // For members, use the member profile view
+            return view('dashboard.member.profile.edit', [
+                'user' => $user,
+            ]);
+        }
     }
 
     /**
@@ -67,7 +77,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the admin's profile
+     * Update the user's profile
      *
      * @param  \App\Http\Requests\Admin\UpdateProfileRequest  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -116,6 +126,11 @@ class ProfileController extends Controller
             ? 'Password updated successfully.'
             : 'Profile updated successfully.';
 
-        return redirect()->route('admin.profile.edit')->with('status', $message);
+        // Redirect based on user role
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.profile.edit')->with('status', $message);
+        } else {
+            return redirect()->route('member.profile.edit')->with('status', $message);
+        }
     }
 }

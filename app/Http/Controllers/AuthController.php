@@ -10,6 +10,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log; // Import the Log facade
 use App\Models\User;
+use App\Models\City;
+use App\Models\Stadium;
 
 class AuthController extends Controller
 {
@@ -92,6 +94,14 @@ class AuthController extends Controller
 
     public function adminDashboard(): View
     {
-        return view('dashboard.admin.index', ['user' => Auth::user()]);
+        // Fetch real counts from the database
+        $cityCount = City::count();
+        $stadiumCount = Stadium::count();
+
+        return view('dashboard.admin.index', [
+            'user' => Auth::user(),
+            'cityCount' => $cityCount,
+            'stadiumCount' => $stadiumCount
+        ]);
     }
 }

@@ -123,7 +123,7 @@ class StadiumController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'An error occurred while creating the stadium. Please try again.');
+                ->with('error', 'Failed to create stadium: ' . $e->getMessage());
         }
     }
 

@@ -17,6 +17,8 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\AccommodationController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Member\MemberProfileController;
+use App\Http\Controllers\PublicArticleController;
 use Illuminate\Support\Facades\Route;
 
 //=================================
@@ -25,6 +27,10 @@ use Illuminate\Support\Facades\Route;
 
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Public Articles Routes
+Route::get('/articles', [PublicArticleController::class, 'index'])->name('articles.index');
+Route::get('/articles/{article}', [PublicArticleController::class, 'show'])->name('articles.show');
 
 // Authentication Routes
 Route::controller(AuthController::class)->group(function () {
@@ -71,11 +77,20 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('member')->name('member.')->group(function () {
     // Member Dashboard
     Route::get('dashboard', [AuthController::class, 'memberDashboard'])->name('dashboard');
-    
-    // Member Profile
+
+    // Member Profile - Using Admin ProfileController
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    
+    Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Member Favorites Routes
+    Route::get('favorites', [FavoritesController::class, 'memberIndex'])->name('favorites.index');
+    Route::get('favorites/matches', [FavoritesController::class, 'memberMatches'])->name('favorites.matches');
+
     // Member Article Routes
+    Route::resource('articles', \App\Http\Controllers\Member\MemberArticleController::class);
+
+    // Legacy routes for backward compatibility
     Route::get('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'index'])->name('my-articles.index');
     Route::get('my-articles/create', [\App\Http\Controllers\Member\MemberArticleController::class, 'create'])->name('my-articles.create');
     Route::post('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'store'])->name('my-articles.store');
