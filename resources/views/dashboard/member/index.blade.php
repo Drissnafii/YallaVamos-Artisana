@@ -373,7 +373,13 @@
                 <div class="space-y-4">
                     @foreach($officialNews ?? [] as $news)
                     <div class="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
-                        <span class="text-xs font-medium text-blue-600 mb-1 block">{{ $news->created_at->format('d M Y') }}</span>
+                        <span class="text-xs font-medium text-blue-600 mb-1 block">
+                            @if(isset($news) && is_object($news) && isset($news->created_at))
+                                {{ $news->created_at->format('d M Y') }}
+                            @else
+                                -
+                            @endif
+                        </span>
                         <h4 class="text-sm font-bold text-gray-800 mb-1">{{ $news->title }}</h4>
                         <p class="text-xs text-gray-600 mb-2 line-clamp-2">{{ Str::limit($news->content, 100) }}</p>
                         <a href="{{ route('news.show', $news) }}" class="text-xs font-medium text-blue-600 hover:text-blue-700">Lire la suite</a>
@@ -426,7 +432,10 @@
                     @foreach($cities ?? [] as $city)
                     <a href="{{ route('cities.show', $city) }}" class="group flex items-center p-2 rounded-lg hover:bg-amber-50 transition-colors">
                         <div class="w-12 h-12 rounded-lg overflow-hidden mr-3 flex-shrink-0">
-                            <img src="{{ asset($city->image) }}" alt="{{ $city->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            @if(isset($city) && is_object($city) && isset($city->image))
+                                <img src="{{ asset($city->image) }}" alt="{{ $city->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center bg-amber-100 text-
                         </div>
                         <div class="flex-grow">
                             <h4 class="font-bold text-gray-800 text-sm">{{ $city->name }}</h4>
