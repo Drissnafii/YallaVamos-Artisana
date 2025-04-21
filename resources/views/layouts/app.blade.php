@@ -14,6 +14,7 @@
     <title>Morocco 2030 World Cup - @yield('title', 'Home')</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @yield('head')
     @stack('styles')
     <!-- Preload critical assets -->
     <link rel="preload" href="{{ asset('images/morocco-logo.svg') }}" as="image">

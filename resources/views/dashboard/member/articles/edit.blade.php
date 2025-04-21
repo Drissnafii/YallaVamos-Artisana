@@ -1,10 +1,15 @@
 @extends('layouts.app')
 
+@section('head')
+<!-- Include Summernote CSS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+@endsection
+
 @section('content')
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-8 max-w-4xl">
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Article</h1>
 
-    <form action="{{ route('member.my-articles.update', $article) }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form id="articleForm" action="{{ route('member.my-articles.update', $article) }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         @csrf
         @method('PUT')
 
@@ -16,10 +21,24 @@
         </div>
 
         <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="category_id">
+                Category
+            </label>
+            <select name="category_id" id="category_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <option value="">Select a category</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ old('category_id', $article->category_id) == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="content">
                 Content
             </label>
-            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="content" name="content" rows="10" placeholder="Article content" required>{{ old('content', $article->content) }}</textarea>
+            <textarea id="summernote" name="content" required>{{ old('content', $article->content) }}</textarea>
         </div>
 
         <div class="mb-4">
@@ -53,4 +72,39 @@
         </div>
     </form>
 </div>
+
+@push('scripts')
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include Summernote JS -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize Summernote
+        $('#summernote').summernote({
+            placeholder: 'Write your post content here...',
+            tabsize: 2,
+            height: 300,
+            toolbar: [
+                ['font', ['bold', 'underline', 'italic']],
+                ['color', ['color']],
+                ['para', ['paragraph']]
+            ],
+            callbacks: {
+                onPaste: function (e) {
+                    // Strip all HTML elements except for basic formatting
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    document.execCommand('insertText', false, bufferText);
+                },
+                onImageUpload: function(files) {
+                    // Disable image upload functionality
+                    alert('Image uploads are not allowed in the content editor.');
+                }
+            }
+        });
+    });
+</script>
+@endpush
 @endsection

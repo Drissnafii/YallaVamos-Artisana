@@ -26,7 +26,7 @@
         @endif
         
         <div class="prose max-w-none">
-            {!! nl2br(e($article->content)) !!}
+            {!! $article->content !!}
         </div>
         
         <div class="mt-6 pt-6 border-t border-gray-200 text-sm text-gray-500">

@@ -17,12 +17,13 @@ class MemberArticleController extends Controller
         /** @var \App\Models\User|\Illuminate\Contracts\Auth\Authenticatable $user */
         $user = Auth::user();
         $articles = $user->articles()->latest()->get();
-        return view('dashboard.member.my-articles.index', compact('articles'));
+        return view('dashboard.member.articles.index', compact('articles'));
     }
 
     public function create()
     {
-        return view('dashboard.member.my-articles.create');
+        $categories = \App\Models\Category::all();
+        return view('dashboard.member.articles.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -30,8 +31,12 @@ class MemberArticleController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        // Don't strip HTML tags from content - Summernote needs HTML preserved
+        $validated['content'] = $request->input('content');
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -53,7 +58,8 @@ class MemberArticleController extends Controller
     public function edit(Article $article)
     {
         $this->authorize('update', $article);
-        return view('dashboard.member.my-articles.edit', compact('article'));
+        $categories = \App\Models\Category::all();
+        return view('dashboard.member.my-articles.edit', compact('article', 'categories'));
     }
 
     public function update(Request $request, Article $article)
@@ -63,8 +69,12 @@ class MemberArticleController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        // Don't strip HTML tags from content - Summernote needs HTML preserved
+        $validated['content'] = $request->input('content');
 
         $article->update($validated);
 

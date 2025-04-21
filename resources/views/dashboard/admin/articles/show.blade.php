@@ -118,7 +118,7 @@
         <!-- Article Content - Clean Google-style layout -->
         <div class="px-6 py-4 border-t border-gray-100">
             <div class="prose max-w-none prose-blue prose-img:rounded-lg prose-headings:font-normal prose-headings:text-gray-800">
-                {!! nl2br(e($article->content)) !!}
+                {!! $article->content !!}
             </div>
         </div>
 
