@@ -37,7 +37,7 @@ class CityController extends BaseController
         }
 
         // Execute query with pagination
-        $cities = $query->orderBy('name')->paginate(10);
+        $cities = $query->orderBy('name')->simplePaginate(10);
 
         return view('dashboard.admin.cities.index', compact('cities'));
     }

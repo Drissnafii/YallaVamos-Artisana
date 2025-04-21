@@ -142,7 +142,7 @@ class MatcheController extends Controller
         // If we're just changing status (from quick actions)
         if ($request->has('status') && count($request->all()) === 3) { // status + _token + _method
             $validated = $request->validate([
-                'status' => 'required|in:scheduled,in_progress,completed,postponed,cancelled',
+                'status' => 'required|in:scheduled,live,completed,cancelled',
             ]);
 
             $match->update($validated);
@@ -157,13 +157,13 @@ class MatcheController extends Controller
             'team1_id' => 'required|exists:teams,id',
             'team2_id' => 'required|exists:teams,id|different:team1_id',
             'stadium_id' => 'required|exists:stadiums,id',
-            'status' => 'required|in:scheduled,in_progress,completed,postponed,cancelled',
+            'status' => 'required|in:scheduled,live,completed,cancelled',
             'score_team1' => 'nullable|integer|min:0',
             'score_team2' => 'nullable|integer|min:0',
         ]);
 
-        // Only include scores if the match is in progress or completed
-        if ($validated['status'] !== 'in_progress' && $validated['status'] !== 'completed') {
+        // Only include scores if the match is live or completed
+        if ($validated['status'] !== 'live' && $validated['status'] !== 'completed') {
             $validated['score_team1'] = null;
             $validated['score_team2'] = null;
         }

@@ -39,7 +39,7 @@
             <div class="flex items-center">
                 <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full
                     {{ $match->status == 'scheduled' ? 'bg-blue-100 text-blue-800' :
-                      ($match->status == 'in_progress' ? 'bg-orange-100 text-orange-800' :
+                      ($match->status == 'live' ? 'bg-orange-100 text-orange-800' :
                       ($match->status == 'completed' ? 'bg-green-100 text-green-800' :
                       ($match->status == 'postponed' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'))) }}">
                     {{ ucfirst(str_replace('_', ' ', $match->status)) }}
@@ -70,11 +70,11 @@
                     </div>
 
                     <div class="text-center">
-                        @if($match->status == 'completed' || $match->status == 'in_progress')
+                        @if($match->status == 'completed' || $match->status == 'live')
                             <div class="text-4xl font-bold text-gray-900">
                                 {{ $match->score_team1 ?? 0 }} - {{ $match->score_team2 ?? 0 }}
                             </div>
-                            @if($match->status == 'in_progress')
+                            @if($match->status == 'live')
                                 <div class="text-sm text-orange-600 animate-pulse font-medium mt-1">LIVE</div>
                             @endif
                         @else
@@ -205,7 +205,7 @@
                 <form action="{{ route('admin.matches.update', $match) }}" method="POST" class="inline-block">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="status" value="in_progress">
+                    <input type="hidden" name="status" value="live">
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md shadow transition duration-150 ease-in-out" onclick="return confirm('Are you sure you want to start this match?')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
@@ -213,14 +213,14 @@
                         Start Match
                     </button>
                 </form>
-                @elseif($match->status == 'in_progress')
+                @elseif($match->status == 'live')
                 <form action="{{ route('admin.matches.update', $match) }}" method="POST" class="inline-block">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="status" value="completed">
                     <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow transition duration-150 ease-in-out" onclick="return confirm('Are you sure you want to mark this match as completed?')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 101.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                         Complete Match
                     </button>
