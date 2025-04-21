@@ -10,8 +10,8 @@
     <div class="absolute inset-0 w-screen bg-gradient-to-t from-[#FAF9F5] via-transparent to-transparent"></div>
 
     <!-- Full-width greeting div -->
-    <div class="w-full h-full flex items-end pb-24">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-full h-full flex items-end">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8" style="padding-left: 120px; padding-bottom: 150px; padding-top: 60px;">
             <p class="text-white/80 text-sm font-medium mb-1">{{ now()->format('l, d F Y') }}</p>
             <h1 class="text-4xl font-bold text-white mb-2">Bonjour, {{ Auth::user()->name }}</h1>
             <p class="text-white/90">Bienvenue sur votre tableau de bord Coupe du Monde 2030</p>
