@@ -438,7 +438,7 @@
                                 <div class="w-full h-full flex items-center justify-center bg-amber-100 text-
                         </div>
                         <div class="flex-grow">
-                            <h4 class="font-bold text-gray-800 text-sm">{{ $city->name }}</h4>
+                            <h4 class="font-bold text-gray-800 text-sm">{{ (is_object($city) && isset($city->name)) ? $city->name : '' }}</h4>
                             <p class="text-xs text-gray-500">{{ $city->stadiums_count ?? 0 }} stades</p>
                         </div>
                         <div class="flex-shrink-0">
