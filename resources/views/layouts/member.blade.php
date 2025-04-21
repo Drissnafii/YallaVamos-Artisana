@@ -11,8 +11,12 @@
 </head>
 <body class="bg-background text-foreground antialiased min-h-screen">
     @include('components.member-header')
-    
+
     <main class="pb-8">
+        <!-- Full-width content section (no container) -->
+        @yield('full-width-content')
+
+        <!-- Regular contained content -->
         <div class="py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <!-- Flash Messages -->
