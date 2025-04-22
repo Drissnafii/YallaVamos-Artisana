@@ -56,11 +56,11 @@
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1"
                                 style="display: none;">
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FDE8E9]/40" role="menuitem" tabindex="-1">
+                                <a href="{{ route('member.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FDE8E9]/40" role="menuitem" tabindex="-1">
                                     Your Profile
                                 </a>
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FDE8E9]/40" role="menuitem" tabindex="-1">
+                                <a href="{{ route('member.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FDE8E9]/40" role="menuitem" tabindex="-1">
                                     Settings
                                 </a>
 
@@ -127,11 +127,11 @@
 
                 <!-- User menu options -->
                 <div class="space-y-1">
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#FDE8E9]/40">
+                    <a href="{{ route('member.profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#FDE8E9]/40">
                         Your Profile
                     </a>
 
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#FDE8E9]/40">
+                    <a href="{{ route('member.profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#FDE8E9]/40">
                         Settings
                     </a>
 
