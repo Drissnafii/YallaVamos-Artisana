@@ -30,9 +30,9 @@
         <!-- City Image -->
         <div class="md:col-span-2">
             <div class="rounded-lg overflow-hidden shadow-md h-96">
-                @if($city->image_path)
+                @if($city->image)
                 <img
-                    src="{{ asset('storage/' . $city->image_path) }}"
+                    src="{{ asset('storage/' . $city->image) }}"
                     alt="{{ $city->name }} City"
                     class="w-full h-full object-cover"
                 >
@@ -89,9 +89,9 @@
             @foreach($city->stadiums as $stadium)
             <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:scale-[1.01]">
                 <div class="h-40 overflow-hidden">
-                    @if($stadium->image_path)
+                    @if($stadium->image)
                     <img
-                        src="{{ asset('storage/' . $stadium->image_path) }}"
+                        src="{{ asset('storage/' . $stadium->image) }}"
                         alt="{{ $stadium->name }}"
                         class="w-full h-full object-cover"
                     >

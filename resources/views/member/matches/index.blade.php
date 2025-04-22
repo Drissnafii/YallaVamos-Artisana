@@ -59,50 +59,50 @@
                     <div class="flex flex-col md:flex-row items-center md:space-x-6 w-full">
                         <!-- Match Date -->
                         <div class="text-center mb-3 md:mb-0 md:w-24">
-                            <div class="text-sm font-medium text-gray-500">{{ \Carbon\Carbon::parse($match->match_date)->format('M d') }}</div>
-                            <div class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($match->match_time)->format('H:i') }}</div>
+                            <div class="text-sm font-medium text-gray-500">{{ $match->date->format('M d') }}</div>
+                            <div class="text-sm text-gray-600">{{ $match->date->format('H:i') }}</div>
                         </div>
 
                         <!-- Teams -->
                         <div class="flex flex-1 items-center justify-center space-x-3">
-                            <!-- Home Team -->
+                            <!-- Team 1 -->
                             <div class="flex flex-col items-center w-24">
                                 <div class="w-10 h-10 bg-gray-200 rounded-full overflow-hidden mb-1">
-                                    @if($match->homeTeam && $match->homeTeam->logo_path)
-                                    <img src="{{ asset('storage/' . $match->homeTeam->logo_path) }}" alt="{{ $match->homeTeam->name }} logo" class="w-full h-full object-cover">
+                                    @if($match->team1 && $match->team1->flag)
+                                    <img src="{{ asset('storage/' . $match->team1->flag) }}" alt="{{ $match->team1->name }} logo" class="w-full h-full object-cover">
                                     @else
                                     <div class="w-full h-full bg-gray-300 flex items-center justify-center">
                                         <span class="text-xs text-gray-500">No logo</span>
                                     </div>
                                     @endif
                                 </div>
-                                <span class="text-sm font-medium text-gray-800 text-center">{{ $match->homeTeam ? $match->homeTeam->name : 'TBD' }}</span>
+                                <span class="text-sm font-medium text-gray-800 text-center">{{ $match->team1 ? $match->team1->name : 'TBD' }}</span>
                             </div>
 
                             <!-- Score -->
                             <div class="flex flex-col items-center">
                                 <div class="flex items-center justify-center bg-gray-100 rounded-md px-3 py-1 w-16">
                                     <span class="text-lg font-semibold text-gray-800">
-                                        {{ $match->home_score !== null ? $match->home_score : '-' }}
+                                        {{ $match->score_team1 !== null ? $match->score_team1 : '-' }}
                                         <span class="mx-1 text-gray-400">:</span>
-                                        {{ $match->away_score !== null ? $match->away_score : '-' }}
+                                        {{ $match->score_team2 !== null ? $match->score_team2 : '-' }}
                                     </span>
                                 </div>
                                 <span class="text-xs text-gray-500 mt-1">{{ $match->status ?? 'Scheduled' }}</span>
                             </div>
 
-                            <!-- Away Team -->
+                            <!-- Team 2 -->
                             <div class="flex flex-col items-center w-24">
                                 <div class="w-10 h-10 bg-gray-200 rounded-full overflow-hidden mb-1">
-                                    @if($match->awayTeam && $match->awayTeam->logo_path)
-                                    <img src="{{ asset('storage/' . $match->awayTeam->logo_path) }}" alt="{{ $match->awayTeam->name }} logo" class="w-full h-full object-cover">
+                                    @if($match->team2 && $match->team2->flag)
+                                    <img src="{{ asset('storage/' . $match->team2->flag) }}" alt="{{ $match->team2->name }} logo" class="w-full h-full object-cover">
                                     @else
                                     <div class="w-full h-full bg-gray-300 flex items-center justify-center">
                                         <span class="text-xs text-gray-500">No logo</span>
                                     </div>
                                     @endif
                                 </div>
-                                <span class="text-sm font-medium text-gray-800 text-center">{{ $match->awayTeam ? $match->awayTeam->name : 'TBD' }}</span>
+                                <span class="text-sm font-medium text-gray-800 text-center">{{ $match->team2 ? $match->team2->name : 'TBD' }}</span>
                             </div>
                         </div>
 

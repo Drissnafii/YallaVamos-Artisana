@@ -35,7 +35,7 @@ class MemberStadiumsController extends Controller
      */
     public function show(Stadium $stadium)
     {
-        $stadium->load(['city', 'matches.homeTeam', 'matches.awayTeam']);
+        $stadium->load(['city', 'matches.team1', 'matches.team2']);
 
         // Check if this stadium is favorited by the user
         $isFavorite = Auth::user()->favoriteStadiums()
@@ -44,10 +44,9 @@ class MemberStadiumsController extends Controller
 
         // Get upcoming matches at this stadium
         $upcomingMatches = $stadium->matches()
-            ->with(['homeTeam', 'awayTeam'])
-            ->whereDate('match_date', '>=', now())
-            ->orderBy('match_date')
-            ->orderBy('match_time')
+            ->with(['team1', 'team2'])
+            ->whereDate('date', '>=', now())
+            ->orderBy('date')
             ->get();
 
         return view('member.stadiums.show', compact('stadium', 'isFavorite', 'upcomingMatches'));

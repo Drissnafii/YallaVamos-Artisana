@@ -12,9 +12,9 @@
     @foreach($cities as $city)
     <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:scale-[1.01]">
         <div class="relative h-48 overflow-hidden">
-            @if($city->image_path)
+            @if($city->image)
             <img
-                src="{{ asset('storage/' . $city->image_path) }}"
+                src="{{ asset('storage/' . $city->image) }}"
                 alt="{{ $city->name }} City"
                 class="w-full h-full object-cover"
             >

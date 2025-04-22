@@ -12,9 +12,9 @@
     @foreach($stadiums as $stadium)
     <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:scale-[1.01]">
         <div class="relative h-48 overflow-hidden">
-            @if($stadium->image_path)
+            @if($stadium->image)
             <img
-                src="{{ asset('storage/' . $stadium->image_path) }}"
+                src="{{ asset('storage/' . $stadium->image) }}"
                 alt="{{ $stadium->name }}"
                 class="w-full h-full object-cover"
             >
