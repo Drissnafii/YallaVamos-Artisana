@@ -1,44 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member - Morocco 2030 World Cup - @yield('title', 'Dashboard')</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/flash-messages.js'])
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Morocco 2030') }} | @yield('title', 'Member Area')</title>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap">
+
+    <!-- Styles & Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.1/dist/cdn.min.js" defer></script>
 </head>
-<body class="bg-background text-foreground antialiased min-h-screen">
-    @include('components.member-header')
+<body class="font-sans antialiased bg-background text-foreground">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <x-member-header />
 
-    <main class="pb-8">
-        <!-- Full-width content section (no container) -->
-        @yield('full-width-content')
+        <!-- Page Content -->
+        <main class="flex-1">
+            @if (isset($header))
+                <header class="bg-white shadow">
+                    <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endif
 
-        <!-- Regular contained content -->
-        <div class="py-6">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <!-- Flash Messages -->
-                @if(session('success'))
-                    <x-flash-message type="success" :message="session('success')" />
-                @endif
-
-                @if(session('error'))
-                    <x-flash-message type="error" :message="session('error')" />
-                @endif
-
-                @if(session('warning'))
-                    <x-flash-message type="warning" :message="session('warning')" />
-                @endif
-
-                @if(session('info'))
-                    <x-flash-message type="info" :message="session('info')" />
-                @endif
+            <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
                 @yield('content')
             </div>
-        </div>
-    </main>
+        </main>
+
+        <!-- Footer -->
+        <x-footer />
+    </div>
+
+    <!-- Flash Messages -->
+    @if (session('success'))
+    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+         class="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-md shadow-lg flex items-center">
+        <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if (session('error'))
+    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
+         class="fixed bottom-4 right-4 bg-red-500 text-white py-2 px-4 rounded-md shadow-lg flex items-center">
+        <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        {{ session('error') }}
+    </div>
+    @endif
 
     @stack('scripts')
 </body>

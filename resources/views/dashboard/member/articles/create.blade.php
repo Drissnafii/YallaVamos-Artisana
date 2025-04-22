@@ -33,10 +33,14 @@
         <!-- Hidden file input that will be triggered by the button -->
         <input type="hidden" id="imageData" name="imageData">
 
+        <!-- Hidden slug field that will be generated from the title -->
+        <input type="hidden" id="slug" name="slug">
+
         <!-- Title -->
         <input
             type="text"
             name="title"
+            id="title"
             placeholder="New post title here..."
             class="w-full text-4xl font-bold text-gray-800 placeholder-gray-500 focus:outline-none mb-4"
             required
@@ -142,6 +146,20 @@
             coverImagePlaceholder.classList.remove('hidden');
         });
 
+        // Generate slug from title
+        const titleInput = document.getElementById('title');
+        const slugInput = document.getElementById('slug');
+
+        titleInput.addEventListener('input', function() {
+            // Generate slug from title (convert to lowercase, replace spaces with hyphens, remove special characters)
+            const slug = this.value
+                .toLowerCase()
+                .replace(/[^\w ]+/g, '')
+                .replace(/ +/g, '-');
+
+            slugInput.value = slug;
+        });
+
         // Save draft functionality
         $('#saveDraft').click(function() {
             const form = $('#articleForm');
@@ -152,6 +170,19 @@
             });
             form.append(draftInput);
             form.submit();
+        });
+
+        // Ensure slug is generated before form submission
+        $('#articleForm').submit(function() {
+            if (!slugInput.value && titleInput.value) {
+                const slug = titleInput.value
+                    .toLowerCase()
+                    .replace(/[^\w ]+/g, '')
+                    .replace(/ +/g, '-');
+
+                slugInput.value = slug;
+            }
+            return true;
         });
     });
 </script>

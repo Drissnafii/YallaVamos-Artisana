@@ -3,7 +3,7 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between transition-all duration-300" id="nav-container">
                 <div class="flex items-center">
-                    <a href="/" class="flex items-center group">
+                    <a href="{{ route('member.dashboard') }}" class="flex items-center group">
                         <img src="{{ asset('images/morocco-logo.svg') }}" alt="Morocco 2030" class="h-8 w-auto transition-transform duration-500 group-hover:rotate-12">
                         <span class="ml-2 text-lg font-semibold text-primary transition-colors duration-300 hover:text-primary/80">Morocco 2030</span>
                     </a>
@@ -16,19 +16,22 @@
                         <a href="{{ route('member.dashboard') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('member.dashboard') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                             Dashboard
                         </a>
-                        <a href="{{ route('cities.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('cities*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
+                        <a href="{{ route('member.cities.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('member.cities*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                             Host Cities
                         </a>
-                        <a href="{{ route('stadiums.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('stadiums*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
+                        <a href="{{ route('member.stadiums.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('member.stadiums*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                             Stadiums
                         </a>
-                        <a href="{{ route('matches.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('matches*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
+                        <a href="{{ route('member.matches.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('member.matches*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                             Match Schedule
                         </a>
-                        <a href="{{ route('member.my-articles.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('member.my-articles*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
+                        <a href="{{ route('member.articles.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('member.articles*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                             My Articles
                         </a>
-                        <a href="{{ route('favorites.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('favorites*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
+                        <a href="{{ route('member.travel.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('member.travel*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
+                            Travel
+                        </a>
+                        <a href="{{ route('member.favorites.index') }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->routeIs('member.favorites*') ? 'text-primary' : 'text-foreground hover:text-primary' }}">
                             Favorites
                         </a>
 
@@ -91,22 +94,22 @@
                 <a href="{{ route('member.dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('member.dashboard') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
                     Dashboard
                 </a>
-                <a href="{{ route('cities.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('cities*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
+                <a href="{{ route('member.cities.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('member.cities*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
                     Host Cities
                 </a>
-                <a href="{{ route('stadiums.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('stadiums*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
+                <a href="{{ route('member.stadiums.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('member.stadiums*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
                     Stadiums
                 </a>
-                <a href="{{ route('matches.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('matches*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
+                <a href="{{ route('member.matches.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('member.matches*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
                     Match Schedule
                 </a>
-                <a href="{{ route('travel.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('travel*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
+                <a href="{{ route('member.travel.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('member.travel*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
                     Transport Info
                 </a>
-                <a href="{{ route('member.my-articles.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('member.my-articles*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
+                <a href="{{ route('member.articles.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('member.articles*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
                     My Articles
                 </a>
-                <a href="{{ route('favorites.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('favorites*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
+                <a href="{{ route('member.favorites.index') }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->routeIs('member.favorites*') ? 'text-primary' : 'text-foreground hover:bg-[#FDE8E9]/40 hover:text-primary' }}">
                     Favorites
                 </a>
             </div>

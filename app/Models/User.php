@@ -66,6 +66,56 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Get all favorite matches for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function favoriteMatches()
+    {
+        return $this->hasMany(FavoriteMatch::class);
+    }
+
+    /**
+     * Get all favorite cities for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function favoriteCities()
+    {
+        return $this->hasMany(FavoriteCity::class);
+    }
+
+    /**
+     * Get all favorite stadiums for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function favoriteStadiums()
+    {
+        return $this->hasMany(FavoriteStadium::class);
+    }
+
+    /**
+     * Get all favorite teams for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function favoriteTeams()
+    {
+        return $this->hasMany(FavoriteTeam::class);
+    }
+
+    /**
      * Get all articles authored by the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

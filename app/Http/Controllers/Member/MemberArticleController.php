@@ -32,7 +32,8 @@ class MemberArticleController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'slug' => 'required|string|max:255|unique:articles'
         ]);
 
         // Don't strip HTML tags from content - Summernote needs HTML preserved
@@ -46,20 +47,20 @@ class MemberArticleController extends Controller
             $article->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
-        return redirect()->route('member.my-articles.index')->with('success', 'Article created successfully!');
+        return redirect()->route('member.articles.index')->with('success', 'Article created successfully!');
     }
 
     public function show(Article $article)
     {
         $this->authorize('view', $article);
-        return view('dashboard.member.my-articles.show', compact('article'));
+        return view('dashboard.member.articles.show', compact('article'));
     }
 
     public function edit(Article $article)
     {
         $this->authorize('update', $article);
         $categories = \App\Models\Category::all();
-        return view('dashboard.member.my-articles.edit', compact('article', 'categories'));
+        return view('dashboard.member.articles.edit', compact('article', 'categories'));
     }
 
     public function update(Request $request, Article $article)
@@ -83,13 +84,13 @@ class MemberArticleController extends Controller
             $article->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
-        return redirect()->route('member.my-articles.index')->with('success', 'Article updated successfully!');
+        return redirect()->route('member.articles.index')->with('success', 'Article updated successfully!');
     }
 
     public function destroy(Article $article)
     {
         $this->authorize('delete', $article);
         $article->delete();
-        return redirect()->route('member.my-articles.index')->with('success', 'Article deleted successfully!');
+        return redirect()->route('member.articles.index')->with('success', 'Article deleted successfully!');
     }
 }

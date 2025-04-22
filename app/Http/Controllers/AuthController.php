@@ -4,97 +4,107 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log; // Import the Log facade
-use App\Models\User;
+use App\Models\Article;
 use App\Models\City;
+use App\Models\MatchX;
 use App\Models\Stadium;
+use App\Services\AuthService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
-class AuthController extends Controller
+class AuthController extends \App\Http\Controllers\Controller
 {
-    public function __construct()
+    protected $authService;
+
+    public function __construct(AuthService $authService)
     {
-        // Define middleware to protect certain actions
+        $this->authService = $authService;
         $this->middleware('auth', ['except' => ['showLoginForm', 'login', 'showRegisterForm', 'register']]);
     }
 
-    public function showLoginForm(): View
+    public function showLoginForm(): View|RedirectResponse
     {
+        if (Auth::check()) {
+            if (Auth::user()->role === 'admin') {
+                return Redirect::route('admin.dashboard');
+            }
+            return Redirect::route('member.dashboard');
+        }
+
         return view('auth.login');
     }
 
-    public function login(LoginRequest $request): RedirectResponse
+    public function login(Request $request): RedirectResponse
     {
-        $credentials = $request->validated();
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            $user = Auth::user();
 
-            if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard');
+            if (Auth::user()->role === 'admin') {
+                return Redirect::route('admin.dashboard');
             }
 
-            return redirect()->route('member.dashboard');
+            return Redirect::route('member.dashboard');
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+         ])->withInput($request->except('password'));
     }
 
-    public function showRegisterForm(): View
+    public function showRegisterForm(): View|RedirectResponse
     {
+        if (Auth::check()) {
+            return Redirect::route('member.dashboard');
+        }
+
         return view('auth.register');
     }
 
-    public function register(RegisterRequest $request): RedirectResponse
+    public function register(Request $request): RedirectResponse
     {
-        try {
-            $user = User::create($request->validated());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-            // Automatically log in the user after registration
+        try {
+            $user = $this->authService->register($request->all());
+
             Auth::login($user);
 
-            // Debug logging
-            Log::info('User registered', [
-                'role' => $user->role,
-                'user_id' => $user->id,
-                'redirect_route' => $user->role === 'admin' ? 'admin.dashboard' : 'member.dashboard'
-            ]);
-
-            // Redirect based on role
-            if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard');
+            if (Auth::user()->role === 'admin') {
+                return Redirect::route('admin.dashboard');
             }
 
-            return redirect()->route('member.dashboard');
+            return Redirect::route('member.dashboard');
         } catch (\Exception $e) {
-            Log::error('Registration failed: ' . $e->getMessage());
             return back()->withErrors(['error' => 'Registration failed. Please try again.'])->withInput();
         }
     }
 
-    public function logout(): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect('/login');
-    }
-
-    public function memberDashboard(): View
-    {
-        return view('dashboard.member.index', ['user' => Auth::user()]);
+        return Redirect::route('index');
     }
 
     public function adminDashboard(): View
     {
-        // Fetch real counts from the database
         $cityCount = City::count();
         $stadiumCount = Stadium::count();
 
@@ -103,5 +113,22 @@ class AuthController extends Controller
             'cityCount' => $cityCount,
             'stadiumCount' => $stadiumCount
         ]);
+    }
+
+    public function memberDashboard(): View
+    {
+        $user = Auth::user();
+
+        $userArticles = Article::where('author_id', $user->id)->get();
+        $upcomingMatches = MatchX::with(['team1', 'team2', 'stadium.city'])
+            ->whereDate('date', '>=', now())
+            ->whereDate('date', '<=', now()->addDays(7))
+            ->orderBy('date')
+            ->get();
+
+        return view('member.dashboard', compact(
+            'userArticles',
+            'upcomingMatches'
+        ));
     }
 }

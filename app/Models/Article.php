@@ -20,7 +20,13 @@ class Article extends Model
     // Relationships
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
+    // Adding a method alias for clarity
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     public function comments()
@@ -36,5 +42,5 @@ class Article extends Model
         return $this->belongsTo(Category::class);
     }
 
-    
+
 }

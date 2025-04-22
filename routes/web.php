@@ -17,7 +17,12 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\AccommodationController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Member\MemberArticleController;
+use App\Http\Controllers\Member\MemberCitiesController;
+use App\Http\Controllers\Member\MemberMatchesController;
 use App\Http\Controllers\Member\MemberProfileController;
+use App\Http\Controllers\Member\MemberStadiumsController;
+use App\Http\Controllers\Member\MemberTravelController;
 use App\Http\Controllers\PublicArticleController;
 use Illuminate\Support\Facades\Route;
 
@@ -83,9 +88,32 @@ Route::middleware(['auth', 'verified'])->prefix('member')->name('member.')->grou
     Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
+    // Member Cities Routes
+    Route::get('cities', [MemberCitiesController::class, 'index'])->name('cities.index');
+    Route::get('cities/{city}', [MemberCitiesController::class, 'show'])->name('cities.show');
+    Route::post('cities/{city}/toggle-favorite', [MemberCitiesController::class, 'toggleFavorite'])->name('cities.toggle-favorite');
+
+    // Member Stadiums Routes
+    Route::get('stadiums', [MemberStadiumsController::class, 'index'])->name('stadiums.index');
+    Route::get('stadiums/{stadium}', [MemberStadiumsController::class, 'show'])->name('stadiums.show');
+    Route::post('stadiums/{stadium}/toggle-favorite', [MemberStadiumsController::class, 'toggleFavorite'])->name('stadiums.toggle-favorite');
+
+    // Member Matches Routes
+    Route::get('matches', [MemberMatchesController::class, 'index'])->name('matches.index');
+    Route::get('matches/{match}', [MemberMatchesController::class, 'show'])->name('matches.show');
+    Route::post('matches/{match}/toggle-favorite', [MemberMatchesController::class, 'toggleFavorite'])->name('matches.toggle-favorite');
+
+    // Member Travel Routes
+    Route::get('travel', [MemberTravelController::class, 'index'])->name('travel.index');
+    Route::get('travel/accommodations', [MemberTravelController::class, 'accommodations'])->name('travel.accommodations');
+    Route::get('travel/transportation', [MemberTravelController::class, 'transportation'])->name('travel.transportation');
+    Route::get('travel/tips', [MemberTravelController::class, 'tips'])->name('travel.tips');
+
     // Member Favorites Routes
     Route::get('favorites', [FavoritesController::class, 'memberIndex'])->name('favorites.index');
     Route::get('favorites/matches', [FavoritesController::class, 'memberMatches'])->name('favorites.matches');
+    Route::get('favorites/stadiums', [FavoritesController::class, 'memberStadiums'])->name('favorites.stadiums');
+    Route::get('favorites/cities', [FavoritesController::class, 'memberCities'])->name('favorites.cities');
 
     // Member Article Routes
     Route::resource('articles', \App\Http\Controllers\Member\MemberArticleController::class);

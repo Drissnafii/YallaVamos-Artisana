@@ -182,12 +182,13 @@
 
             <!-- Browse Matches -->
             <a href="{{ route('matches.index') }}" class="group bg-gradient-to-br from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 transition-all duration-300 rounded-xl overflow-hidden border border-purple-200 p-4 flex flex-col items-center justify-center text-center h-28">
-                <div class="rounded-full bg-white p-2 shadow-sm mb-2 group-hover:scale-110 transition-transform duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <div class="text-purple-500 mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polygon points="10 8 16 12 10 16 10 8" />
                     </svg>
                 </div>
-                <span class="font-medium text-gray-800 text-sm">Explorer les matchs</span>
+                <h3 class="text-md font-medium text-gray-800">Match Schedule</h3>
             </a>
         </div>
     </div>
@@ -201,9 +202,9 @@
                 <div class="flex justify-between items-center mb-5">
                     <h2 class="text-xl font-bold text-gray-800">Matchs à venir</h2>
                     <a href="{{ route('matches.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center">
-                        Voir tous
-                        <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        View All Matches
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </a>
                 </div>
@@ -221,7 +222,7 @@
                     <div class="space-y-3">
                         @foreach($upcomingMatches as $match)
                         <div class="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all cursor-pointer relative group flex"
-                             onclick="window.location.href='{{ route('matches.show', $match) }}'">
+                             onclick="window.location.href='{{ route('public.matches.show', $match) }}'">
                             <div class="w-1.5 {{ in_array($match->id, $favoriteMatchIds ?? []) ? 'bg-amber-500' : 'bg-gray-200 group-hover:bg-amber-200' }}"></div>
                             <div class="p-4 flex-grow">
                                 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
