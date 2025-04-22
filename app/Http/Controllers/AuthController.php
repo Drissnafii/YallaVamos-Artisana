@@ -80,7 +80,9 @@ class AuthController extends \App\Http\Controllers\Controller
         ]);
 
         try {
-            $user = $this->authService->register($request->all());
+            $result = $this->authService->register($request->all());
+            // Extract the User object from the result
+            $user = $result['user'];
 
             Auth::login($user);
 

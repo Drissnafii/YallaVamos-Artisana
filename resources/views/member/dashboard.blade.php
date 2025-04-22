@@ -62,7 +62,7 @@
         <h2 class="text-xl font-semibold text-gray-800">Upcoming Matches</h2>
         <a href="{{ route('member.matches.index') }}" class="text-primary hover:text-primary/80 transition-colors text-sm font-medium">View All</a>
     </div>
-    
+
     @if(isset($upcomingMatches) && $upcomingMatches->count() > 0)
     <div class="bg-white rounded-lg shadow-md overflow-hidden">
         <div class="divide-y divide-gray-200">
@@ -75,7 +75,7 @@
                             <div class="text-sm font-medium text-gray-500">{{ \Carbon\Carbon::parse($match->date)->format('M d') }}</div>
                             <div class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($match->date)->format('H:i') }}</div>
                         </div>
-                        
+
                         <!-- Teams -->
                         <div class="flex flex-1 items-center justify-center space-x-3">
                             <!-- Team 1 -->
@@ -109,14 +109,14 @@
                                 <span class="text-sm font-medium text-gray-800 text-center">{{ $match->team2 ? $match->team2->name : 'TBD' }}</span>
                             </div>
                         </div>
-                        
+
                         <!-- Stadium and City -->
                         <div class="md:w-48 text-center md:text-right">
                             <p class="text-sm font-medium text-gray-800">{{ $match->stadium ? $match->stadium->name : 'TBD' }}</p>
                             <p class="text-xs text-gray-500">{{ $match->stadium && $match->stadium->city ? $match->stadium->city->name : '-' }}</p>
                         </div>
                     </div>
-                    
+
                     <div class="ml-4">
                         <a href="{{ route('member.matches.show', $match) }}" class="text-primary hover:text-primary/80">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -139,7 +139,7 @@
 <!-- Quick Access Grid -->
 <div class="mb-8">
     <h2 class="text-xl font-semibold text-gray-800 mb-4">Quick Access</h2>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- My Travel Plans -->
         <a href="{{ route('member.travel.index') }}" class="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow flex items-center">
@@ -153,7 +153,7 @@
                 <p class="text-sm text-gray-600">Plan your World Cup journey</p>
             </div>
         </a>
-        
+
         <!-- My Favorites -->
         <a href="{{ route('member.favorites.index') }}" class="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow flex items-center">
             <div class="h-12 w-12 bg-red-50 rounded-full flex items-center justify-center mr-4">
@@ -166,7 +166,7 @@
                 <p class="text-sm text-gray-600">Access your saved content</p>
             </div>
         </a>
-        
+
         <!-- My Articles -->
         <a href="{{ route('member.articles.index') }}" class="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow flex items-center">
             <div class="h-12 w-12 bg-purple-50 rounded-full flex items-center justify-center mr-4">
@@ -185,7 +185,7 @@
 <!-- Member Sections -->
 <div class="mb-8">
     <h2 class="text-xl font-semibold text-gray-800 mb-4">Explore More</h2>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Cities Section -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -201,7 +201,7 @@
                 </a>
             </div>
         </div>
-        
+
         <!-- Stadiums Section -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div class="h-32 bg-gray-200 relative">
