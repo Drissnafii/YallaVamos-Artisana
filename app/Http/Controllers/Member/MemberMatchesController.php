@@ -17,8 +17,8 @@ class MemberMatchesController extends Controller
      */
     public function index()
     {
-        $matches = MatchX::with(['stadium', 'homeTeam', 'awayTeam'])
-            ->orderBy('match_date')
+        $matches = MatchX::with(['stadium', 'team1', 'team2'])
+            ->orderBy('date')
             ->get();
         $favoriteMatches = Auth::user()->favoriteMatches->pluck('match_id')->toArray();
 
@@ -33,7 +33,7 @@ class MemberMatchesController extends Controller
      */
     public function show(MatchX $match)
     {
-        $match->load(['stadium.city', 'homeTeam', 'awayTeam']);
+        $match->load(['stadium.city', 'team1', 'team2']);
         $isFavorite = Auth::user()->favoriteMatches()->where('match_id', $match->id)->exists();
 
         // Getting nearby accommodations in the same city as the stadium

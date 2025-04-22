@@ -20,6 +20,9 @@
         <!-- Header -->
         <x-member-header />
 
+        <!-- Full Width Content Section -->
+        @yield('full-width-content')
+
         <!-- Page Content -->
         <main class="flex-1">
             @if (isset($header))
