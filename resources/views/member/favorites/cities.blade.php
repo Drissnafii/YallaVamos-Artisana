@@ -42,7 +42,7 @@
                     <!-- City Image -->
                     <div class="h-48 overflow-hidden">
                         @if($city->image)
-                            <img src="{{ asset($city->image) }}" alt="{{ $city->name }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $city->image) }}" alt="{{ $city->name }}" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center bg-gray-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

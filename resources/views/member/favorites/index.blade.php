@@ -61,7 +61,7 @@
                                 <div class="flex flex-col items-center text-center w-1/3">
                                     <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-2">
                                         @if($match->team1->flag)
-                                            <img src="{{ asset($match->team1->flag) }}" alt="{{ $match->team1->name }}" class="w-full h-full object-cover rounded-full">
+                                            <img src="{{ asset('storage/' . $match->team1->flag) }}" alt="{{ $match->team1->name }}" class="w-full h-full object-cover rounded-full">
                                         @else
                                             <span class="text-sm font-bold text-gray-500">{{ substr($match->team1->code, 0, 3) }}</span>
                                         @endif
@@ -84,7 +84,7 @@
                                 <div class="flex flex-col items-center text-center w-1/3">
                                     <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-2">
                                         @if($match->team2->flag)
-                                            <img src="{{ asset($match->team2->flag) }}" alt="{{ $match->team2->name }}" class="w-full h-full object-cover rounded-full">
+                                            <img src="{{ asset('storage/' . $match->team2->flag) }}" alt="{{ $match->team2->name }}" class="w-full h-full object-cover rounded-full">
                                         @else
                                             <span class="text-sm font-bold text-gray-500">{{ substr($match->team2->code, 0, 3) }}</span>
                                         @endif
@@ -149,7 +149,7 @@
                         <!-- City Image -->
                         <div class="h-36 overflow-hidden">
                             @if($city->image)
-                                <img src="{{ asset($city->image) }}" alt="{{ $city->name }}" class="w-full h-full object-cover">
+                                <img src="{{ asset('storage/' . $city->image) }}" alt="{{ $city->name }}" class="w-full h-full object-cover">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-gray-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -206,7 +206,7 @@
                         <!-- Stadium Image -->
                         <div class="h-40 overflow-hidden">
                             @if($stadium->image)
-                                <img src="{{ asset($stadium->image) }}" alt="{{ $stadium->name }}" class="w-full h-full object-cover">
+                                <img src="{{ asset('storage/' . $stadium->image) }}" alt="{{ $stadium->name }}" class="w-full h-full object-cover">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-gray-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

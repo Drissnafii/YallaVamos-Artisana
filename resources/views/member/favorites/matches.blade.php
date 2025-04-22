@@ -54,7 +54,7 @@
                             <div class="flex flex-col items-center text-center w-1/3">
                                 <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-2">
                                     @if($match->team1->flag)
-                                        <img src="{{ asset($match->team1->flag) }}" alt="{{ $match->team1->name }}" class="w-full h-full object-cover rounded-full">
+                                        <img src="{{ asset('storage/' . $match->team1->flag) }}" alt="{{ $match->team1->name }}" class="w-full h-full object-cover rounded-full">
                                     @else
                                         <span class="text-sm font-bold text-gray-500">{{ substr($match->team1->code, 0, 3) }}</span>
                                     @endif
@@ -77,7 +77,7 @@
                             <div class="flex flex-col items-center text-center w-1/3">
                                 <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-2">
                                     @if($match->team2->flag)
-                                        <img src="{{ asset($match->team2->flag) }}" alt="{{ $match->team2->name }}" class="w-full h-full object-cover rounded-full">
+                                        <img src="{{ asset('storage/' . $match->team2->flag) }}" alt="{{ $match->team2->name }}" class="w-full h-full object-cover rounded-full">
                                     @else
                                         <span class="text-sm font-bold text-gray-500">{{ substr($match->team2->code, 0, 3) }}</span>
                                     @endif

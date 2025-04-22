@@ -74,8 +74,9 @@ class FavoritesController extends Controller
         $favoriteMatchIds = FavoriteMatch::where('user_id', $user->id)->pluck('match_id');
 
         // Then get the actual matches with their related data
+        // Explicitly specify attributes to include flag data
         $favoriteMatches = MatchX::whereIn('id', $favoriteMatchIds)
-                          ->with(['team1', 'team2', 'stadium.city'])
+                          ->with(['team1:id,name,flag,code', 'team2:id,name,flag,code', 'stadium.city'])
                           ->get();
 
         return view('member.favorites.matches', compact('favoriteMatches'));

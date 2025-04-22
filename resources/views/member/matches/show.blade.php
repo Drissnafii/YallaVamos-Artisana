@@ -43,7 +43,7 @@
                     <div class="flex-1 flex flex-col items-center text-center">
                         <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-3 overflow-hidden">
                             @if($match->team1->flag)
-                                <img src="{{ asset($match->team1->flag) }}" alt="{{ $match->team1->name }}" class="w-full h-full object-cover">
+                                <img src="{{ asset('storage/' . $match->team1->flag) }}" alt="{{ $match->team1->name }}" class="w-full h-full object-cover">
                             @else
                                 <div class="text-3xl font-bold text-gray-400">{{ substr($match->team1->code, 0, 3) }}</div>
                             @endif
@@ -72,7 +72,7 @@
                     <div class="flex-1 flex flex-col items-center text-center">
                         <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-3 overflow-hidden">
                             @if($match->team2->flag)
-                                <img src="{{ asset($match->team2->flag) }}" alt="{{ $match->team2->name }}" class="w-full h-full object-cover">
+                                <img src="{{ asset('storage/' . $match->team2->flag) }}" alt="{{ $match->team2->name }}" class="w-full h-full object-cover">
                             @else
                                 <div class="text-3xl font-bold text-gray-400">{{ substr($match->team2->code, 0, 3) }}</div>
                             @endif
@@ -100,7 +100,7 @@
                 <div class="flex items-center mb-6">
                     <div class="w-20 h-20 bg-gray-100 rounded-lg mr-4 flex-shrink-0 overflow-hidden">
                         @if($match->stadium->image)
-                            <img src="{{ asset($match->stadium->image) }}" alt="{{ $match->stadium->name }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $match->stadium->image) }}" alt="{{ $match->stadium->name }}" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center bg-blue-50 text-blue-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -142,7 +142,7 @@
                 <div class="flex items-center mb-6">
                     <div class="w-20 h-20 bg-gray-100 rounded-lg mr-4 flex-shrink-0 overflow-hidden">
                         @if($match->stadium->city->image)
-                            <img src="{{ asset($match->stadium->city->image) }}" alt="{{ $match->stadium->city->name }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $match->stadium->city->image) }}" alt="{{ $match->stadium->city->name }}" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center bg-green-50 text-green-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -187,7 +187,7 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all">
                 <div class="h-40 bg-gray-200 overflow-hidden">
                     @if($accommodation->image)
-                        <img src="{{ asset($accommodation->image) }}" alt="{{ $accommodation->name }}" class="w-full h-full object-cover">
+                        <img src="{{ asset('storage/' . $accommodation->image) }}" alt="{{ $accommodation->name }}" class="w-full h-full object-cover">
                     @else
                         <div class="w-full h-full flex items-center justify-center bg-gray-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -239,7 +239,7 @@
                 <div class="flex items-center mb-6">
                     <div class="w-20 h-20 bg-gray-100 rounded-full mr-4 flex-shrink-0 overflow-hidden">
                         @if($match->team1->flag)
-                            <img src="{{ asset($match->team1->flag) }}" alt="{{ $match->team1->name }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $match->team1->flag) }}" alt="{{ $match->team1->name }}" class="w-full h-full object-cover">
                         @else
                             <div class="text-3xl font-bold text-gray-400">{{ substr($match->team1->code, 0, 3) }}</div>
                         @endif
@@ -275,7 +275,7 @@
                 <div class="flex items-center mb-6">
                     <div class="w-20 h-20 bg-gray-100 rounded-full mr-4 flex-shrink-0 overflow-hidden">
                         @if($match->team2->flag)
-                            <img src="{{ asset($match->team2->flag) }}" alt="{{ $match->team2->name }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $match->team2->flag) }}" alt="{{ $match->team2->name }}" class="w-full h-full object-cover">
                         @else
                             <div class="text-3xl font-bold text-gray-400">{{ substr($match->team2->code, 0, 3) }}</div>
                         @endif

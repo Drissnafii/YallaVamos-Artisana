@@ -42,7 +42,7 @@
                     <!-- Stadium Image -->
                     <div class="h-48 overflow-hidden">
                         @if($stadium->image)
-                            <img src="{{ asset($stadium->image) }}" alt="{{ $stadium->name }}" class="w-full h-full object-cover">
+                            <img src="{{ asset('storage/' . $stadium->image) }}" alt="{{ $stadium->name }}" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center bg-gray-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
