@@ -524,15 +524,34 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin' // Include cookies for CSRF protection
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
-            // Update UI based on the response
+            // Make sure the element exists before accessing its properties
+            if (!element) {
+                console.error('Element is null or undefined');
+                showNotification('Error: Could not find the favorite button element', 'error');
+                return;
+            }
+
+            // Find the icon and text elements inside the provided element
             const icon = element.querySelector('.favorite-icon');
             const text = element.querySelector('.favorite-text');
+
+            if (!icon || !text) {
+                console.error('Could not find icon or text elements within the favorite button');
+                showNotification('Error: Could not update the favorite button display', 'error');
+                return;
+            }
 
             if (data.status === 'added') {
                 // Match was added to favorites
@@ -545,9 +564,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 showNotification('Match ajouté aux favoris', 'success');
 
                 // Update the color indicator on the left
-                const colorBar = element.closest('.flex').querySelector('div:first-child');
-                colorBar.classList.remove('bg-gray-200');
-                colorBar.classList.add('bg-amber-500');
+                const parentElement = element.closest('.flex');
+                if (parentElement) {
+                    const colorBar = parentElement.querySelector('div:first-child');
+                    if (colorBar) {
+                        colorBar.classList.remove('bg-gray-200');
+                        colorBar.classList.add('bg-amber-500');
+                    }
+                }
             } else {
                 // Match was removed from favorites
                 element.classList.remove('text-amber-500');
@@ -559,17 +583,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 showNotification('Match retiré des favoris', 'info');
 
                 // Update the color indicator on the left
-                const colorBar = element.closest('.flex').querySelector('div:first-child');
-                colorBar.classList.remove('bg-amber-500');
-                colorBar.classList.add('bg-gray-200');
+                const parentElement = element.closest('.flex');
+                if (parentElement) {
+                    const colorBar = parentElement.querySelector('div:first-child');
+                    if (colorBar) {
+                        colorBar.classList.remove('bg-amber-500');
+                        colorBar.classList.add('bg-gray-200');
+                    }
+                }
             }
 
             // Toggle the onclick handler
             element.setAttribute('onclick', `event.stopPropagation(); toggleFavorite(${matchId}, this, ${data.status === 'added'})`);
         })
         .catch(error => {
-            console.error('Error:', error);
-            showNotification('Erreur lors de l\'ajout aux favoris', 'error');
+            console.error('Error toggling favorite:', error);
+            showNotification('Erreur lors de l\'ajout aux favoris: ' + error.message, 'error');
         });
     };
 
