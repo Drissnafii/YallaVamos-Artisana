@@ -21,7 +21,7 @@
                 <span class="sr-only">Change background</span>
             </label>
 
-            <div class="flex flex-col sm:flex-row items-start sm:items-end gap-6 relative z-10">
+            <div class="flex flex-col sm:flex-row items-center gap-6 relative z-10">
                 <!-- Profile image with Material-style elevation -->
                 <div class="relative group">
                     <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-white overflow-hidden shadow-lg transition-transform hover:scale-105">
@@ -89,9 +89,38 @@
 
         <!-- Card style from Google Material Design with Spotify-inspired spacing -->
         <div class="bg-white shadow-sm rounded-lg overflow-hidden">
-            <div class="px-6 py-5 border-b border-gray-100">
-                <h3 class="text-lg font-medium text-gray-900">Profile Information</h3>
-                <p class="mt-1 text-sm text-gray-500">Update your account details</p>
+            <div class="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-medium text-gray-900">Profile Information</h3>
+                    <p class="mt-1 text-sm text-gray-500">Update your account details</p>
+                </div>
+                
+                <button
+                    type="submit"
+                    class="
+                      flex items-center
+                      px-6 py-3
+                      bg-teal-500 hover:bg-teal-600 active:bg-teal-700
+                      text-white font-sans font-semibold
+                      rounded-full
+                      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500
+                      transition-colors duration-150 ease-in-out
+                    "
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-5 w-5 mr-2"
+                         viewBox="0 0 20 20"
+                         fill="currentColor"
+                    >
+                      <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 
+                               0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 
+                               1 0 011.414 0z"
+                            clip-rule="evenodd"
+                      />
+                    </svg>
+                    Save changes
+                  </button>
             </div>
 
             <div class="px-6 py-6">
@@ -201,18 +230,6 @@
             </div>
         </div>
 
-        <!-- Form actions - Google Material style button with Spotify-inspired positioning -->
-        <div class="flex justify-end">
-            <button
-                type="submit"
-                class="flex items-center px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                Save changes
-            </button>
-        </div>
     </form>
 </div>
 

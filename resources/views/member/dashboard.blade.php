@@ -4,15 +4,14 @@
 
 @section('full-width-content')
 <!-- Hero Section with Background Image -->
-<div class="relative bg-gradient-to-r from-gray-800 to-gray-900 h-80 overflow-hidden w-full">
-    <div class="absolute inset-0 bg-pattern opacity-10"></div>
+<div class="relative bg-rose-600 h-80 overflow-hidden w-full">
     @if(Auth::user()->background_image)
         <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover w-full h-full">
-        <div class="absolute inset-0 backdrop-blur-sm bg-gray-900/40"></div>
+        <div class="absolute inset-0 bg-rose-600/60 backdrop-blur-sm"></div>
     @else
-        <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover mix-blend-overlay opacity-20 w-full h-full">
+        <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover w-full h-full">
+        <div class="absolute inset-0 bg-rose-600/70 backdrop-blur-sm"></div>
     @endif
-    <div class="absolute inset-0 w-screen bg-gradient-to-t from-[#FAF9F5] via-transparent to-transparent"></div>
 
     <!-- Full-width greeting div -->
     <div class="w-full h-full flex items-end z-10 relative">
@@ -30,10 +29,7 @@
 </div> <!-- Closing the container div from the hero section -->
 
 <!-- Quick Actions - Simplified container with gradient blur effects -->
-<div class="relative z-30 mt-20">
-    <!-- Top gradient blur -->
-    <div class="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-red-400/30 via-red-500/40 to-transparent" style="filter: blur(0.5rem);"></div>
-    
+<div class="relative z-30 mt-10">
     <!-- Content container -->
     <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-5 py-2 w-[calc(100%-2rem)] max-w-5xl mx-auto">
         <!-- Create Article - Green -->
@@ -103,9 +99,7 @@
 </div>
 
 <!-- Add padding to the bottom of your content to make room for the fixed quick actions -->
-<div class="pb-24">
-    <!-- This padding should be approximately the height of your quick actions bar -->
-</div>
+<div class="pb-24"></div>
 
 <div class="max-w-7xl mx-auto"> <!-- Re-opening the container div for the rest of the content -->
     <!-- Quick Stats Cards Row - Styled with yellow and mauve colors -->
