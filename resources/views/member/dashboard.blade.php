@@ -32,7 +32,7 @@
 <!-- Quick Actions - Simplified container with gradient blur effects -->
 <div class="relative z-30 mt-20">
     <!-- Top gradient blur -->
-    <div class="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#EB3A41]/20 to-transparent" style="filter: blur(0.5rem);"></div>
+    <div class="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-red-400/30 via-red-500/40 to-transparent" style="filter: blur(0.5rem);"></div>
     
     <!-- Content container -->
     <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-5 py-2 w-[calc(100%-2rem)] max-w-5xl mx-auto">
@@ -99,7 +99,7 @@
     </div>
 
     <!-- Bottom gradient blur -->
-    <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#EB3A41]/20 to-transparent" style="filter: blur(0.5rem);"></div>
+    <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-red-400/30 via-red-500/40 to-transparent" style="filter: blur(0.5rem);"></div>
 </div>
 
 <!-- Add padding to the bottom of your content to make room for the fixed quick actions -->
