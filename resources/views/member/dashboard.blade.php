@@ -27,87 +27,176 @@
 
 @section('content')
 <!-- Main Content -->
-<div class="max-w-7xl mx-auto -mt-20">
-    <!-- Quick Stats Cards Row - Spotify-style rounded cards with hover effects -->
+</div> <!-- Closing the container div from the hero section -->
+
+<!-- Quick Actions - Simplified container with gradient blur effects -->
+<div class="relative z-30 mt-20">
+    <!-- Top gradient blur -->
+    <div class="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#EB3A41]/20 to-transparent" style="filter: blur(0.5rem);"></div>
+    
+    <!-- Content container -->
+    <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-5 py-2 w-[calc(100%-2rem)] max-w-5xl mx-auto">
+        <!-- Create Article - Green -->
+        <a href="http://127.0.0.1:8000/member/articles/create" class="group relative flex items-center justify-center h-24" title="Créer un article">
+            <div class="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 rounded-full transform transition-all duration-300 group-hover:scale-110"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-green-100 to-green-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <!-- Label that appears on hover -->
+            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-green-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
+                Créer un article
+            </div>
+            <div class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+            </div>
+        </a>
+
+        <!-- Manage Favorites - Amber -->
+        <a href="http://127.0.0.1:8000/member/favorites" class="group relative flex items-center justify-center h-24" title="Gérer les favoris">
+            <div class="absolute inset-0 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full transform transition-all duration-300 group-hover:scale-110"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <!-- Label that appears on hover -->
+            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-amber-500 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
+                Gérer les favoris
+            </div>
+            <div class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                </svg>
+            </div>
+        </a>
+
+        <!-- Edit Profile - Blue -->
+        <a href="http://127.0.0.1:8000/member/profile" class="group relative flex items-center justify-center h-24" title="Modifier profil">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full transform transition-all duration-300 group-hover:scale-110"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <!-- Label that appears on hover -->
+            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
+                Modifier profil
+            </div>
+            <div class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+            </div>
+        </a>
+
+        <!-- Browse Matches - Purple -->
+        <a href="http://127.0.0.1:8000/member/matches" class="group relative flex items-center justify-center h-24" title="Match Schedule">
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full transform transition-all duration-300 group-hover:scale-110"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <!-- Label that appears on hover -->
+            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
+                Match Schedule
+            </div>
+            <div class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+            </div>
+        </a>
+    </div>
+
+    <!-- Bottom gradient blur -->
+    <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#EB3A41]/20 to-transparent" style="filter: blur(0.5rem);"></div>
+</div>
+
+<!-- Add padding to the bottom of your content to make room for the fixed quick actions -->
+<div class="pb-24">
+    <!-- This padding should be approximately the height of your quick actions bar -->
+</div>
+
+<div class="max-w-7xl mx-auto"> <!-- Re-opening the container div for the rest of the content -->
+    <!-- Quick Stats Cards Row - Styled with yellow and mauve colors -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <!-- Favorites Card -->
-        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-[#FFF7E1] rounded-full opacity-70 transition-transform duration-300 group-hover:scale-110"></div>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
+            <!-- Enhanced background effect -->
+            <div class="absolute top-0 right-0 w-40 h-40 -mr-12 -mt-12 bg-amber-100/30 rounded-full opacity-70 transition-all duration-500 group-hover:bg-amber-200/60 group-hover:scale-125"></div>
+
             <div class="relative">
-                <div class="flex items-center mb-4">
-                    <div class="p-3 rounded-full bg-[#FFF7E1] mr-4 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                <!-- Improved header section with better spacing -->
+                <div class="flex items-center mb-5">
+                    <div class="p-3 rounded-full bg-amber-50 mr-4 shadow-sm group-hover:bg-amber-100 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
                         </svg>
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-500">Favoris</p>
-                        <p class="text-3xl font-bold">{{ $favoriteCount ?? 0 }}</p>
+                        <p class="text-3xl font-bold text-gray-800">0</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-3 gap-2 mb-4">
-                    <div class="bg-[#FFF7E1] bg-opacity-50 p-2 rounded-lg text-center">
-                        <p class="text-xs text-gray-600">Villes</p>
-                        <p class="font-bold text-amber-600">{{ $favoriteCitiesCount ?? 0 }}</p>
+                <!-- Enhanced stat cards with hover effects -->
+                <div class="grid grid-cols-3 gap-3 mb-5">
+                    <div class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
+                        <p class="text-xs text-gray-600 mb-1">Villes</p>
+                        <p class="font-bold text-gray-800 text-lg">0</p>
                     </div>
-                    <div class="bg-[#FFF7E1] bg-opacity-50 p-2 rounded-lg text-center">
-                        <p class="text-xs text-gray-600">Stades</p>
-                        <p class="font-bold text-amber-600">{{ $favoriteStadiumsCount ?? 0 }}</p>
+                    <div class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
+                        <p class="text-xs text-gray-600 mb-1">Stades</p>
+                        <p class="font-bold text-gray-800 text-lg">0</p>
                     </div>
-                    <div class="bg-[#FFF7E1] bg-opacity-50 p-2 rounded-lg text-center">
-                        <p class="text-xs text-gray-600">Matchs</p>
-                        <p class="font-bold text-amber-600">{{ $favoriteMatchesCount ?? 0 }}</p>
+                    <div class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
+                        <p class="text-xs text-gray-600 mb-1">Matchs</p>
+                        <p class="font-bold text-gray-800 text-lg">0</p>
                     </div>
                 </div>
 
-                <a href="{{ route('member.favorites.index') }}" class="inline-flex items-center text-sm font-medium text-amber-600 hover:text-amber-700">
+                <!-- Improved action button -->
+                <a href="http://127.0.0.1:8000/member/favorites" class="inline-flex items-center px-4 py-2 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-colors duration-300 font-medium text-sm">
                     Gérer vos favoris
-                    <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                     </svg>
                 </a>
             </div>
         </div>
 
         <!-- Articles Card -->
-        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-[#F2F1EC] rounded-full opacity-70 transition-transform duration-300 group-hover:scale-110"></div>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
+            <!-- Enhanced background effect -->
+            <div class="absolute top-0 right-0 w-40 h-40 -mr-12 -mt-12 bg-green-100/30 rounded-full opacity-70 transition-all duration-500 group-hover:bg-green-200/60 group-hover:scale-125"></div>
+
             <div class="relative">
-                <div class="flex items-center mb-4">
-                    <div class="p-3 rounded-full bg-[#F2F1EC] mr-4 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                <!-- Improved header section -->
+                <div class="flex items-center mb-5">
+                    <div class="p-3 rounded-full bg-green-50 mr-4 shadow-sm group-hover:bg-green-100 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
                         </svg>
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-500">Articles</p>
-                        <p class="text-3xl font-bold">{{ $articleCount ?? 0 }}</p>
+                        <p class="text-3xl font-bold text-gray-800">0</p>
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="text-xs text-gray-600">Articles publiés ce mois</span>
-                        <span class="text-xs font-medium">{{ $monthlyArticleCount ?? 0 }}/5</span>
+                <!-- Enhanced progress indicator -->
+                <div class="mb-5 bg-green-50 p-3 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-600 font-medium">Articles publiés ce mois</span>
+                        <span class="text-sm font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded-md">0/5</span>
                     </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-green-500 h-2 rounded-full" style="width: {{ min(($monthlyArticleCount ?? 0) / 5 * 100, 100) }}%"></div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div class="bg-green-600 h-2.5 rounded-full" style="width: 0%; transition: width 1.5s ease-in-out;"></div>
                     </div>
                 </div>
 
+                <!-- Improved action buttons -->
                 <div class="flex space-x-3">
-                    <a href="{{ route('member.articles.index') }}" class="inline-flex items-center text-sm font-medium text-green-600 hover:text-green-700">
+                    <a href="http://127.0.0.1:8000/member/articles" class="flex-1 flex justify-center items-center px-3 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-300 text-sm font-medium">
                         Voir mes articles
-                        <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        <svg class="ml-1.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                         </svg>
                     </a>
-                    <span class="text-gray-300">|</span>
-                    <a href="{{ route('member.articles.create') }}" class="inline-flex items-center text-sm font-medium text-green-600 hover:text-green-700">
+                    <a href="http://127.0.0.1:8000/member/articles/create" class="flex-1 flex justify-center items-center px-3 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors duration-300 text-sm font-medium">
                         Créer
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
                     </a>
                 </div>
@@ -115,86 +204,37 @@
         </div>
 
         <!-- Upcoming Matches Card -->
-        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-[#F2F2F2] rounded-full opacity-70 transition-transform duration-300 group-hover:scale-110"></div>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
+            <!-- Enhanced background effect -->
+            <div class="absolute top-0 right-0 w-40 h-40 -mr-12 -mt-12 bg-purple-100/30 rounded-full opacity-70 transition-all duration-500 group-hover:bg-purple-200/60 group-hover:scale-125"></div>
+
             <div class="relative">
-                <div class="flex items-center mb-4">
-                    <div class="p-3 rounded-full bg-[#F2F2F2] mr-4 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <!-- Improved header section -->
+                <div class="flex items-center mb-5">
+                    <div class="p-3 rounded-full bg-purple-50 mr-4 shadow-sm group-hover:bg-purple-100 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-500">Matchs à venir</p>
-                        <p class="text-3xl font-bold">{{ $upcomingMatchCount ?? 0 }}</p>
+                        <p class="text-3xl font-bold text-gray-800">0</p>
                     </div>
                 </div>
 
-                @if(isset($nextMatch))
-                <div class="bg-[#F2F2F2] bg-opacity-60 p-3 rounded-lg mb-4">
-                    <div class="text-xs font-medium text-gray-500 mb-1">Prochain match</div>
-                    <div class="flex items-center justify-between mb-1">
-                        <div class="font-bold text-gray-800">{{ $nextMatch->team1->name }} vs {{ $nextMatch->team2->name }}</div>
-                        <div class="text-xs font-medium text-blue-600 px-2 py-1 bg-blue-100 rounded-full">{{ $nextMatch->date->format('d M') }}</div>
-                    </div>
-                    <div class="text-xs text-gray-600">{{ $nextMatch->stadium->name }}, {{ $nextMatch->stadium->city->name }}</div>
+                <!-- No matches message -->
+                <div class="bg-gray-50 p-4 rounded-lg mb-5 text-center">
+                    <p class="text-gray-600">Aucun match à venir dans votre calendrier</p>
                 </div>
-                @endif
 
-                <a href="{{ route('member.favorites.matches') }}" class="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700">
+                <!-- Improved action button -->
+                <a href="http://127.0.0.1:8000/member/favorites/matches" class="w-full flex justify-center items-center px-4 py-2.5 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors duration-300 font-medium text-sm">
                     Voir tous les matchs
-                    <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    <svg class="ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                     </svg>
                 </a>
             </div>
-        </div>
-    </div>
-
-    <!-- Quick Actions - Spotify-style card with clear visual hierarchy -->
-    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 mb-6">
-        <h2 class="text-xl font-bold mb-5 text-gray-800">Actions rapides</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <!-- Create Article -->
-            <a href="{{ route('member.articles.create') }}" class="group bg-gradient-to-br from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 transition-all duration-300 rounded-xl overflow-hidden border border-green-200 p-4 flex flex-col items-center justify-center text-center h-28">
-                <div class="rounded-full bg-white p-2 shadow-sm mb-2 group-hover:scale-110 transition-transform duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                </div>
-                <span class="font-medium text-gray-800 text-sm">Créer un article</span>
-            </a>
-
-            <!-- Manage Favorites -->
-            <a href="{{ route('member.favorites.index') }}" class="group bg-gradient-to-br from-amber-50 to-amber-100 hover:from-amber-100 hover:to-amber-200 transition-all duration-300 rounded-xl overflow-hidden border border-amber-200 p-4 flex flex-col items-center justify-center text-center h-28">
-                <div class="rounded-full bg-white p-2 shadow-sm mb-2 group-hover:scale-110 transition-transform duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                </div>
-                <span class="font-medium text-gray-800 text-sm">Gérer les favoris</span>
-            </a>
-
-            <!-- Edit Profile -->
-            <a href="{{ route('member.profile.edit') }}" class="group bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 transition-all duration-300 rounded-xl overflow-hidden border border-blue-200 p-4 flex flex-col items-center justify-center text-center h-28">
-                <div class="rounded-full bg-white p-2 shadow-sm mb-2 group-hover:scale-110 transition-transform duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </div>
-                <span class="font-medium text-gray-800 text-sm">Modifier profil</span>
-            </a>
-
-            <!-- Browse Matches -->
-            <a href="{{ route('member.matches.index') }}" class="group bg-gradient-to-br from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 transition-all duration-300 rounded-xl overflow-hidden border border-purple-200 p-4 flex flex-col items-center justify-center text-center h-28">
-                <div class="text-purple-500 mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10" />
-                        <polygon points="10 8 16 12 10 16 10 8" />
-                    </svg>
-                </div>
-                <h3 class="text-md font-medium text-gray-800">Match Schedule</h3>
-            </a>
         </div>
     </div>
 
@@ -273,7 +313,7 @@
                     <a href="{{ route('articles.index') }}" class="text-sm font-medium text-green-600 hover:text-green-700 flex items-center">
                         Voir tous
                         <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                         </svg>
                     </a>
                 </div>
@@ -437,7 +477,7 @@
                     <a href="{{ route('cities.index') }}" class="text-sm font-medium text-amber-600 hover:text-amber-700 flex items-center">
                         Voir toutes
                         <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                         </svg>
                     </a>
                 </div>
