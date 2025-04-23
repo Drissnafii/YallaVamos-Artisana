@@ -12,13 +12,23 @@
         <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover w-full h-full">
         <div class="absolute inset-0 bg-rose-600/70 backdrop-blur-sm"></div>
     @endif
-
-    <!-- Full-width greeting div -->
-    <div class="w-full h-full flex items-end z-10 relative">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8" style="padding-left: 120px; padding-bottom: 150px; padding-top: 60px;">
-            <p class="text-white/90 text-sm font-medium mb-1 drop-shadow-md">{{ now()->format('l, d F Y') }}</p>
-            <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">Bonjour, {{ Auth::user()->name }}</h1>
-            <p class="text-white/90 drop-shadow-md">Bienvenue sur votre tableau de bord Coupe du Monde 2030</p>
+    
+    <!-- Container for profile image and text content -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center pb-8 relative z-10">
+        <div class="flex items-center gap-6 ml-8">
+            <!-- Circular profile image -->
+            <div>
+                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}" alt="Profile Photo" class="w-full h-full object-cover">
+                </div>
+            </div>
+            
+            <!-- Text content -->
+            <div>
+                <p class="text-white/90 text-sm font-medium mb-1 drop-shadow-md">{{ now()->format('l, d F Y') }}</p>
+                <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">Bonjour, {{ Auth::user()->name }}</h1>
+                <p class="text-white/90 drop-shadow-md">Bienvenue sur votre tableau de bord Coupe du Monde 2030</p>
+            </div>
         </div>
     </div>
 </div>
@@ -481,7 +491,7 @@
                     <a href="{{ route('cities.show', $city) }}" class="group flex items-center p-2 rounded-lg hover:bg-amber-50 transition-colors">
                         <div class="w-12 h-12 rounded-lg overflow-hidden mr-3 flex-shrink-0">
                             @if(isset($city) && is_object($city) && isset($city->image))
-                                <img src="{{ asset($city->image) }}" alt="{{ $city->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                <img src="{{ asset($city->image) }}" alt="{{ $city->name }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-amber-100 text-amber-500 group-hover:bg-amber-200 transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
