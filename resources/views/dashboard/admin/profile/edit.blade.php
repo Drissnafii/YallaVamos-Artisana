@@ -4,11 +4,12 @@
 <div class="max-w-5xl mx-auto">
     <!-- Hero profile header with background image -->
     <div class="rounded-lg overflow-hidden mb-8">
-        <div class="bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-12 sm:px-10 relative">
+
+        <div class="bg-gradient-to-r from-gray-800 to-gray-900 px-6 py-12 sm:px-10 relative">
             <!-- Background image overlay - Default or user uploaded -->
             @if($user->background_image)
                 <img src="{{ Storage::url($user->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover w-full h-full">
-                <div class="absolute inset-0 backdrop-blur-sm bg-amber-500/20"></div>
+                <div class="absolute inset-0 backdrop-blur-sm bg-gray-900/40"></div>
             @else
                 <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover mix-blend-overlay opacity-20 w-full h-full">
             @endif

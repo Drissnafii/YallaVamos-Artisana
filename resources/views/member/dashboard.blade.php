@@ -4,11 +4,11 @@
 
 @section('full-width-content')
 <!-- Hero Section with Background Image -->
-<div class="relative bg-gradient-to-r from-amber-500 to-amber-600 h-80 overflow-hidden w-full">
+<div class="relative bg-gradient-to-r from-gray-800 to-gray-900 h-80 overflow-hidden w-full">
     <div class="absolute inset-0 bg-pattern opacity-10"></div>
     @if(Auth::user()->background_image)
         <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover w-full h-full">
-        <div class="absolute inset-0 backdrop-blur-sm bg-amber-500/20"></div>
+        <div class="absolute inset-0 backdrop-blur-sm bg-gray-900/40"></div>
     @else
         <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover mix-blend-overlay opacity-20 w-full h-full">
     @endif
