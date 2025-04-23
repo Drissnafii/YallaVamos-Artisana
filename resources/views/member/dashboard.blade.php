@@ -7,18 +7,19 @@
 <div class="relative bg-gradient-to-r from-amber-500 to-amber-600 h-80 overflow-hidden w-full">
     <div class="absolute inset-0 bg-pattern opacity-10"></div>
     @if(Auth::user()->background_image)
-        <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover mix-blend-overlay opacity-40 w-full h-full">
+        <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover w-full h-full">
+        <div class="absolute inset-0 backdrop-blur-sm bg-amber-500/20"></div>
     @else
         <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover mix-blend-overlay opacity-20 w-full h-full">
     @endif
     <div class="absolute inset-0 w-screen bg-gradient-to-t from-[#FAF9F5] via-transparent to-transparent"></div>
 
     <!-- Full-width greeting div -->
-    <div class="w-full h-full flex items-end">
+    <div class="w-full h-full flex items-end z-10 relative">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8" style="padding-left: 120px; padding-bottom: 150px; padding-top: 60px;">
-            <p class="text-white/80 text-sm font-medium mb-1">{{ now()->format('l, d F Y') }}</p>
-            <h1 class="text-4xl font-bold text-white mb-2">Bonjour, {{ Auth::user()->name }}</h1>
-            <p class="text-white/90">Bienvenue sur votre tableau de bord Coupe du Monde 2030</p>
+            <p class="text-white/90 text-sm font-medium mb-1 drop-shadow-md">{{ now()->format('l, d F Y') }}</p>
+            <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">Bonjour, {{ Auth::user()->name }}</h1>
+            <p class="text-white/90 drop-shadow-md">Bienvenue sur votre tableau de bord Coupe du Monde 2030</p>
         </div>
     </div>
 </div>
