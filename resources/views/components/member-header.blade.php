@@ -56,7 +56,7 @@
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1"
                                 style="display: none;">
 
-                                <a href="{{ route('member.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FDE8E9]/40" role="menuitem" tabindex="-1">
+                                    <a href="{{ route('member.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#FDE8E9]/40" role="menuitem" tabindex="-1">
                                     Your Profile
                                 </a>
 

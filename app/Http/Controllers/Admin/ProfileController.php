@@ -27,8 +27,8 @@ class ProfileController extends Controller
                 'user' => $user,
             ]);
         } else {
-            // For members, use the member profile view
-            return view('dashboard.member.profile.edit', [
+            // For members, use the member profile view in the new location
+            return view('member.profile.edit', [
                 'user' => $user,
             ]);
         }
