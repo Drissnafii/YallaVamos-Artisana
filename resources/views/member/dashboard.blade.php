@@ -6,7 +6,11 @@
 <!-- Hero Section with Background Image -->
 <div class="relative bg-gradient-to-r from-amber-500 to-amber-600 h-80 overflow-hidden w-full">
     <div class="absolute inset-0 bg-pattern opacity-10"></div>
-    <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover mix-blend-overlay opacity-20 w-full h-full">
+    @if(Auth::user()->background_image)
+        <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover mix-blend-overlay opacity-40 w-full h-full">
+    @else
+        <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover mix-blend-overlay opacity-20 w-full h-full">
+    @endif
     <div class="absolute inset-0 w-screen bg-gradient-to-t from-[#FAF9F5] via-transparent to-transparent"></div>
 
     <!-- Full-width greeting div -->

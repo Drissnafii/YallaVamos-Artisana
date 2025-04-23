@@ -98,12 +98,24 @@ class ProfileController extends Controller
         if ($request->hasFile('profile_photo')) {
             // Delete old profile photo if exists
             if ($user->profile_photo) {
-                Storage::delete($user->profile_photo);
+                Storage::disk('public')->delete($user->profile_photo);
             }
 
             // Store the new image
             $path = $request->file('profile_photo')->store('profile-photos', 'public');
             $user->profile_photo = $path;
+        }
+
+        // Handle background image upload
+        if ($request->hasFile('background_image')) {
+            // Delete old background image if exists
+            if ($user->background_image) {
+                Storage::disk('public')->delete($user->background_image);
+            }
+
+            // Store the new background image
+            $path = $request->file('background_image')->store('background-images', 'public');
+            $user->background_image = $path;
         }
 
         // Update password if provided

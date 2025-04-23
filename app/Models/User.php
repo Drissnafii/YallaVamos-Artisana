@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'role',
         'profile_photo',
+        'background_image',
     ];
 
     /**
@@ -63,6 +64,20 @@ class User extends Authenticatable
         }
 
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
+    }
+
+    /**
+     * Get the background image URL.
+     *
+     * @return string|null
+     */
+    public function getBackgroundImageUrlAttribute()
+    {
+        if ($this->background_image) {
+            return Storage::url($this->background_image);
+        }
+
+        return null;
     }
 
     /**

@@ -35,11 +35,12 @@ class UpdateProfileRequest extends FormRequest
                 'max:255',
             ],
             'profile_photo' => ['nullable', 'image', 'max:2048'],
+            'background_image' => ['nullable', 'image', 'max:4096'], // Allow slightly larger files for background images
         ];
 
         // The password field is optional, so we will just add the password update rules if the user is changing their password.
         if ($this->filled('password')) {
-            $rules['current_password'] = ['required', 'string', Password::defaults()];  
+            $rules['current_password'] = ['required', 'string', Password::defaults()];
             $rules['password'] = ['required', 'string', 'min:8', 'confirmed', 'different:current_password'];
             $rules['password_confirmation'] = ['required'];
         }
