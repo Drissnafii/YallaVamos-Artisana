@@ -4,7 +4,7 @@
 
 @section('full-width-content')
 <!-- Hero Section with Background Image -->
-<div class="relative bg-rose-600 h-80 overflow-hidden w-full">
+<div class="relative bg-rose-600 h-96 overflow-hidden w-full">
     @if(Auth::user()->background_image)
         <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover w-full h-full">
         <div class="absolute inset-0 bg-rose-600/60 backdrop-blur-sm"></div>
