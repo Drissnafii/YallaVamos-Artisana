@@ -2,9 +2,22 @@
 
 @section('content')
 <div class="max-w-5xl mx-auto">
-    <!-- Hero profile header - UNCHANGED as requested -->
+    <!-- Hero profile header with background image -->
     <div class="rounded-lg overflow-hidden mb-8">
         <div class="bg-gradient-to-r from-primary to-purple-700 px-6 py-12 sm:px-10 relative">
+            <!-- Background image overlay - Default or user uploaded -->
+            @if($user->background_image)
+                <img src="{{ Storage::url($user->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover mix-blend-overlay opacity-30 w-full h-full">
+            @endif
+
+            <!-- Background image upload button -->
+            <label for="background_image" class="absolute top-3 right-3 p-2 bg-black bg-opacity-50 rounded-full text-white cursor-pointer hover:bg-opacity-70 transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="sr-only">Change background</span>
+            </label>
+
             <div class="flex flex-col sm:flex-row items-start sm:items-end gap-6">
                 <!-- Profile image -->
                 <div class="relative group">
@@ -56,8 +69,9 @@
     <form method="POST" action="{{ route('admin.profile.update') }}" enctype="multipart/form-data" class="space-y-8">
         @csrf
 
-        <!-- Hidden file input for profile photo -->
+        <!-- Hidden file inputs -->
         <input type="file" id="profile_photo" name="profile_photo" class="hidden" accept="image/*">
+        <input type="file" id="background_image" name="background_image" class="hidden" accept="image/*">
 
         <!-- Personal Information Card -->
         <div class="bg-white shadow-sm rounded-lg overflow-hidden">
@@ -219,6 +233,28 @@
 
                     reader.onload = function(event) {
                         photoPreview.src = event.target.result;
+                    }
+
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+        }
+
+        // Handle background image selection and preview
+        const backgroundInput = document.getElementById('background_image');
+        const backgroundPreview = document.querySelector('.bg-gradient-to-r');
+
+        if (backgroundInput && backgroundPreview) {
+            backgroundInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        const overlayImage = document.createElement('img');
+                        overlayImage.src = event.target.result;
+                        overlayImage.alt = 'Profile Background';
+                        overlayImage.className = 'absolute inset-0 object-cover mix-blend-overlay opacity-30 w-full h-full';
+                        backgroundPreview.appendChild(overlayImage);
                     }
 
                     reader.readAsDataURL(e.target.files[0]);
