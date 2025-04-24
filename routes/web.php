@@ -59,15 +59,11 @@ Route::get('/matches', [MatcheController::class, 'index'])->name('matches.index'
 Route::get('/matches/{match}', [MatcheController::class, 'show'])->name('matches.show');
 
 // Travel and News
-Route::get('/travel', [TravelController::class, 'index'])->name('travel.index');
+
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
-
-Route::get('/accommodations', function () {
-    // You can return a view, redirect, or any other response here
-    return view('accommodations.index'); // Assuming you have a view named 'accommodations.index'
-})->name('accommodations.index');
-
-Route::post('/newsletter/subscribe', [NewsController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/news/archive', [NewsController::class, 'archive'])->name('news.archive');
+Route::get('/press-releases', [NewsController::class, 'pressReleases'])->name('press-releases');
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
 //=================================
 // Authenticated Routes

@@ -11,9 +11,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $cities = City::all();
-        $stadiums = Stadium::all();
-        $news = News::all();
+        // Limit to 3 items for each category
+        $cities = City::take(3)->get();
+        $stadiums = Stadium::take(3)->get();
+        $news = News::latest()->take(3)->get();
         return view('pages.home', compact('cities', 'stadiums', 'news'));
     }
 }

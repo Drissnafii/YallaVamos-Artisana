@@ -102,7 +102,7 @@ class AuthController extends \App\Http\Controllers\Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::route('index');
+        return Redirect::route('home');
     }
 
     public function adminDashboard(): View
