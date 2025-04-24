@@ -13,25 +13,25 @@
                         <!-- Hover Indicator -->
                         <div class="absolute rounded-md bg-white/20 transition-all duration-300 ease-out opacity-0 z-0" id="hover-indicator"></div>
 
-                        <a href="{{ auth()->check() ? '/member' : '/' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('/') || request()->is('member') ? 'text-white' : 'text-white/80 hover:text-white' }}">
+                        <a href="{{ auth()->check() ? '/member' : '/' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('/') || request()->is('member') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5' }}">
                             Home
                         </a>
-                        <a href="{{ auth()->check() ? '/member/cities' : '/cities' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('cities*') || request()->is('member/cities*') ? 'text-white' : 'text-white/80 hover:text-white' }}">
+                        <a href="{{ auth()->check() ? '/member/cities' : '/cities' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('cities*') || request()->is('member/cities*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5' }}">
                             Cities
                         </a>
-                        <a href="{{ auth()->check() ? '/member/stadiums' : '/stadiums' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('stadiums*') || request()->is('member/stadiums*') ? 'text-white' : 'text-white/80 hover:text-white' }}">
+                        <a href="{{ auth()->check() ? '/member/stadiums' : '/stadiums' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('stadiums*') || request()->is('member/stadiums*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5' }}">
                             Stadiums
                         </a>
-                        <a href="{{ auth()->check() ? '/member/match-schedule' : '/match-schedule' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('match-schedule*') || request()->is('member/match-schedule*') ? 'text-white' : 'text-white/80 hover:text-white' }}">
+                        <a href="{{ auth()->check() ? '/member/match-schedule' : '/match-schedule' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('match-schedule*') || request()->is('member/match-schedule*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5' }}">
                             Match Schedule
                         </a>
-                        <a href="{{ auth()->check() ? '/member/travel' : '/travel' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('travel*') || request()->is('member/travel*') ? 'text-white' : 'text-white/80 hover:text-white' }}">
+                        <a href="{{ auth()->check() ? '/member/travel' : '/travel' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('travel*') || request()->is('member/travel*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5' }}">
                             Travel
                         </a>
-                        <a href="{{ auth()->check() ? '/member/news' : '/news' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('news*') || request()->is('member/news*') ? 'text-white' : 'text-white/80 hover:text-white' }}">
+                        <a href="{{ auth()->check() ? '/member/news' : '/news' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('news*') || request()->is('member/news*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5' }}">
                             News
                         </a>
-                        <a href="{{ auth()->check() ? '/member/favorites' : '/favorites' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('favorites*') || request()->is('member/favorites*') ? 'text-white' : 'text-white/80 hover:text-white' }}">
+                        <a href="{{ auth()->check() ? '/member/favorites' : '/favorites' }}" class="nav-link px-3 py-2 rounded-md text-sm font-medium z-10 relative {{ request()->is('favorites*') || request()->is('member/favorites*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5' }}">
                             Favorites
                         </a>
                         <!-- Login/Logout Button (Desktop) -->
@@ -63,25 +63,25 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden overflow-hidden transition-all duration-500 max-h-0 bg-black/30 backdrop-blur-md">
             <div class="space-y-1 px-4 pb-3 pt-2">
-                <a href="{{ auth()->check() ? '/member' : '/' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('/') || request()->is('member') ? 'text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                <a href="{{ auth()->check() ? '/member' : '/' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('/') || request()->is('member') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Home
                 </a>
-                <a href="{{ auth()->check() ? '/member/cities' : '/cities' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('cities*') || request()->is('member/cities*') ? 'text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                <a href="{{ auth()->check() ? '/member/cities' : '/cities' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('cities*') || request()->is('member/cities*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Cities
                 </a>
-                <a href="{{ auth()->check() ? '/member/stadiums' : '/stadiums' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('stadiums*') || request()->is('member/stadiums*') ? 'text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                <a href="{{ auth()->check() ? '/member/stadiums' : '/stadiums' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('stadiums*') || request()->is('member/stadiums*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Stadiums
                 </a>
-                <a href="{{ auth()->check() ? '/member/match-schedule' : '/match-schedule' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('match-schedule*') || request()->is('member/match-schedule*') ? 'text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                <a href="{{ auth()->check() ? '/member/match-schedule' : '/match-schedule' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('match-schedule*') || request()->is('member/match-schedule*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Match Schedule
                 </a>
-                <a href="{{ auth()->check() ? '/member/travel' : '/travel' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('travel*') || request()->is('member/travel*') ? 'text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                <a href="{{ auth()->check() ? '/member/travel' : '/travel' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('travel*') || request()->is('member/travel*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Travel
                 </a>
-                <a href="{{ auth()->check() ? '/member/news' : '/news' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('news*') || request()->is('member/news*') ? 'text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                <a href="{{ auth()->check() ? '/member/news' : '/news' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('news*') || request()->is('member/news*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     News
                 </a>
-                <a href="{{ auth()->check() ? '/member/favorites' : '/favorites' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('favorites*') || request()->is('member/favorites*') ? 'text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                <a href="{{ auth()->check() ? '/member/favorites' : '/favorites' }}" class="block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 {{ request()->is('favorites*') || request()->is('member/favorites*') ? 'text-white font-bold bg-white/10' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     Favorites
                 </a>
                 <!-- Login/Logout Button (Mobile) -->
