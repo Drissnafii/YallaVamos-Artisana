@@ -17,12 +17,12 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($cities as $city)
             <div class="card overflow-hidden">
-                <img src="{{ $city['image'] }}" alt="{{ $city['name'] }}" class="w-full h-48 object-cover">
+                <img src="{{ asset('storage/' . $city->image) }}" alt="{{ $city->name }}" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">{{ $city['name'] }}</h3>
-                    <p class="text-muted-foreground mb-4">{{ $city['description'] }}</p>
+                    <h3 class="text-xl font-semibold mb-2">{{ $city->name }}</h3>
+                    <p class="text-muted-foreground mb-4">{{ \Illuminate\Support\Str::limit($city->description, 150) }}</p>
                     <div class="flex justify-between items-center">
-                        <a href="/cities/{{ $city['id'] }}" class="btn-primary">Explore</a>
+                        <a href="/cities/{{ $city->id }}" class="btn-primary">Explore</a>
                         <button class="text-muted-foreground hover:text-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
@@ -33,6 +33,23 @@
             </div>
             @endforeach
         </div>
+
+        @if(isset($showLoginMessage) && $showLoginMessage)
+        <div class="mt-12 bg-secondary/10 p-8 rounded-lg text-center">
+            <h3 class="text-2xl font-semibold mb-4">Want to see all host cities?</h3>
+            <p class="text-muted-foreground mb-6">Sign in or create an account to explore all cities hosting the 2030 FIFA World Cup!</p>
+            <div class="flex justify-center gap-4">
+                <a href="{{ route('login') }}" class="btn-primary">Login</a>
+                <a href="{{ route('register') }}" class="btn-secondary">Register</a>
+            </div>
+        </div>
+        @endif
+
+        @if(isset($isAuthenticated) && $isAuthenticated)
+        <div class="mt-8">
+            {{ $cities->links() }}
+        </div>
+        @endif
     </div>
 </div>
 

@@ -27,7 +27,7 @@
     <!-- Add manifest for PWA support -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
 </head>
-<body class="bg-background text-foreground antialiased min-h-screen flex flex-col">
+<body class="bg-transparent backdrop-blur-lg text-foreground antialiased min-h-screen flex flex-col">
 
     {{-- Using the Header Component from views/components --}}
     <x-header />

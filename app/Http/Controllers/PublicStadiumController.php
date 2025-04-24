@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Stadium;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PublicStadiumController extends Controller
 {
@@ -23,9 +24,19 @@ class PublicStadiumController extends Controller
             });
         }
 
-        $stadiums = $query->orderBy('name')->paginate(10);
+        // Check if the user is authenticated
+        $isAuthenticated = Auth::check();
 
-        return view('pages.stadiums.index', compact('stadiums'));
+        // If not authenticated, limit to 3 stadiums
+        if (!$isAuthenticated) {
+            $stadiums = $query->orderBy('name')->take(3)->get();
+            $showLoginMessage = true;
+        } else {
+            $stadiums = $query->orderBy('name')->paginate(10);
+            $showLoginMessage = false;
+        }
+
+        return view('pages.stadiums.index', compact('stadiums', 'isAuthenticated', 'showLoginMessage'));
     }
 
     /**

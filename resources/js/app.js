@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Variables
     const header = document.getElementById('main-header');
+    const headerNav = document.getElementById('header-nav');
     const navContainer = document.getElementById('nav-container');
     const navLinks = document.querySelectorAll('.nav-link');
     const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -9,6 +10,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const hoverIndicator = document.getElementById('hover-indicator');
     let lastScrollY = window.scrollY;
     let isMenuOpen = false;
+    let isOverWhiteBackground = false;
+    const whiteThreshold = 0.9; // Brightness threshold (0-1)
+
+    // Apply initial gradient background when at the top
+    function applyInitialHeaderBackground() {
+        if (window.scrollY <= 50 && headerNav) {
+            // Darker gradient for the initial view at top of page
+            headerNav.style.background = 'linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5))';
+            headerNav.style.backdropFilter = 'blur(10px)';
+            headerNav.style.borderColor = 'transparent'; // Hide border at top
+        } else {
+            // Regular background detection when scrolling
+            updateHeaderBackground();
+        }
+    }
+
+    // Function to detect white backgrounds
+    function isColorWhite(rgb) {
+        if (!rgb || rgb === 'rgba(0, 0, 0, 0)' || rgb === 'transparent') return false;
+        const [r, g, b] = rgb.match(/\d+/g).map(Number);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness > 255 * whiteThreshold;
+    }
 
     // Handle hover effect for navigation items
     navLinks.forEach(link => {
@@ -51,6 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         lastScrollY = currentScrollY;
+
+        // Apply appropriate header background based on scroll position
+        applyInitialHeaderBackground();
     });
 
     // Mobile menu toggle
@@ -102,7 +129,86 @@ document.addEventListener('DOMContentLoaded', function() {
                 </svg>
             `;
         }
+
+        // Update header background on resize
+        applyInitialHeaderBackground();
     });
+
+    // Function to update header background based on section below
+    function updateHeaderBackground() {
+        if (!header || !headerNav) return;
+
+        // Always start with a dark header background
+        let headerBg = 'rgba(0, 0, 0, 0.85)'; // Very dark with high opacity
+
+        const headerRect = header.getBoundingClientRect();
+        const headerBottom = headerRect.bottom;
+
+        // Check elements directly below the header
+        const elementsBelow = document.elementsFromPoint(
+            window.innerWidth / 2,
+            headerBottom + 5
+        );
+
+        // Find first non-header element with background
+        const sectionBelow = elementsBelow.find(el => {
+            return !el.closest('header') &&
+                  window.getComputedStyle(el).backgroundColor !== 'rgba(0, 0, 0, 0)' &&
+                  window.getComputedStyle(el).backgroundColor !== 'transparent';
+        });
+
+        if (sectionBelow) {
+            const sectionBgColor = window.getComputedStyle(sectionBelow).backgroundColor;
+            const isWhite = isColorWhite(sectionBgColor);
+
+            if (isWhite) {
+                // If section below has white background, ensure dark header
+                headerNav.style.backgroundColor = headerBg;
+                headerNav.style.background = headerBg; // Override any gradient
+            } else {
+                // If section below has a dark/colored background, make header transparent
+                headerNav.style.backgroundColor = 'transparent';
+                headerNav.style.background = 'transparent'; // Override any gradient
+            }
+
+            // Always maintain backdrop blur and subtle border
+            headerNav.style.backdropFilter = 'blur(10px)';
+            headerNav.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+
+            // Store current background state
+            isOverWhiteBackground = isWhite;
+        }
+
+        // Force all navigation links to be white text
+        navLinks.forEach(link => {
+            // Remove any text color classes that might conflict
+            link.classList.remove('text-gray-900', '!text-gray-900');
+            // Add white text with !important to override any other styles
+            link.classList.add('!text-white');
+        });
+
+        // Also fix mobile menu links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.classList.remove('text-gray-900', '!text-gray-900');
+            link.classList.add('!text-white');
+        });
+    }
+
+    // Initial check for header background
+    applyInitialHeaderBackground();
+
+    // Recheck on page load when images and other resources are fully loaded
+    window.addEventListener('load', applyInitialHeaderBackground);
+
+    // Disable the conflicting detectBackgroundColor function
+    function detectBackgroundColor() {
+        // This function is now empty to prevent conflicts
+        return;
+    }
+
+    window.addEventListener('scroll', detectBackgroundColor);
+    window.addEventListener('resize', detectBackgroundColor);
+    detectBackgroundColor(); // Initial check
 });
 
 // particles.js implementation for Morocco-themed animation - restricted to login/register pages
@@ -269,47 +375,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Start animation
         animate();
-    }
-});
-
-
-// Handle mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', function() {
-            if (mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.remove('hidden');
-                mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
-            } else {
-                mobileMenu.style.maxHeight = '0';
-                setTimeout(function() {
-                    mobileMenu.classList.add('hidden');
-                }, 500);
-            }
-        });
-    }
-
-    // Handle hover indicator for desktop navigation
-    const navLinks = document.querySelectorAll('.nav-link');
-    const hoverIndicator = document.getElementById('hover-indicator');
-
-    if (navLinks.length && hoverIndicator) {
-        navLinks.forEach(link => {
-            link.addEventListener('mouseenter', function() {
-                const rect = this.getBoundingClientRect();
-                hoverIndicator.style.width = rect.width + 'px';
-                hoverIndicator.style.height = rect.height + 'px';
-                hoverIndicator.style.left = (rect.left - this.parentElement.getBoundingClientRect().left) + 'px';
-                hoverIndicator.style.top = (rect.top - this.parentElement.getBoundingClientRect().top) + 'px';
-                hoverIndicator.style.opacity = '1';
-            });
-
-            link.addEventListener('mouseleave', function() {
-                hoverIndicator.style.opacity = '0';
-            });
-        });
     }
 });

@@ -17,19 +17,19 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($stadiums as $stadium)
             <div class="card overflow-hidden">
-                <img src="{{ $stadium['image'] }}" alt="{{ $stadium['name'] }}" class="w-full h-48 object-cover">
+                <img src="{{ asset('storage/' . $stadium->image) }}" alt="{{ $stadium->name }}" class="w-full h-48 object-cover">
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">{{ $stadium['name'] }}</h3>
+                    <h3 class="text-xl font-semibold mb-2">{{ $stadium->name }}</h3>
                     <div class="flex items-center text-sm text-muted-foreground mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                         </svg>
-                        {{ $stadium['city'] }}
+                        {{ $stadium->city->name ?? 'Location not available' }}
                     </div>
-                    <p class="text-muted-foreground mb-4">{{ $stadium['description'] }}</p>
+                    <p class="text-muted-foreground mb-4">{{ \Illuminate\Support\Str::limit($stadium->description, 150) }}</p>
                     <div class="flex justify-between items-center">
-                        <a href="/stadiums/{{ $stadium['id'] }}" class="btn-primary">View Details</a>
+                        <a href="/stadiums/{{ $stadium->id }}" class="btn-primary">View Details</a>
                         <button class="text-muted-foreground hover:text-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
@@ -40,6 +40,23 @@
             </div>
             @endforeach
         </div>
+
+        @if(isset($showLoginMessage) && $showLoginMessage)
+        <div class="mt-12 bg-secondary/10 p-8 rounded-lg text-center">
+            <h3 class="text-2xl font-semibold mb-4">Want to see all stadiums?</h3>
+            <p class="text-muted-foreground mb-6">Sign in or create an account to explore all venues hosting the 2030 FIFA World Cup!</p>
+            <div class="flex justify-center gap-4">
+                <a href="{{ route('login') }}" class="btn-primary">Login</a>
+                <a href="{{ route('register') }}" class="btn-secondary">Register</a>
+            </div>
+        </div>
+        @endif
+
+        @if(isset($isAuthenticated) && $isAuthenticated)
+        <div class="mt-8">
+            {{ $stadiums->links() }}
+        </div>
+        @endif
     </div>
 </div>
 

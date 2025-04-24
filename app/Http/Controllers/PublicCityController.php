@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PublicCityController extends Controller
 {
@@ -23,9 +24,19 @@ class PublicCityController extends Controller
             });
         }
 
-        $cities = $query->orderBy('name')->paginate(10);
+        // Check if the user is authenticated
+        $isAuthenticated = Auth::check();
 
-        return view('pages.cities.index', compact('cities'));
+        // If not authenticated, limit to 3 cities
+        if (!$isAuthenticated) {
+            $cities = $query->orderBy('name')->take(3)->get();
+            $showLoginMessage = true;
+        } else {
+            $cities = $query->orderBy('name')->paginate(10);
+            $showLoginMessage = false;
+        }
+
+        return view('pages.cities.index', compact('cities', 'isAuthenticated', 'showLoginMessage'));
     }
 
     /**
