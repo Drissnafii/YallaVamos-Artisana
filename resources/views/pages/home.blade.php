@@ -95,32 +95,67 @@
                         <div class="absolute inset-0 pointer-events-none">
                             <!-- Casablanca marker - adjusted position -->
                             <div class="absolute top-[38%] left-[75%]">
-                                <div class="h-3 w-3 bg-red-500 rounded-full animate-ping"></div>
-                                <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-3 w-3 bg-red-500 rounded-full animate-ping"></div>
+                                    <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Casablanca
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Marrakech marker - adjusted position -->
                             <div class="absolute top-[52%] left-[60%]">
-                                <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 0.5s"></div>
-                                <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 0.5s"></div>
+                                    <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Marrakech
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Rabat marker - adjusted position -->
                             <div class="absolute top-[32%] left-[53%]">
-                                <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 1s"></div>
-                                <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 1s"></div>
+                                    <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Rabat
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Fez marker - new central point -->
                             <div class="absolute top-[45%] left-[65%]">
-                                <div class="h-3 w-3 bg-green-500 rounded-full animate-ping" style="animation-delay: 1.5s"></div>
-                                <div class="h-2 w-2 bg-green-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-3 w-3 bg-green-500 rounded-full animate-ping" style="animation-delay: 1.5s"></div>
+                                    <div class="h-2 w-2 bg-green-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-green-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Fez
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-green-600"></div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Center point between all markers -->
                             <div class="absolute top-[40.6%] left-[62.6%]">
-                                <div class="h-4 w-4 bg-yellow-500 rounded-full animate-pulse"></div>
-                                <div class="h-3 w-3 bg-yellow-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-4 w-4 bg-yellow-500 rounded-full animate-pulse"></div>
+                                    <div class="h-3 w-3 bg-yellow-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-yellow-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Stadium Hub
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-yellow-600"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
