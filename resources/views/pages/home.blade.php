@@ -100,7 +100,7 @@
                                     <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
                                     <!-- Tooltip -->
                                     <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
-                                        Oujda   
+                                        Oujda
                                         <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
                                     </div>
                                 </div>
