@@ -77,18 +77,18 @@
             </div>
 
             <!-- Map Side - Right (Strictly contained) -->
-            <div class="w-full lg:w-1/2 flex justify-center items-center mt-8 lg:mt-0 h-80 lg:h-96 relative overflow-hidden">
-                <!-- The key is this wrapper with overflow-hidden and position relative -->
+            <div class="w-full lg:w-1/2 flex justify-center items-center mt-8 lg:mt-0 h-80 lg:h-96 relative overflow-visible">
+                <!-- The key is this wrapper with overflow-visible (changed from overflow-hidden) -->
                 <div class="absolute inset-0 flex items-start justify-center">
                     <!-- Decorative background for the map -->
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black opacity-30"></div>
 
-                    <!-- Morocco Map with contained dimensions - zoomed by 30% and positioned higher -->
-                    <div class="relative max-w-full max-h-full">
+                    <!-- Morocco Map with contained dimensions - positioned to appear below the video section -->
+                    <div class="relative max-w-full max-h-full" style="z-index: 5;">
                         <img
                             src="{{ asset('images/ma.svg') }}"
                             alt="Morocco Map"
-                            class="h-auto w-auto max-h-full max-w-full object-contain transform scale-130 -translate-y-12"
+                            class="h-auto w-auto max-h-full max-w-full object-contain transform scale-[1.1]"
                             style="filter: brightness(1.3) contrast(1.4) drop-shadow(0 0 12px rgba(220, 38, 38, 0.4));">
 
                         <!-- City markers - repositioned to appear correctly on the map -->
@@ -100,7 +100,7 @@
                                     <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
                                     <!-- Tooltip -->
                                     <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
-                                        Casablanca
+                                        Oujda   
                                         <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
                                     </div>
                                 </div>
