@@ -26,47 +26,104 @@
     </div>
 </section>
 
-<!-- Introduction Section - IMPROVED WITH SPOTIFY DESIGN -->
-<section class="py-16 bg-gradient-to-b from-black to-gray-900 text-white">
-    <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto">
-            <!-- Simple heading with subtle accent -->
-            <div class="mb-8 flex items-center justify-center">
-                <div class="h-1 w-12 bg-red-500 mr-4"></div>
-                <h2 class="text-3xl font-bold">Welcome to Morocco's World Cup</h2>
-                <div class="h-1 w-12 bg-red-500 ml-4"></div>
-            </div>
+<!-- Introduction Section with Morocco Map SVG on Right Side - Properly Contained -->
+<section class="py-16 bg-gradient-to-b from-black to-gray-900 text-white overflow-hidden relative">
+    <!-- Decorative blur effects -->
+    <div class="absolute top-0 right-0 w-72 h-72 bg-red-500 rounded-full mix-blend-multiply filter blur-5xl opacity-20 animate-blob"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-5xl opacity-15 animate-blob animation-delay-2000"></div>
 
-            <!-- Card with subtle glass effect -->
-            <div class="p-6 rounded-lg bg-white bg-opacity-5 backdrop-blur-sm hover:bg-opacity-10 transition-all duration-300">
-                <p class="text-gray-300 mb-6 leading-relaxed">
-                    Your comprehensive resource for exploring Morocco as it prepares to host the 2030 FIFA World Cup. Discover breathtaking venues, vibrant host cities, and everything you need to plan your unforgettable World Cup experience.
-                </p>
+    <div class="container mx-auto px-4 relative">
+        <div class="flex flex-col lg:flex-row items-start gap-8 relative">
+            <!-- Content Side - Left -->
+            <div class="w-full lg:w-1/2 z-10 lg:ml-24 flex flex-col justify-center lg:mt-16">
+                <!-- Heading with subtle accent -->
+                <div class="mb-8 flex items-center">
+                    <div class="h-1 w-16 bg-red-500 mr-4"></div>
+                    <h2 class="text-4xl font-bold">Welcome to Morocco's World Cup</h2>
+                </div>
 
-                <!-- Interactive elements -->
-                <div class="flex flex-wrap justify-center gap-4 mt-8">
-                    <a href="/about" class="inline-flex items-center px-5 py-2 rounded-full bg-red-500 bg-opacity-20 hover:bg-opacity-30 text-red-400 text-sm font-medium transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <!-- Card with subtle glass effect -->
+                <div class="p-6 rounded-lg bg-white bg-opacity-5 backdrop-blur-sm hover:bg-opacity-10 transition-all duration-300">
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Your comprehensive resource for exploring Morocco as it prepares to host the 2030 FIFA World Cup. Discover breathtaking venues, vibrant host cities, and everything you need to plan your unforgettable World Cup experience.
+                    </p>
+
+                    <!-- Interactive elements -->
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <a href="/about" class="inline-flex items-center px-5 py-2 rounded-full bg-red-500 bg-opacity-20 hover:bg-opacity-30 text-red-400 text-sm font-medium transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            About Morocco 2030
+                        </a>
+                        <a href="/explore" class="inline-flex items-center px-5 py-2 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 text-white text-sm font-medium transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                            </svg>
+                            Interactive Map
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Simple indicator for scrolling - Only visible on mobile -->
+                <div class="mt-10 text-center lg:hidden">
+                    <div class="inline-flex flex-col items-center text-gray-400 text-xs space-y-3">
+                        <span>Scroll to explore</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                         </svg>
-                        About Morocco 2030
-                    </a>
-                    <a href="/explore" class="inline-flex items-center px-5 py-2 rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 text-white text-sm font-medium transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1.998 1.998 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                        </svg>
-                        Interactive Map
-                    </a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Simple indicator for scrolling -->
-            <div class="mt-10 text-center">
-                <div class="inline-flex flex-col items-center text-gray-400 text-xs">
-                    <span>Scroll to explore</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mt-1 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
+            <!-- Map Side - Right (Strictly contained) -->
+            <div class="w-full lg:w-1/2 flex justify-center items-center mt-8 lg:mt-0 h-80 lg:h-96 relative overflow-hidden">
+                <!-- The key is this wrapper with overflow-hidden and position relative -->
+                <div class="absolute inset-0 flex items-start justify-center">
+                    <!-- Decorative background for the map -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black opacity-30"></div>
+
+                    <!-- Morocco Map with contained dimensions - zoomed by 30% and positioned higher -->
+                    <div class="relative max-w-full max-h-full">
+                        <img
+                            src="{{ asset('images/ma.svg') }}"
+                            alt="Morocco Map"
+                            class="h-auto w-auto max-h-full max-w-full object-contain transform scale-130 -translate-y-12"
+                            style="filter: brightness(1.3) contrast(1.4) drop-shadow(0 0 12px rgba(220, 38, 38, 0.4));">
+
+                        <!-- City markers - repositioned to appear correctly on the map -->
+                        <div class="absolute inset-0 pointer-events-none">
+                            <!-- Casablanca marker - adjusted position -->
+                            <div class="absolute top-[38%] left-[75%]">
+                                <div class="h-3 w-3 bg-red-500 rounded-full animate-ping"></div>
+                                <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                            </div>
+
+                            <!-- Marrakech marker - adjusted position -->
+                            <div class="absolute top-[52%] left-[60%]">
+                                <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 0.5s"></div>
+                                <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                            </div>
+
+                            <!-- Rabat marker - adjusted position -->
+                            <div class="absolute top-[32%] left-[53%]">
+                                <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 1s"></div>
+                                <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                            </div>
+
+                            <!-- Fez marker - new central point -->
+                            <div class="absolute top-[45%] left-[65%]">
+                                <div class="h-3 w-3 bg-green-500 rounded-full animate-ping" style="animation-delay: 1.5s"></div>
+                                <div class="h-2 w-2 bg-green-600 rounded-full absolute top-0.5 left-0.5"></div>
+                            </div>
+
+                            <!-- Center point between all markers -->
+                            <div class="absolute top-[40.6%] left-[62.6%]">
+                                <div class="h-4 w-4 bg-yellow-500 rounded-full animate-pulse"></div>
+                                <div class="h-3 w-3 bg-yellow-600 rounded-full absolute top-0.5 left-0.5"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
