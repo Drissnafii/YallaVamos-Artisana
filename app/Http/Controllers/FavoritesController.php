@@ -21,7 +21,7 @@ class FavoritesController extends Controller
     public function index()
     {
         // Implementation for the public favorites page
-        return view('favorites.index');
+        return view('pages.favorites.index');
     }
 
     /**

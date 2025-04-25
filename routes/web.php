@@ -7,6 +7,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MapController;
 use App\Http\Controllers\MatcheController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PublicCityController;
@@ -36,6 +37,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Public Articles Routes
 Route::get('/articles', [PublicArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article}', [PublicArticleController::class, 'show'])->name('articles.show');
+
+// Interactive Map
+Route::get('/interactive-map', [MapController::class, 'index'])->name('interactive-map');
+
+// Favorites (Public access)
+Route::get('/favorites', [FavoritesController::class, 'index'])->name('favorites.index');
 
 // Authentication Routes
 Route::controller(AuthController::class)->group(function () {
@@ -70,9 +77,7 @@ Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 //=================================
 
 Route::middleware(['auth'])->group(function () {
-    // Favorites Management
-    Route::get('/favorites', [FavoritesController::class, 'index'])->name('favorites.index');
-    // Add POST and DELETE routes for favorites if required
+    // Add authenticated favorites actions like toggle, add, remove
 });
 
 Route::middleware(['auth', 'verified'])->prefix('member')->name('member.')->group(function () {
