@@ -107,6 +107,7 @@ Route::middleware(['auth', 'verified'])->prefix('member')->name('member.')->grou
     // Member Travel Routes
     Route::get('travel', [MemberTravelController::class, 'index'])->name('travel.index');
     Route::get('travel/accommodations', [MemberTravelController::class, 'accommodations'])->name('travel.accommodations');
+    Route::get('travel/accommodations/{accommodation}', [MemberTravelController::class, 'showAccommodation'])->name('travel.accommodation.show');
     Route::get('travel/transportation', [MemberTravelController::class, 'transportation'])->name('travel.transportation');
     Route::get('travel/tips', [MemberTravelController::class, 'tips'])->name('travel.tips');
 
