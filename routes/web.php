@@ -55,8 +55,7 @@ Route::controller(AuthController::class)->group(function () {
 
 // Public Cities Routes
 Route::get('/cities', [PublicCityController::class, 'index'])->name('cities.index');
-Route::get('/cities/{city}', [PublicCityController::class, 'show'])->name('cities.show');
-
+Route::get('/cities/{city}', [PublicCityController::class, 'show'])->middleware('auth')->name('cities.show');
 
 Route::get('/stadiums', [PublicStadiumController::class, 'index'])->name('stadiums.index');
 Route::get('/stadiums/{stadium}', [PublicStadiumController::class, 'show'])->name('stadiums.show');
