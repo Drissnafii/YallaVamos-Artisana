@@ -172,7 +172,7 @@
     </div>
 
     <!-- Team Management Section -->
-    <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="mt-8 bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Teams Management</h3>
             <a href="{{ url('/admin/teams/create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -180,170 +180,85 @@
             </a>
         </div>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="min-w-full">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Team
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Country
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Confederation
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            FIFA Ranking
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Status
                         </th>
-                        <th scope="col" class="relative px-6 py-3">
+                        <th scope="col" class="relative px-6 py-3 text-right">
                             <span class="sr-only">Actions</span>
+                            Actions
                         </th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <!-- Example Team 1 -->
+                <tbody class="bg-white">
+                    @forelse($teams ?? [] as $team)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10">
-                                    <img class="h-10 w-10 rounded-full" src="{{ asset('images/flags/morocco.png') }}" alt="Morocco">
+                                    <img class="h-10 w-10 rounded-full" src="{{ $team->flag ? asset('storage/' . $team->flag) : asset('images/flags/placeholder.png') }}" alt="{{ $team->name }}">
                                 </div>
                                 <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Morocco</div>
-                                    <div class="text-sm text-gray-500">The Atlas Lions</div>
+                                    <div class="text-sm font-medium text-gray-900">{{ $team->name }}</div>
+                                    @if($team->description)
+                                    <div class="text-sm text-gray-500">{{ \Illuminate\Support\Str::limit($team->description, 30) }}</div>
+                                    @endif
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">Morocco</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">CAF</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            13
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($team->name == 'Morocco')
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                 Host Nation
                             </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                            <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
-                        </td>
-                    </tr>
-                    <!-- Example Team 2 -->
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10">
-                                    <img class="h-10 w-10 rounded-full" src="{{ asset('images/flags/brazil.png') }}" alt="Brazil">
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Brazil</div>
-                                    <div class="text-sm text-gray-500">Seleção</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">Brazil</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">CONMEBOL</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            5
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                            @elseif($team->is_qualified)
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                                 Qualified
                             </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                            <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
-                        </td>
-                    </tr>
-                    <!-- Example Team 3 -->
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10">
-                                    <img class="h-10 w-10 rounded-full" src="{{ asset('images/flags/spain.png') }}" alt="Spain">
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">Spain</div>
-                                    <div class="text-sm text-gray-500">La Roja</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">Spain</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">UEFA</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            7
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                            @else
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
                                 Qualifying
                             </span>
+                            @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                            <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                            <a href="{{ url('/admin/teams/' . $team->id . '/edit') }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
+                            <form action="{{ url('/admin/teams/' . $team->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this team?')">Delete</button>
+                            </form>
                         </td>
                     </tr>
-                    <!-- Replace with dynamic data from your database -->
+                    @empty
+                    <tr>
+                        <td colspan="3" class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-500">
+                            No teams found. <a href="{{ url('/admin/teams/create') }}" class="text-indigo-600 hover:text-indigo-900">Create your first team</a>.
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
-        <div class="bg-gray-50 px-4 py-3 border-t border-gray-200 sm:px-6">
+        <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
             <div class="flex justify-between">
-                <div class="flex-1 flex justify-between sm:hidden">
-                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                        Previous
-                    </a>
-                    <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                        Next
-                    </a>
-                </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
+                        @if(isset($teams) && method_exists($teams, 'total'))
                         <p class="text-sm text-gray-700">
-                            Showing <span class="font-medium">1</span> to <span class="font-medium">3</span> of <span class="font-medium">{{ $teamCount ?? '0' }}</span> teams
+                            Showing <span class="font-medium">{{ $teams->firstItem() ?? 0 }}</span> to <span class="font-medium">{{ $teams->lastItem() ?? 0 }}</span> of <span class="font-medium">{{ $teams->total() ?? 0 }}</span> teams
                         </p>
+                        @endif
                     </div>
                     <div>
-                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Previous</span>
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                            <a href="#" aria-current="page" class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                                1
-                            </a>
-                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                2
-                            </a>
-                            <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                3
-                            </a>
-                            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Next</span>
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                        </nav>
+                        @if(isset($teams) && method_exists($teams, 'links'))
+                            {{ $teams->links() }}
+                        @endif
                     </div>
                 </div>
             </div>

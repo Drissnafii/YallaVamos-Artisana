@@ -109,11 +109,21 @@ class AuthController extends \App\Http\Controllers\Controller
     {
         $cityCount = City::count();
         $stadiumCount = Stadium::count();
+        $teamCount = \App\Models\Team::count();
+        $articleCount = Article::count();
+        $matchCount = MatchX::count();
+
+        // Fetch only 3 teams per page
+        $teams = \App\Models\Team::orderBy('name')->paginate(3);
 
         return view('dashboard.admin.index', [
             'user' => Auth::user(),
             'cityCount' => $cityCount,
-            'stadiumCount' => $stadiumCount
+            'stadiumCount' => $stadiumCount,
+            'teamCount' => $teamCount,
+            'articleCount' => $articleCount,
+            'matchCount' => $matchCount,
+            'teams' => $teams
         ]);
     }
 
