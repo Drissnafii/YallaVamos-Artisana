@@ -17,13 +17,13 @@ class MemberArticleController extends Controller
         /** @var \App\Models\User|\Illuminate\Contracts\Auth\Authenticatable $user */
         $user = Auth::user();
         $articles = $user->articles()->latest()->get();
-        return view('dashboard.member.articles.index', compact('articles'));
+        return view('member.articles.index', compact('articles'));
     }
 
     public function create()
     {
         $categories = \App\Models\Category::all();
-        return view('dashboard.member.articles.create', compact('categories'));
+        return view('member.articles.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -53,14 +53,14 @@ class MemberArticleController extends Controller
     public function show(Article $article)
     {
         $this->authorize('view', $article);
-        return view('dashboard.member.articles.show', compact('article'));
+        return view('member.articles.show', compact('article'));
     }
 
     public function edit(Article $article)
     {
         $this->authorize('update', $article);
         $categories = \App\Models\Category::all();
-        return view('dashboard.member.articles.edit', compact('article', 'categories'));
+        return view('member.articles.edit', compact('article', 'categories'));
     }
 
     public function update(Request $request, Article $article)
