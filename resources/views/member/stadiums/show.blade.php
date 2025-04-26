@@ -138,41 +138,6 @@
             @endif
         </div>
 
-        <!-- Stadium Facilities -->
-        <div class="border-t border-gray-200 px-6 py-6">
-            <h2 class="text-lg font-medium text-gray-900 mb-4">Stadium Facilities</h2>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-primary mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p class="text-sm font-medium">Information Points</p>
-                </div>
-
-                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-primary mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                    </svg>
-                    <p class="text-sm font-medium">Luggage Storage</p>
-                </div>
-
-                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-primary mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                    </svg>
-                    <p class="text-sm font-medium">Photo Points</p>
-                </div>
-
-                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mx-auto text-primary mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
-                    <p class="text-sm font-medium">Shopping</p>
-                </div>
-            </div>
-        </div>
-
         <!-- Member Exclusive Access -->
         <div class="border-t border-gray-200 px-6 py-6 bg-blue-50">
             <h2 class="text-lg font-medium text-blue-900 mb-2">Member Exclusive Access</h2>

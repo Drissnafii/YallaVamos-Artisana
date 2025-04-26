@@ -102,16 +102,16 @@
             View All Accommodations
         </a>
     </div>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         @if($accommodations && $accommodations->count() > 0)
             @foreach($accommodations->take(3) as $accommodation)
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="h-48 bg-gray-200 relative">
-                    @if($accommodation->image_path)
-                    <img 
-                        src="{{ asset('storage/' . $accommodation->image_path) }}" 
-                        alt="{{ $accommodation->name }}" 
+                    @if($accommodation->image)
+                    <img
+                        src="{{ asset('storage/' . $accommodation->image) }}"
+                        alt="{{ $accommodation->name }}"
                         class="w-full h-full object-cover"
                     >
                     @else
@@ -126,18 +126,18 @@
                 <div class="p-4">
                     <h3 class="text-lg font-semibold text-gray-800 mb-1">{{ $accommodation->name }}</h3>
                     <p class="text-gray-500 text-sm mb-2">{{ $accommodation->type }}</p>
-                    
+
                     <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center">
                             @for ($i = 1; $i <= 5; $i++)
-                                <svg class="h-4 w-4 {{ $i <= $accommodation->rating ? 'text-yellow-400' : 'text-gray-300' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <svg class="h-4 w-4 {{ $i <= ($accommodation->rating ?? 3) ? 'text-yellow-400' : 'text-gray-300' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                 </svg>
                             @endfor
                         </div>
-                        <span class="text-gray-700 font-medium">${{ number_format($accommodation->price_per_night) }}/night</span>
+                        <span class="text-gray-700 font-medium">${{ number_format($accommodation->price_min ?? 0) }}/night</span>
                     </div>
-                    
+
                     <a href="#" class="text-primary font-medium hover:text-primary/80 transition-colors text-sm">
                         View Details
                     </a>
@@ -155,24 +155,24 @@
 <!-- Travel Tips -->
 <div class="bg-white rounded-lg shadow-md p-5 mb-8">
     <h2 class="text-xl font-semibold text-gray-800 mb-4">Member Travel Tips</h2>
-    
+
     <div class="space-y-4">
         <div class="p-4 bg-gray-50 rounded-lg">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">Best Time to Visit</h3>
             <p class="text-gray-600">Morocco's climate varies by region. Coastal areas are pleasant year-round, while inland cities can be very hot in summer. The World Cup matches are scheduled to optimize for comfortable viewing conditions.</p>
         </div>
-        
+
         <div class="p-4 bg-gray-50 rounded-lg">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">Local Currency</h3>
             <p class="text-gray-600">The official currency is the Moroccan Dirham (MAD). ATMs are widely available in urban areas. Credit cards are accepted at major establishments, but carry cash for smaller businesses.</p>
         </div>
-        
+
         <div class="p-4 bg-gray-50 rounded-lg">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">Cultural Customs</h3>
             <p class="text-gray-600">Morocco is a Muslim country with rich cultural traditions. Dress modestly when visiting religious sites. Learn a few phrases in Arabic or French, which are widely spoken alongside English in tourist areas.</p>
         </div>
     </div>
-    
+
     <div class="mt-4 text-right">
         <a href="{{ route('member.travel.tips') }}" class="text-primary hover:text-primary/80 transition-colors text-sm font-medium">
             View All Travel Tips →
@@ -207,7 +207,7 @@
                 </li>
             </ul>
         </div>
-        
+
         <div>
             <h3 class="text-lg font-semibold text-gray-800 mb-2">Travel Support</h3>
             <div class="p-4 bg-white rounded-lg">
