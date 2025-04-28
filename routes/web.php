@@ -117,16 +117,16 @@ Route::middleware(['auth', 'verified'])->prefix('member')->name('member.')->grou
     Route::get('favorites/cities', [FavoritesController::class, 'memberCities'])->name('favorites.cities');
 
     // Member Article Routes
-    Route::resource('articles', \App\Http\Controllers\Member\MemberArticleController::class);
+    Route::resource('articles', MemberArticleController::class);
 
     // Legacy routes for backward compatibility
-    Route::get('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'index'])->name('my-articles.index');
-    Route::get('my-articles/create', [\App\Http\Controllers\Member\MemberArticleController::class, 'create'])->name('my-articles.create');
-    Route::post('my-articles', [\App\Http\Controllers\Member\MemberArticleController::class, 'store'])->name('my-articles.store');
-    Route::get('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'show'])->name('my-articles.show');
-    Route::get('my-articles/{article}/edit', [\App\Http\Controllers\Member\MemberArticleController::class, 'edit'])->name('my-articles.edit');
-    Route::put('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'update'])->name('my-articles.update');
-    Route::delete('my-articles/{article}', [\App\Http\Controllers\Member\MemberArticleController::class, 'destroy'])->name('my-articles.destroy');
+    Route::get('my-articles', [MemberArticleController::class, 'index'])->name('my-articles.index');
+    Route::get('my-articles/create', [MemberArticleController::class, 'create'])->name('my-articles.create');
+    Route::post('my-articles', [MemberArticleController::class, 'store'])->name('my-articles.store');
+    Route::get('my-articles/{article}', [MemberArticleController::class, 'show'])->name('my-articles.show');
+    Route::get('my-articles/{article}/edit', [MemberArticleController::class, 'edit'])->name('my-articles.edit');
+    Route::put('my-articles/{article}', [MemberArticleController::class, 'update'])->name('my-articles.update');
+    Route::delete('my-articles/{article}', [MemberArticleController::class, 'destroy'])->name('my-articles.destroy');
 });
 
 //=================================

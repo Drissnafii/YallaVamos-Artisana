@@ -1,26 +1,26 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('title', 'Login')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-4xl w-full space-y-8">
+<div class="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl w-full">
         <div class="flex flex-col md:flex-row md:space-x-8 items-center">
             <!-- Form Section -->
             <div class="w-full md:w-1/2">
                 <div class="text-center">
                     <img class="mx-auto h-12 w-auto" src="{{ asset('images/morocco-logo.svg') }}" alt="Morocco 2030">
-                    <h2 class="mt-6 text-3xl font-bold">Sign in to your account</h2>
-                    <p class="mt-2 text-sm text-muted-foreground">
+                    <h2 class="mt-3 text-2xl font-bold">Sign in to your account</h2>
+                    <p class="mt-1 text-sm text-muted-foreground">
                         Or <a href="{{ route('register') }}" class="font-medium text-primary hover:text-primary/90">create a new account</a>
                     </p>
                 </div>
 
                 {{-- Optional: Display a general error summary --}}
                 @if ($errors->any())
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mt-2" role="alert">
                         <strong class="font-bold">Oops! Something went wrong.</strong>
-                        <ul class="mt-2 list-disc list-inside text-sm">
+                        <ul class="mt-1 list-disc list-inside text-sm">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -28,7 +28,7 @@
                     </div>
                 @endif
 
-                <form class="mt-8 space-y-6" action="{{ route('login') }}" method="POST">
+                <form class="mt-6 space-y-4" action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="rounded-md shadow-sm -space-y-px">
                         {{-- Email Input --}}
@@ -90,9 +90,8 @@
             </div>
 
             <!-- SVG Illustration Section -->
-            <div class="w-full md:w-1/2 flex items-center justify-center mt-16 md:mt-8 md:ml-16">
-                {{-- Make the SVG fill its container width --}}
-                <x-svg-icon name="login-illustration" class="w-full h-auto" style="background: transparent;" />
+            <div class="hidden md:block md:w-1/2 flex items-center justify-center md:ml-8">
+                <x-svg-icon name="login-illustration" class="w-full h-auto max-h-[50vh]" style="background: transparent;" />
             </div>
             
         </div>

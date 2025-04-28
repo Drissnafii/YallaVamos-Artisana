@@ -1,27 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('title', 'Register')
 
 @section('content')
     @if (session('message'))
-        <div class="alert alert-info mb-4">
+        <div class="alert alert-info mb-2">
             {{ session('message') }}
         </div>
     @endif
-    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl w-full space-y-8">
+    <div class="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl w-full">
             <div class="flex flex-col md:flex-row md:space-x-8 items-center">
                 <!-- Form Section -->
                 <div class="w-full md:w-1/2">
                     <div class="text-center">
                         <img class="mx-auto h-12 w-auto" src="{{ asset('images/morocco-logo.svg') }}" alt="Morocco 2030">
-                        <h2 class="mt-6 text-3xl font-bold">Create a new account</h2>
-                        <p class="mt-2 text-sm text-muted-foreground">
+                        <h2 class="mt-3 text-2xl font-bold">Create a new account</h2>
+                        <p class="mt-1 text-sm text-muted-foreground">
                             Or <a href="/login" class="font-medium text-primary hover:text-primary/90">sign in to your existing account</a>
                         </p>
                     </div>
-                    <form class="mt-8 space-y-6" action="{{route('register')}}" method="POST">
-                        @csrf   
+                    <form class="mt-6 space-y-4" action="{{route('register')}}" method="POST">
+                        @csrf
                         <div class="rounded-md shadow-sm -space-y-px">
                             <div>
                                 <label for="name" class="sr-only">Full name</label>
@@ -73,8 +73,8 @@
                 </div>
 
                 <!-- SVG Illustration Section -->
-                <div class="w-full md:w-1/2 flex items-center justify-center mt-16 md:mt-8 md:ml-16">
-                    <x-svg-icon name="login-illustration" class="w-full h-auto" style="background: transparent;" />
+                <div class="hidden md:block md:w-1/2 flex items-center justify-center md:ml-8">
+                    <x-svg-icon name="login-illustration" class="w-full h-auto max-h-[50vh]" style="background: transparent;" />
                 </div>
             </div>
         </div>

@@ -136,7 +136,7 @@
             </div>
             <div class="card">
                 <div class="relative">
-                    <img src="{{ asset('images/news7.jpg') }}" alt="Volunteer Program" class="w-full h-48 object-cover">
+                    <img src="{{ asset('images/volunreer.jpg') }}" alt="Volunteer Program" class="w-full h-48 object-cover">
                     <div class="absolute top-0 right-0 bg-indigo-500 text-white px-3 py-1 m-2 text-sm font-medium rounded">Community</div>
                 </div>
                 <div class="p-6">
