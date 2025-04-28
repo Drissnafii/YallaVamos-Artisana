@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,14 +27,14 @@
     <!-- Add manifest for PWA support -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
 </head>
-<body class="bg-transparent backdrop-blur-lg text-foreground antialiased min-h-screen flex flex-col">
+<body class="bg-transparent backdrop-blur-lg text-foreground antialiased h-screen max-h-screen overflow-hidden flex flex-col">
 
     {{-- Using the Header Component from views/components --}}
     <x-header />
 
-    <main class="flex-grow" id="main-content">
+    <main class="flex-grow overflow-hidden" id="main-content">
         <!-- Add flash messages container -->
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full">
             @if(session('success'))
                 <x-flash-message type="success" :message="session('success')" />
             @endif
