@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('title', 'Register')
 
@@ -21,7 +21,7 @@
                         </p>
                     </div>
                     <form class="mt-8 space-y-6" action="{{route('register')}}" method="POST">
-                        @csrf   
+                        @csrf
                         <div class="rounded-md shadow-sm -space-y-px">
                             <div>
                                 <label for="name" class="sr-only">Full name</label>

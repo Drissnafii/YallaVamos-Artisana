@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('title', 'Login')
 
@@ -94,7 +94,7 @@
                 {{-- Make the SVG fill its container width --}}
                 <x-svg-icon name="login-illustration" class="w-full h-auto" style="background: transparent;" />
             </div>
-            
+
         </div>
     </div>
 </div>
