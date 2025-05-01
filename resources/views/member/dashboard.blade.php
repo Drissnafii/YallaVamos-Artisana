@@ -18,7 +18,7 @@
         <div class="flex items-center gap-6 ml-8">
             <!-- Circular profile image -->
             <div>
-                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                <div class="w-32 h-32 rounded-full overflow-hidden shadow-xl border-2 border-white transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
                     <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}" alt="Profile Photo" class="w-full h-full object-cover">
                 </div>
             </div>
