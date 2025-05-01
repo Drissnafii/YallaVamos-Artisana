@@ -4,15 +4,15 @@
 
 @section('full-width-content')
 <!-- Hero Section with Background Image -->
-<div class="relative bg-rose-600 h-96 overflow-hidden w-full">
+<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 h-96 overflow-hidden w-full">
     @if(Auth::user()->background_image)
         <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover w-full h-full">
-        <div class="absolute inset-0 bg-rose-600/60 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-gray-800/40 backdrop-blur-sm"></div>
     @else
         <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover w-full h-full">
-        <div class="absolute inset-0 bg-rose-600/70 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/60 to-gray-800/50 backdrop-blur-sm"></div>
     @endif
-    
+
     <!-- Container for profile image and text content -->
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center pb-8 relative z-10">
         <div class="flex items-center gap-6 ml-8">
@@ -22,7 +22,7 @@
                     <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}" alt="Profile Photo" class="w-full h-full object-cover">
                 </div>
             </div>
-            
+
             <!-- Text content -->
             <div>
                 <p class="text-white/90 text-sm font-medium mb-1 drop-shadow-md">{{ now()->format('l, d F Y') }}</p>
