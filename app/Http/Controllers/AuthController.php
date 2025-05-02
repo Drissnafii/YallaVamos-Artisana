@@ -57,9 +57,12 @@ class AuthController extends \App\Http\Controllers\Controller
             return Redirect::route('member.dashboard');
         }
 
+        // Use withInput() to keep the old values (except password)
+        // Add a clear error message that will show up prominently
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
-         ])->withInput($request->except('password'));
+            'login_error' => 'The email or password you entered is incorrect. Please try again.'
+        ])->withInput($request->except('password'));
     }
 
     public function showRegisterForm(): View|RedirectResponse

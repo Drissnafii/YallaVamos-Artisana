@@ -16,8 +16,15 @@
                     </p>
                 </div>
 
-                {{-- Optional: Display a general error summary --}}
-                @if ($errors->any())
+                {{-- Display login error - This is the specific login failure error --}}
+                @if ($errors->has('login_error'))
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 my-4" role="alert">
+                        <p class="font-medium">{{ $errors->first('login_error') }}</p>
+                    </div>
+                @endif
+
+                {{-- General error summary --}}
+                @if ($errors->any() && !$errors->has('login_error'))
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mt-2" role="alert">
                         <strong class="font-bold">Oops! Something went wrong.</strong>
                         <ul class="mt-1 list-disc list-inside text-sm">
@@ -93,7 +100,7 @@
             <div class="hidden md:block md:w-1/2 flex items-center justify-center md:ml-8">
                 <x-svg-icon name="login-illustration" class="w-full h-auto max-h-[50vh]" style="background: transparent;" />
             </div>
-            
+
         </div>
     </div>
 </div>

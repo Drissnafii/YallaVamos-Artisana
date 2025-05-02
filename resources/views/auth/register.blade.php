@@ -20,6 +20,19 @@
                             Or <a href="/login" class="font-medium text-primary hover:text-primary/90">sign in to your existing account</a>
                         </p>
                     </div>
+
+                    {{-- Display validation errors prominently --}}
+                    @if ($errors->any())
+                        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 my-4" role="alert">
+                            <p class="font-medium">Please fix the following errors:</p>
+                            <ul class="mt-1 list-disc list-inside text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form class="mt-6 space-y-4" action="{{route('register')}}" method="POST">
                         @csrf
                         <div class="rounded-md shadow-sm -space-y-px">
