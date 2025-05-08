@@ -1,13 +1,13 @@
 <mxfile host="65bd71144e">
     <diagram id="hG0Wyj41N1r8YTa6EXz7" name="Page-1">
-        <mxGraphModel dx="1032" dy="436" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1290" dy="568" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="cD20SrhtgwTC-DeN6DwE-2" value="" style="rounded=0;whiteSpace=wrap;html=1;rotation=-90;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="-82.18" y="215.95" width="1059.38" height="671.87" as="geometry"/>
                 </mxCell>
-                <mxCell id="cD20SrhtgwTC-DeN6DwE-3" value="YallaVamos Guide app" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
+                <mxCell id="cD20SrhtgwTC-DeN6DwE-3" value="YallaBina Guide app" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" parent="1" vertex="1">
                     <mxGeometry x="353.75" y="30" width="187.5" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="cD20SrhtgwTC-DeN6DwE-42" style="edgeStyle=none;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="cD20SrhtgwTC-DeN6DwE-5" target="cD20SrhtgwTC-DeN6DwE-24" edge="1">
@@ -324,10 +324,10 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="56" value="Register/Loging" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="56" value="Register/Loging" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="241.89999999999998" y="100" width="133.74" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="57" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="cD20SrhtgwTC-DeN6DwE-7" target="56">
+                <mxCell id="57" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="cD20SrhtgwTC-DeN6DwE-7" target="56" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="253" y="171" as="targetPoint"/>
                         <mxPoint x="75" y="145" as="sourcePoint"/>
