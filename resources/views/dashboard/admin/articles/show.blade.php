@@ -185,58 +185,6 @@
         </div>
     </div>
 
-    <!-- Comments Section - Material Design Card -->
-    <div class="bg-white rounded-lg shadow-sm mb-4 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-            <h2 class="text-lg font-normal text-gray-800">Comments ({{ $article->comments->count() }})</h2>
-
-            <button type="button" class="text-blue-600 text-sm font-medium hover:text-blue-800 transition-colors duration-150">
-                Add Comment
-            </button>
-        </div>
-
-        <div class="divide-y divide-gray-100">
-            @forelse($article->comments as $comment)
-            <div class="p-4 hover:bg-gray-50 transition-colors duration-150">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-medium">
-                            {{ substr($comment->user->name ?? 'A', 0, 1) }}
-                        </div>
-                    </div>
-                    <div class="ml-3 flex-1">
-                        <div class="flex items-center justify-between">
-                            <div class="text-sm font-medium text-gray-900">
-                                {{ $comment->user->name ?? 'Anonymous' }}
-                            </div>
-                            <div class="text-xs text-gray-500">
-                                {{ $comment->created_at->format('M d, Y') }}
-                            </div>
-                        </div>
-                        <div class="mt-1 text-sm text-gray-700">
-                            {{ $comment->content }}
-                        </div>
-                        <div class="mt-2 flex space-x-4">
-                            <button class="text-xs text-blue-600 hover:text-blue-800">Reply</button>
-                            <button class="text-xs text-gray-500 hover:text-gray-700">Report</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @empty
-            <div class="py-12 flex flex-col items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                <p class="text-gray-500 mb-4">No comments yet</p>
-                <button class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-150 text-sm font-medium">
-                    Add the first comment
-                </button>
-            </div>
-            @endforelse
-        </div>
-    </div>
-
     <!-- Quick Actions Card - Google Material Design -->
     <div class="bg-white rounded-lg shadow-sm mb-8 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100">
@@ -305,14 +253,7 @@
                     </a>
                 </div>
 
-                <div class="flex items-center">
-                    <span class="bg-white text-gray-800 px-2 py-1 rounded-lg text-sm shadow mr-2">Comment</span>
-                    <button class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center shadow-md hover:bg-green-200 transition-colors duration-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                        </svg>
-                    </button>
-                </div>
+
             </div>
         </div>
     </div>
