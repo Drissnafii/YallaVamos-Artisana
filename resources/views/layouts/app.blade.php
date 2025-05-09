@@ -32,17 +32,19 @@
     {{-- Using the Header Component from views/components --}}
     <x-header />
 
-    <main class="flex-grow" id="main-content">
+    <main class="flex-grow w-full" id="main-content">
         <!-- Add flash messages container -->
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            @if(session('success'))
-                <x-flash-message type="success" :message="session('success')" />
-            @endif
+        <div class="w-full">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                @if(session('success'))
+                    <x-flash-message type="success" :message="session('success')" />
+                @endif
 
-            @if(session('error'))
-                <x-flash-message type="error" :message="session('error')" />
-            @endif
-
+                @if(session('error'))
+                    <x-flash-message type="error" :message="session('error')" />
+                @endif
+            </div>
+            
             @yield('content')
         </div>
     </main>
