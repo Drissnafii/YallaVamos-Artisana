@@ -6,6 +6,8 @@ Table users {
   email varchar [unique]
   email_verified_at timestamp [null]
   password varchar
+  role varchar
+  status varchar
   created_at timestamp
   updated_at timestamp
 }
@@ -59,9 +61,12 @@ Table articles {
   title varchar
   content text
   author_id int
+  category_id int [null]
   publication_date date [null]
   image varchar [null]
   slug varchar [unique]
+  readtime int [null]
+  views int [null]
   published boolean
   created_at timestamp
   updated_at timestamp
@@ -72,15 +77,6 @@ Table categories {
   name varchar
   slug varchar [unique]
   description text [null]
-  created_at timestamp
-  updated_at timestamp
-}
-
-Table comments {
-  id int [pk, increment]
-  content text
-  user_id int
-  article_id int
   created_at timestamp
   updated_at timestamp
 }
@@ -154,14 +150,26 @@ Table news {
   updated_at timestamp
 }
 
+Table personal_access_tokens {
+  id int [pk, increment]
+  tokenable_type varchar
+  tokenable_id int
+  name varchar
+  token varchar [unique]
+  abilities text [null]
+  last_used_at timestamp [null]
+  expires_at timestamp [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
 // Relationships
 Ref: stadiums.city_id > cities.id
 Ref: matches.stadium_id > stadiums.id
 Ref: matches.team1_id > teams.id
 Ref: matches.team2_id > teams.id
 Ref: articles.author_id > users.id
-Ref: comments.user_id > users.id
-Ref: comments.article_id > articles.id
+Ref: articles.category_id > categories.id
 Ref: favorite_cities.user_id > users.id
 Ref: favorite_cities.city_id > cities.id
 Ref: favorite_stadiums.user_id > users.id

@@ -9,24 +9,57 @@ use Illuminate\Support\Str;
 class GenerateDBML extends Command
 {
     protected $signature = 'generate:dbml';
-    protected $description = 'Generate DBML file from Laravel migrations';
-
-    public function handle()
+    protected $description = 'Generate DBML file from Laravel migrations';    public function handle()
     {
         $this->info('Generating DBML from migrations...');
+
+        // Tables to explicitly exclude (like comments)
+        $excludedTables = ['comments'];
 
         $migrationsPath = database_path('migrations');
         $migrations = File::glob($migrationsPath . '/*.php');
 
+        // Sort migrations by date to process in chronological order
+        usort($migrations, function($a, $b) {
+            return basename($a) <=> basename($b);
+        });
+
         $dbml = "// Database schema for YallaDiscover\n\n";
         $tables = [];
         $references = [];
+        $droppedTables = $excludedTables; // Start with predefined excluded tables
 
         foreach ($migrations as $migration) {
             $content = File::get($migration);
+
+            // Check for dropped tables in migration filenames that clearly indicate table removal
+            if (str_contains(basename($migration), 'drop_') || str_contains(basename($migration), 'remove_')) {
+                if (preg_match('/Schema::dropIfExists\([\'"](.+?)[\'"]\)/s', $content, $dropMatches)) {
+                    $droppedTable = $dropMatches[1];
+                    $droppedTables[] = $droppedTable;
+                    $this->info("Found dropped table: {$droppedTable}");
+
+                    // Remove from tables if previously added
+                    if (isset($tables[$droppedTable])) {
+                        unset($tables[$droppedTable]);
+                    }
+
+                    // Remove any references to/from this table
+                    $references = array_filter($references, function($ref) use ($droppedTable) {
+                        return !str_contains($ref, $droppedTable . '.');
+                    });
+                }
+                continue;
+            }
+
             $tableName = $this->getTableName($content);
 
             if (!$tableName) continue;
+
+            // Skip if this table is excluded or was dropped in a later migration
+            if (in_array($tableName, $droppedTables) || in_array($tableName, $excludedTables)) {
+                continue;
+            }
 
             $this->info("Processing migration for table: {$tableName}");
 
@@ -49,6 +82,11 @@ class GenerateDBML extends Command
 
         // Generate DBML content
         foreach ($tables as $table => $columns) {
+            // Skip excluded tables
+            if ($table === 'comments' || in_array($table, $droppedTables)) {
+                continue;
+            }
+
             $dbml .= "Table {$table} {\n";
             foreach ($columns as $column) {
                 $dbml .= "  {$column}\n";
@@ -56,9 +94,21 @@ class GenerateDBML extends Command
             $dbml .= "}\n\n";
         }
 
-        // Add references
+        // Add references, but filter out any related to dropped tables
         foreach ($references as $reference) {
-            $dbml .= $reference . "\n";
+            // Skip references related to comments or any excluded table
+            $skipReference = false;
+
+            foreach ($droppedTables as $droppedTable) {
+                if (str_contains($reference, "$droppedTable.") || str_contains($reference, "> $droppedTable.")) {
+                    $skipReference = true;
+                    break;
+                }
+            }
+
+            if (!$skipReference) {
+                $dbml .= $reference . "\n";
+            }
         }
 
         // Save DBML file
@@ -174,6 +224,10 @@ class GenerateDBML extends Command
             $referencedTable = isset($match[3]) ? $match[3] : '';
 
             if ($referencedTable) {
+                // Skip references to the comments table
+                if ($referencedTable === 'comments' || $fromTable === 'comments') {
+                    continue;
+                }
                 $references[] = "Ref: {$fromTable}.{$foreignKey} > {$referencedTable}.{$referencedColumn}";
             }
         }
@@ -184,6 +238,12 @@ class GenerateDBML extends Command
         foreach ($idMatches as $match) {
             $referencedTable = Str::plural($match[1]);  // Assume plural table names
             $foreignKey = "{$match[1]}_id";
+
+            // Skip references to the comments table
+            if ($referencedTable === 'comments' || $fromTable === 'comments') {
+                continue;
+            }
+
             $references[] = "Ref: {$fromTable}.{$foreignKey} > {$referencedTable}.id";
         }
 
