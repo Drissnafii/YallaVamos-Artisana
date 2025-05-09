@@ -20,7 +20,7 @@ class MemberStadiumsController extends Controller
         $stadiums = Stadium::with(['city', 'matches'])->get();
 
         // Get the IDs of stadiums favorited by the current user
-        $favoriteStadiums = Auth::user()->favoriteStadiums()
+        $favoriteStadiums = FavoriteStadium::where('user_id', Auth::id())
             ->pluck('stadium_id')
             ->toArray();
 
@@ -38,7 +38,7 @@ class MemberStadiumsController extends Controller
         $stadium->load(['city', 'matches.team1', 'matches.team2']);
 
         // Check if this stadium is favorited by the user
-        $isFavorite = Auth::user()->favoriteStadiums()
+        $isFavorite = FavoriteStadium::where('user_id', Auth::id())
             ->where('stadium_id', $stadium->id)
             ->exists();
 
