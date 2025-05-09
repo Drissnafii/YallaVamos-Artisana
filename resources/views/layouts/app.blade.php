@@ -44,7 +44,7 @@
                     <x-flash-message type="error" :message="session('error')" />
                 @endif
             </div>
-            
+
             @yield('content')
         </div>
     </main>

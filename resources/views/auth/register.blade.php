@@ -47,12 +47,7 @@
                             </div>
 
                             <div>
-                                <label for="role" class="sr-only">Role</label>
-                                <select id="role" name="role" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm">
-                                    <option value="" disabled selected>Select your role</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="member">Member</option>
-                                </select>
+                                <input type="hidden" name="role" value="member">
                             </div>
 
                             <div>
