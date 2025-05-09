@@ -93,21 +93,21 @@
 
                         <!-- City markers - repositioned to appear correctly on the map -->
                         <div class="absolute inset-0 pointer-events-none">
-                            <!-- Casablanca marker - adjusted position -->
-                            <div class="absolute top-[38%] left-[75%]">
+                            <!-- Casablanca marker - correct position -->
+                            <div class="absolute top-[37%] left-[60%]">
                                 <div class="group relative cursor-pointer pointer-events-auto">
                                     <div class="h-3 w-3 bg-red-500 rounded-full animate-ping"></div>
                                     <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
                                     <!-- Tooltip -->
                                     <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
-                                        Oujda
+                                        Casablanca
                                         <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Marrakech marker - adjusted position -->
-                            <div class="absolute top-[52%] left-[60%]">
+                            <!-- Marrakech marker - correct position -->
+                            <div class="absolute top-[53%] left-[58%]">
                                 <div class="group relative cursor-pointer pointer-events-auto">
                                     <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 0.5s"></div>
                                     <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
@@ -119,8 +119,8 @@
                                 </div>
                             </div>
 
-                            <!-- Rabat marker - adjusted position -->
-                            <div class="absolute top-[32%] left-[53%]">
+                            <!-- Rabat marker - correct position -->
+                            <div class="absolute top-[33%] left-[54%]">
                                 <div class="group relative cursor-pointer pointer-events-auto">
                                     <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 1s"></div>
                                     <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
@@ -132,8 +132,8 @@
                                 </div>
                             </div>
 
-                            <!-- Fez marker - new central point -->
-                            <div class="absolute top-[45%] left-[65%]">
+                            <!-- Fez marker - correct position -->
+                            <div class="absolute top-[35%] left-[65%]">
                                 <div class="group relative cursor-pointer pointer-events-auto">
                                     <div class="h-3 w-3 bg-green-500 rounded-full animate-ping" style="animation-delay: 1.5s"></div>
                                     <div class="h-2 w-2 bg-green-600 rounded-full absolute top-0.5 left-0.5"></div>
@@ -145,8 +145,60 @@
                                 </div>
                             </div>
 
-                            <!-- Center point between all markers -->
-                            <div class="absolute top-[40.6%] left-[62.6%]">
+                            <!-- Tangier marker - correct position -->
+                            <div class="absolute top-[9%] left-[68%]">
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 1.8s"></div>
+                                    <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Tangier
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Agadir marker - correct position -->
+                            <div class="absolute top-[62%] left-[52%]">
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 2.1s"></div>
+                                    <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Agadir
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Oujda marker - correct position -->
+                            <div class="absolute top-[35%] left-[78%]">
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-3 w-3 bg-red-500 rounded-full animate-ping" style="animation-delay: 2.4s"></div>
+                                    <div class="h-2 w-2 bg-red-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Oujda
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tetouan marker - correct position -->
+                            <div class="absolute top-[19%] left-[74%]">
+                                <div class="group relative cursor-pointer pointer-events-auto">
+                                    <div class="h-3 w-3 bg-yellow-500 rounded-full animate-ping" style="animation-delay: 2.7s"></div>
+                                    <div class="h-2 w-2 bg-yellow-600 rounded-full absolute top-0.5 left-0.5"></div>
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-yellow-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 pointer-events-none">
+                                        Tetouan
+                                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-yellow-600"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Central point - for events hub -->
+                            <div class="absolute top-[43%] left-[63%]">
                                 <div class="group relative cursor-pointer pointer-events-auto">
                                     <div class="h-4 w-4 bg-yellow-500 rounded-full animate-pulse"></div>
                                     <div class="h-3 w-3 bg-yellow-600 rounded-full absolute top-0.5 left-0.5"></div>
