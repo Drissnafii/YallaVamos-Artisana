@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
 class GenerateDBML extends Command
 {
@@ -116,7 +117,7 @@ class GenerateDBML extends Command
         File::put($dbmlPath, $dbml);
 
         $this->info("DBML file generated at: {$dbmlPath}");
-        return Command::SUCCESS;
+        return SymfonyCommand::SUCCESS;
     }
 
     private function getTableName($content)
