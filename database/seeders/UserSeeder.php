@@ -20,20 +20,21 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'admin',
         ]);
+        
         User::firstOrCreate([
-            'email' => 'editor@example.com',
+            'email' => 'member@example.com',
         ], [
-            'name' => 'Editor User',
+            'name' => 'Member User',
             'password' => Hash::make('password'),
-            'role' => 'editor',
+            'role' => 'member',
         ]);
+        
         User::firstOrCreate([
-            'email' => 'viewer@example.com',
+            'email' => 'user@example.com',
         ], [
-            'name' => 'Viewer User',
+            'name' => 'Regular User',
             'password' => Hash::make('password'),
-            'role' => 'viewer',
+            'role' => 'user',
         ]);
-
     }
 }

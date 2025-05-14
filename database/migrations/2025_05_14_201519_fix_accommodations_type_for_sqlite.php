@@ -11,8 +11,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        // For MySQL, we can use MODIFY COLUMN with ENUM
-        DB::statement("ALTER TABLE accommodations MODIFY COLUMN type ENUM('hotel', 'apartment', 'riad', 'guesthouse', 'other') NOT NULL");
+        // Since we're using MySQL, this migration is unnecessary
+        // The proper ENUM update is handled directly in the 2025_04_14_210937_update_accommodations_type_enum.php migration
     }
 
     /**
@@ -20,7 +20,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        // Convert back to regular VARCHAR
-        DB::statement("ALTER TABLE accommodations MODIFY COLUMN type VARCHAR(255) NOT NULL");
+        // No action needed in down migration since up does nothing
     }
 };

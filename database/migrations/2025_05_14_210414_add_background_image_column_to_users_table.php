@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('viewer')->after('password');
+            if (!Schema::hasColumn('users', 'background_image')) {
+                $table->string('background_image')->nullable();
+            }
         });
     }
 
@@ -22,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+            if (Schema::hasColumn('users', 'background_image')) {
+                $table->dropColumn('background_image');
+            }
         });
     }
 };
