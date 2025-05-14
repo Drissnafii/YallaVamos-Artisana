@@ -1,17 +1,1 @@
-[0;1;32m●[0m mysqld.service - MySQL 8.0 database server
-     Loaded: loaded (]8;;file://192.168.1.12/usr/lib/systemd/system/mysqld.service\/usr/lib/systemd/system/mysqld.service]8;;\; [0;1;32menabled[0m; preset: [0;1;38:5:185mdisabled[0m)
-    Drop-In: /usr/lib/systemd/system/service.d
-             └─]8;;file://192.168.1.12/usr/lib/systemd/system/service.d/10-timeout-abort.conf\10-timeout-abort.conf]8;;\
-     Active: [0;1;32mactive (running)[0m since Wed 2025-05-14 21:23:13 +01; 13min ago
- Invocation: 6214ca14afd84de99ff47812cc41e77d
-   Main PID: 13981 (mysqld)
-     Status: "[0;1;36mServer is operational[0m"
-      Tasks: 39[0;38;5;245m (limit: 18274)[0m
-     Memory: 691M (peak: 692.1M)
-        CPU: 7.323s
-     CGroup: /system.slice/mysqld.service
-             └─[0;38;5;245m13981 /usr/libexec/mysqld --basedir=/usr[0m
-
-May 14 21:23:09 192.168.1.12 systemd[1]: Starting mysqld.service - MySQL 8.0 database server...
-May 14 21:23:09 192.168.1.12 mysql-prepare-db-dir[13875]: Initializing MySQL database
-May 14 21:23:13 192.168.1.12 systemd[1]: Started mysqld.service - MySQL 8.0 database server.
+ 
