@@ -73,7 +73,7 @@ class TeamController extends Controller
             'description' => 'nullable|string',
             'group' => 'nullable|string|max:1',
             'is_qualified' => 'boolean',
-            'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         // Handle the flag upload
@@ -125,7 +125,7 @@ class TeamController extends Controller
             'description' => 'nullable|string',
             'group' => 'nullable|string|max:1',
             'is_qualified' => 'boolean',
-            'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         // Handle the flag upload
