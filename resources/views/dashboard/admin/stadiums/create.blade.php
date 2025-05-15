@@ -4,149 +4,315 @@
 
 @section('header', 'Add New Stadium')
 
-@section('content')
-<div class="container mx-auto px-4 py-6">
-    <div class="mb-6">
-        <a href="{{ route('admin.stadiums.index') }}" class="inline-flex items-center text-green-600 hover:text-green-800">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-            </svg>
-            Back to Stadiums
-        </a>
-    </div>
+@push('styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+@endpush
 
-    <div class="bg-white shadow-md rounded-lg overflow-hidden" style="background: linear-gradient(to bottom, white, #f0fdf4);">
-        <div class="p-6 border-b border-gray-200">
-            <h2 class="text-lg font-semibold text-gray-800">Stadium Information</h2>
+@section('content')
+<div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Back Button -->
+        <div class="mb-8">
+            <a href="{{ route('admin.stadiums.index') }}" class="inline-flex items-center text-blue-600 hover:text-blue-700 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                </svg>
+                Back to Stadiums
+            </a>
         </div>
 
-        <form action="{{ route('admin.stadiums.store') }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-6">
-            @csrf
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Stadium Name <span class="text-red-500">*</span></label>
-                    <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-input rounded-md shadow-sm w-full @error('name') border-red-500 @enderror" required>
-                    @error('name')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="city_id" class="block text-sm font-medium text-gray-700 mb-1">City <span class="text-red-500">*</span></label>
-                    <select name="city_id" id="city_id" class="form-select rounded-md shadow-sm w-full @error('city_id') border-red-500 @enderror" required>
-                        <option value="">Select a city</option>
-                        @foreach($cities as $city)
-                            <option value="{{ $city->id }}" {{ (old('city_id', $selectedCityId ?? '') == $city->id) ? 'selected' : '' }}>
-                                {{ $city->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('city_id')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+        <!-- Main Form Card -->
+        <div class="bg-white shadow-sm rounded-2xl overflow-hidden">
+            <!-- Header -->
+            <div class="p-8 border-b border-gray-100">
+                <h2 class="text-2xl font-light text-gray-900">Stadium Information</h2>
+                <p class="mt-2 text-sm text-gray-500">Fill in the details below to add a new stadium</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                    <label for="capacity" class="block text-sm font-medium text-gray-700 mb-1">Capacity <span class="text-red-500">*</span></label>
-                    <input type="number" name="capacity" id="capacity" value="{{ old('capacity') }}" class="form-input rounded-md shadow-sm w-full @error('capacity') border-red-500 @enderror" required>
-                    @error('capacity')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+            <!-- Form -->
+            <form action="{{ route('admin.stadiums.store') }}" method="POST" enctype="multipart/form-data" class="p-8">
+                @csrf
+
+                <!-- Stadium Name and City -->
+                <div class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                                Stadium Name <span class="text-red-600">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="name" 
+                                   id="name" 
+                                   value="{{ old('name') }}" 
+                                   class="w-full rounded-lg border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('name') border-red-300 @enderror" 
+                                   required>
+                            @error('name')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="city_id" class="block text-sm font-medium text-gray-700 mb-2">
+                                City <span class="text-red-600">*</span>
+                            </label>
+                            <select name="city_id" 
+                                    id="city_id" 
+                                    class="w-full rounded-lg border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('city_id') border-red-300 @enderror" 
+                                    required>
+                                <option value="">Select a city</option>
+                                @foreach($cities as $city)
+                                    <option value="{{ $city->id }}" {{ (old('city_id', $selectedCityId ?? '') == $city->id) ? 'selected' : '' }}>
+                                        {{ $city->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('city_id')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Capacity, Year Built, Status -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="capacity" class="block text-sm font-medium text-gray-700 mb-2">
+                                Capacity <span class="text-red-600">*</span>
+                            </label>
+                            <input type="number" 
+                                   name="capacity" 
+                                   id="capacity" 
+                                   value="{{ old('capacity') }}" 
+                                   class="w-full rounded-lg border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('capacity') border-red-300 @enderror" 
+                                   required>
+                            @error('capacity')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="year_built" class="block text-sm font-medium text-gray-700 mb-2">
+                                Year Built
+                            </label>
+                            <input type="number" 
+                                   name="year_built" 
+                                   id="year_built" 
+                                   value="{{ old('year_built') }}" 
+                                   class="w-full rounded-lg border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('year_built') border-red-300 @enderror">
+                            @error('year_built')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="status" class="block text-sm font-medium text-gray-700 mb-2">
+                                Status <span class="text-red-600">*</span>
+                            </label>
+                            <select name="status" 
+                                    id="status" 
+                                    class="w-full rounded-lg border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('status') border-red-300 @enderror" 
+                                    required>
+                                <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
+                                <option value="under_construction" {{ old('status') == 'under_construction' ? 'selected' : '' }}>Under Construction</option>
+                                <option value="renovation" {{ old('status') == 'renovation' ? 'selected' : '' }}>Under Renovation</option>
+                                <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                            </select>
+                            @error('status')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-gray-700 mb-2">
+                            Address
+                        </label>
+                        <input type="text" 
+                               name="address" 
+                               id="address" 
+                               value="{{ old('address') }}" 
+                               class="w-full rounded-lg border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('address') border-red-300 @enderror">
+                        @error('address')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+                            Description
+                        </label>
+                        <textarea name="description" 
+                                  id="description" 
+                                  rows="4" 
+                                  class="w-full rounded-lg border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('description') border-red-300 @enderror">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Image Upload Section -->
+                    <div>
+                        <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
+                            Stadium Image
+                        </label>
+                        <div class="mt-1 flex items-center">
+                            <div class="flex-1">
+                                <input type="file" 
+                                       name="image" 
+                                       id="image" 
+                                       class="w-full rounded-lg border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('image') border-red-300 @enderror" 
+                                       accept="image/*">
+                                <p class="mt-1 text-sm text-gray-500">Upload a high-quality image of the stadium (JPEG, PNG, or GIF)</p>
+                                @error('image')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div id="imagePreview" class="mt-4 hidden">
+                            <img id="previewImage" class="h-48 object-cover rounded-xl shadow-sm" alt="Stadium preview">
+                        </div>
+                    </div>
+
+                    <!-- Location Section -->
+                    <div class="bg-gray-50 rounded-xl p-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Stadium Location</h3>
+                        
+                        <!-- Map -->
+                        <div id="map" class="w-full h-96 rounded-xl overflow-hidden shadow-sm mb-4"></div>
+                        <p class="text-sm text-gray-500 mb-4">Click on the map or use the search box to set the stadium location</p>
+
+                        <!-- Coordinates -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="latitude" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Latitude
+                                </label>
+                                <input type="text" 
+                                       name="latitude" 
+                                       id="latitude" 
+                                       value="{{ old('latitude') }}" 
+                                       class="w-full rounded-lg border-gray-200 bg-gray-100 @error('latitude') border-red-300 @enderror" 
+                                       readonly>
+                                @error('latitude')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="longitude" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Longitude
+                                </label>
+                                <input type="text" 
+                                       name="longitude" 
+                                       id="longitude" 
+                                       value="{{ old('longitude') }}" 
+                                       class="w-full rounded-lg border-gray-200 bg-gray-100 @error('longitude') border-red-300 @enderror" 
+                                       readonly>
+                                @error('longitude')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    <label for="year_built" class="block text-sm font-medium text-gray-700 mb-1">Year Built</label>
-                    <input type="number" name="year_built" id="year_built" value="{{ old('year_built') }}" class="form-input rounded-md shadow-sm w-full @error('year_built') border-red-500 @enderror">
-                    @error('year_built')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                <!-- Form Actions -->
+                <div class="mt-8 pt-8 border-t border-gray-100">
+                    <div class="flex justify-end space-x-4">
+                        <a href="{{ route('admin.stadiums.index') }}" 
+                           class="px-6 py-2.5 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">
+                            Cancel
+                        </a>
+                        <button type="submit" 
+                                class="px-8 py-2.5 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                            Create Stadium
+                        </button>
+                    </div>
                 </div>
-
-                <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status <span class="text-red-500">*</span></label>
-                    <select name="status" id="status" class="form-select rounded-md shadow-sm w-full @error('status') border-red-500 @enderror" required>
-                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
-                        <option value="under_construction" {{ old('status') == 'under_construction' ? 'selected' : '' }}>Under Construction</option>
-                        <option value="renovation" {{ old('status') == 'renovation' ? 'selected' : '' }}>Under Renovation</option>
-                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                    </select>
-                    @error('status')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-
-            <div>
-                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                <input type="text" name="address" id="address" value="{{ old('address') }}" class="form-input rounded-md shadow-sm w-full @error('address') border-red-500 @enderror">
-                @error('address')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea name="description" id="description" rows="4" class="form-textarea rounded-md shadow-sm w-full @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
-                @error('description')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Stadium Image</label>
-                <input type="file" name="image" id="image" class="form-input rounded-md shadow-sm w-full @error('image') border-red-500 @enderror" accept="image/*">
-                <p class="text-xs text-gray-500 mt-1">Upload a high-quality image of the stadium (JPEG, PNG, or GIF).</p>
-                @error('image')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="latitude" class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
-                    <input type="text" name="latitude" id="latitude" value="{{ old('latitude') }}" class="form-input rounded-md shadow-sm w-full @error('latitude') border-red-500 @enderror">
-                    @error('latitude')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="longitude" class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
-                    <input type="text" name="longitude" id="longitude" value="{{ old('longitude') }}" class="form-input rounded-md shadow-sm w-full @error('longitude') border-red-500 @enderror">
-                    @error('longitude')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="pt-4 border-t border-gray-200">
-                <div class="flex justify-end">
-                    <a href="{{ route('admin.stadiums.index') }}" class="bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded shadow mr-2">Cancel</a>
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded shadow">Create Stadium</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
-    // Optional: Add any JavaScript for form validation or image preview
     document.addEventListener('DOMContentLoaded', function() {
-        // Image preview functionality could go here
+        // Initialize the map
+        const map = L.map('map').setView([34.0209, -6.8416], 8); // Default center (Rabat, Morocco)
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Initialize marker variable
+        let marker;
+
+        // Add geocoder control
+        const geocoder = L.Control.geocoder({
+            defaultMarkGeocode: false,
+            placeholder: 'Search for a location...',
+            errorMessage: 'Nothing found.',
+            showResultIcons: true,
+            collapsed: false
+        })
+        .on('markgeocode', function(e) {
+            const latlng = e.geocode.center;
+            
+            // Update form inputs
+            document.getElementById('latitude').value = latlng.lat.toFixed(7);
+            document.getElementById('longitude').value = latlng.lng.toFixed(7);
+
+            // Update or create marker
+            if (marker) {
+                marker.setLatLng(latlng);
+            } else {
+                marker = L.marker(latlng).addTo(map);
+            }
+
+            // Center map on result
+            map.setView(latlng, 13);
+        })
+        .addTo(map);
+
+        // Handle map click events
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+
+            // Update form inputs
+            document.getElementById('latitude').value = lat.toFixed(7);
+            document.getElementById('longitude').value = lng.toFixed(7);
+
+            // Update or create marker
+            if (marker) {
+                marker.setLatLng(e.latlng);
+            } else {
+                marker = L.marker(e.latlng).addTo(map);
+            }
+        });
+
+        // If there are old values (e.g., after validation error), set the marker
+        const oldLat = "{{ old('latitude') }}";
+        const oldLng = "{{ old('longitude') }}";
+        if (oldLat && oldLng) {
+            const latlng = L.latLng(parseFloat(oldLat), parseFloat(oldLng));
+            marker = L.marker(latlng).addTo(map);
+            map.setView(latlng, 13);
+        }
+
+        // Image preview functionality
         const imageInput = document.getElementById('image');
-        const previewContainer = document.createElement('div');
-        previewContainer.className = 'mt-2 hidden';
-
-        const previewImage = document.createElement('img');
-        previewImage.className = 'h-32 object-cover rounded-md shadow';
-
-        previewContainer.appendChild(previewImage);
-        imageInput.parentNode.appendChild(previewContainer);
+        const previewContainer = document.getElementById('imagePreview');
+        const previewImage = document.getElementById('previewImage');
 
         imageInput.addEventListener('change', function() {
             const file = this.files[0];
@@ -157,6 +323,8 @@
                     previewContainer.classList.remove('hidden');
                 }
                 reader.readAsDataURL(file);
+            } else {
+                previewContainer.classList.add('hidden');
             }
         });
     });
