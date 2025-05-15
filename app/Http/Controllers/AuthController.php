@@ -80,20 +80,21 @@ class AuthController extends \App\Http\Controllers\Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|string|in:admin,member',
         ]);
 
         try {
             $result = $this->authService->register($request->all());
-            // Extract the User object from the result
             $user = $result['user'];
 
             Auth::login($user);
 
-            if (Auth::user()->role === 'admin') {
-                return Redirect::route('admin.dashboard');
+            // Redirect based on role
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Welcome to the admin dashboard!');
             }
 
-            return Redirect::route('member.dashboard');
+            return redirect()->route('member.dashboard')->with('success', 'Registration successful!');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Registration failed. Please try again.'])->withInput();
         }

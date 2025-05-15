@@ -20,7 +20,7 @@ class AuthService
         $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
-            'role'     => $data['role'] ?? 'member', // Use the role from the form data, or default to 'member' if not provided
+            'role'     => $data['role'] ?? 'member',
             'password' => Hash::make($data['password']),
         ]);
 

@@ -4,6 +4,10 @@
 
 @section('header', 'Add New City')
 
+@push('styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+@endpush
+
 @section('content')
 <div class="container mx-auto px-4 py-6">
     <div class="mb-6">
@@ -48,21 +52,27 @@
                 @enderror
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="latitude" class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
-                    <input type="text" name="latitude" id="latitude" value="{{ old('latitude') }}" class="form-input rounded-md shadow-sm w-full @error('latitude') border-red-500 @enderror">
-                    @error('latitude')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                <div id="map" class="w-full h-96 rounded-lg border border-gray-300 mb-2"></div>
+                <p class="text-sm text-gray-500 mb-2">Click on the map to select the city location or search for a place.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="latitude" class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
+                        <input type="text" name="latitude" id="latitude" value="{{ old('latitude') }}" class="form-input rounded-md shadow-sm w-full @error('latitude') border-red-500 @enderror" readonly>
+                        @error('latitude')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                <div>
-                    <label for="longitude" class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
-                    <input type="text" name="longitude" id="longitude" value="{{ old('longitude') }}" class="form-input rounded-md shadow-sm w-full @error('longitude') border-red-500 @enderror">
-                    @error('longitude')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                    <div>
+                        <label for="longitude" class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
+                        <input type="text" name="longitude" id="longitude" value="{{ old('longitude') }}" class="form-input rounded-md shadow-sm w-full @error('longitude') border-red-500 @enderror" readonly>
+                        @error('longitude')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
             </div>
 
@@ -78,33 +88,45 @@
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // Optional: Add any JavaScript for form validation or image preview
     document.addEventListener('DOMContentLoaded', function() {
-        // Image preview functionality
-        const imageInput = document.getElementById('image');
-        const previewContainer = document.createElement('div');
-        previewContainer.className = 'mt-2 hidden';
+        // Initialize the map
+        const map = L.map('map').setView([25.276987, 55.296249], 8); // Default center (Dubai)
 
-        const previewImage = document.createElement('img');
-        previewImage.className = 'h-32 object-cover rounded-md shadow';
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-        previewContainer.appendChild(previewImage);
-        imageInput.parentNode.appendChild(previewContainer);
+        // Initialize marker variable
+        let marker;
 
-        imageInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;
-                    previewContainer.classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
+        // Handle map click events
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+
+            // Update form inputs
+            document.getElementById('latitude').value = lat.toFixed(7);
+            document.getElementById('longitude').value = lng.toFixed(7);
+
+            // Update or create marker
+            if (marker) {
+                marker.setLatLng(e.latlng);
+            } else {
+                marker = L.marker(e.latlng).addTo(map);
             }
         });
 
-        // Map integration could be added here
+        // If there are old values (e.g., after validation error), set the marker
+        const oldLat = "{{ old('latitude') }}";
+        const oldLng = "{{ old('longitude') }}";
+        if (oldLat && oldLng) {
+            const latlng = L.latLng(parseFloat(oldLat), parseFloat(oldLng));
+            marker = L.marker(latlng).addTo(map);
+            map.setView(latlng, 13);
+        }
     });
 </script>
 @endpush

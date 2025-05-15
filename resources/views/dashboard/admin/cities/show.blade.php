@@ -4,6 +4,10 @@
 
 @section('header', 'City Details')
 
+@push('styles')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+@endpush
+
 @section('content')
 <div class="container mx-auto px-4 py-6">
     <div class="mb-6 flex justify-between">
@@ -59,19 +63,16 @@
                 @if($city->latitude && $city->longitude)
                 <div class="mt-6">
                     <h2 class="text-sm font-medium text-gray-500">Location</h2>
-                    <div class="mt-2 flex space-x-4">
+                    <div id="map" class="w-full h-96 rounded-lg border border-gray-300"></div>
+                    <div class="mt-2 flex space-x-4 text-sm text-gray-600">
                         <div>
-                            <span class="text-gray-600">Latitude:</span>
-                            <span class="ml-1 text-gray-900">{{ $city->latitude }}</span>
+                            <span class="font-medium">Latitude:</span>
+                            <span>{{ $city->latitude }}</span>
                         </div>
                         <div>
-                            <span class="text-gray-600">Longitude:</span>
-                            <span class="ml-1 text-gray-900">{{ $city->longitude }}</span>
+                            <span class="font-medium">Longitude:</span>
+                            <span>{{ $city->longitude }}</span>
                         </div>
-                    </div>
-                    <!-- Map placeholder - You could integrate with a maps API here -->
-                    <div class="mt-3 h-48 bg-gray-100 rounded-md flex items-center justify-center">
-                        <span class="text-gray-500 text-sm">Map view would be shown here</span>
                     </div>
                 </div>
                 @endif
@@ -203,3 +204,25 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if($city->latitude && $city->longitude)
+            // Initialize the map
+            const map = L.map('map').setView([{{ $city->latitude }}, {{ $city->longitude }}], 13);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add a marker for the city location
+            L.marker([{{ $city->latitude }}, {{ $city->longitude }}])
+                .addTo(map)
+                .bindPopup("{{ $city->name }}");
+        @endif
+    });
+</script>
+@endpush
