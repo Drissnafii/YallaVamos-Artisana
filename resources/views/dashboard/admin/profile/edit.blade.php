@@ -22,9 +22,9 @@
             </label>
 
             <div class="flex flex-col sm:flex-row items-center gap-6 relative z-10">
-                <!-- Profile image -->
+                <!-- Profile image with Material-style elevation -->
                 <div class="relative group">
-                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gray-200 overflow-hidden shadow-lg">
+                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-white overflow-hidden shadow-lg transition-transform hover:scale-105">
                         <img
                             id="profile_photo_preview"
                             src="{{ $user->profile_photo ? Storage::url($user->profile_photo) : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}"
@@ -32,7 +32,7 @@
                             class="w-full h-full object-cover"
                         >
                     </div>
-                    <label for="profile_photo" class="absolute inset-0 flex items-center justify-center rounded-full bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                    <label for="profile_photo" class="absolute inset-0 flex items-center justify-center rounded-full bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
@@ -40,31 +40,39 @@
                     </label>
                 </div>
 
-                <!-- Profile name -->
-                <div class="flex-1 ml-0 sm:ml-4 text-white flex items-center">
-                    <div class="flex flex-col">
-                        <h4 class="text-sm font-medium drop-shadow-md">Profile</h4>
-                        <h1 class="text-4xl sm:text-6xl font-bold mt-1 drop-shadow-lg">{{ $user->name }}</h1>
-                        <div class="flex items-center mt-2">
-                            <div class="text-sm drop-shadow-md">{{ $user->email }}</div>
-                        </div>
+                <!-- Profile name - Spotify inspired typography -->
+                <div class="flex-1 ml-0 sm:ml-4 text-white">
+                    <h4 class="text-sm font-medium uppercase tracking-wider drop-shadow-md">Profile</h4>
+                    <h1 class="text-4xl sm:text-5xl font-bold mt-1 tracking-tight drop-shadow-lg">{{ $user->name }}</h1>
+                    <div class="flex items-center mt-2">
+                        <div class="text-sm drop-shadow-md">{{ $user->email }}</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Status message -->
+    <!-- Status message - Enhanced Material Design toast with animation -->
     @if (session('status'))
-        <div class="mb-6 rounded-md bg-green-50 p-4 transition-all duration-300 ease-in-out shadow-sm">
-            <div class="flex">
+        <div id="status-alert" class="mb-6 rounded-lg bg-green-100 border-l-4 border-green-500 p-4 transition-all duration-500 ease-in-out shadow-md">
+            <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                     </svg>
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm font-medium text-green-800">{{ session('status') }}</p>
+                    <p class="text-base font-medium text-green-800">{{ session('status') }}</p>
+                </div>
+                <div class="ml-auto pl-3">
+                    <div class="-mx-1.5 -my-1.5">
+                        <button type="button" onclick="document.getElementById('status-alert').remove()" class="inline-flex rounded-md p-1.5 text-green-500 hover:bg-green-200 focus:outline-none">
+                            <span class="sr-only">Dismiss</span>
+                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -272,16 +280,23 @@
                     const reader = new FileReader();
 
                     reader.onload = function(event) {
-                        const overlayImage = document.createElement('img');
-                        overlayImage.src = event.target.result;
-                        overlayImage.alt = 'Profile Background';
-                        overlayImage.className = 'absolute inset-0 object-cover mix-blend-overlay opacity-30 w-full h-full';
-                        backgroundPreview.appendChild(overlayImage);
+                        backgroundPreview.style.backgroundImage = `url(${event.target.result})`;
                     }
 
                     reader.readAsDataURL(e.target.files[0]);
                 }
             });
+        }
+
+        // Auto-dismiss status alert after 5 seconds
+        const statusAlert = document.getElementById('status-alert');
+        if (statusAlert) {
+            setTimeout(function() {
+                statusAlert.style.opacity = '0';
+                setTimeout(function() {
+                    statusAlert.remove();
+                }, 500);
+            }, 5000);
         }
     });
 </script>
