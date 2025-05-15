@@ -7,89 +7,149 @@
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <style>
-        .leaflet-control-geocoder {
-            width: 100%;
-            max-width: 300px;
-        }
-    </style>
 @endpush
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <div class="mb-6">
-        <a href="{{ route('admin.cities.index') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+<div class="min-h-screen bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Back Button -->
+        <a href="{{ route('admin.cities.index') }}" class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200 mb-8">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
-            Back to Cities
+            <span class="font-medium">Back to Cities</span>
         </a>
-    </div>
 
-    <div class="bg-white shadow-md rounded-lg overflow-hidden" style="background: linear-gradient(to bottom, white, #f0f7ff);">
-        <div class="p-6 border-b border-gray-200">
-            <h2 class="text-lg font-semibold text-gray-800">City Information</h2>
+        <!-- Main Card -->
+        <div class="bg-white rounded-2xl shadow-sm">
+            <!-- Header -->
+            <div class="px-8 py-6 border-b border-gray-100">
+                <h1 class="text-2xl font-light text-gray-900">Add New City</h1>
+                <p class="text-sm text-gray-500 mt-1">Create a new city entry with location details</p>
+            </div>
+
+            <form action="{{ route('admin.cities.store') }}" method="POST" enctype="multipart/form-data" class="px-8 py-6 space-y-8">
+                @csrf
+
+                <!-- City Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                        City Name
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" 
+                           name="name" 
+                           id="name" 
+                           value="{{ old('name') }}" 
+                           class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 @error('name') border-red-300 @enderror" 
+                           placeholder="Enter city name"
+                           required>
+                    @error('name')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+                        Description
+                    </label>
+                    <textarea name="description" 
+                              id="description" 
+                              rows="4" 
+                              class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 @error('description') border-red-300 @enderror"
+                              placeholder="Describe the city...">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- City Image -->
+                <div>
+                    <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
+                        City Image
+                    </label>
+                    <div class="relative">
+                        <input type="file" 
+                               name="image" 
+                               id="image" 
+                               class="hidden" 
+                               accept="image/*">
+                        <label for="image" 
+                               class="flex flex-col items-center justify-center w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 transition-colors duration-200 cursor-pointer">
+                            <div id="preview-container" class="hidden w-full mb-3">
+                                <img id="preview-image" class="max-h-48 rounded-lg mx-auto" src="" alt="Preview">
+                            </div>
+                            <div id="upload-icon" class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                <span class="text-gray-600" id="fileLabel">Choose file or drag and drop</span>
+                            </div>
+                        </label>
+                    </div>
+                    <p class="mt-2 text-xs text-gray-500">JPEG, PNG, or GIF (Max 2MB)</p>
+                    @error('image')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Location Section -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Location
+                    </label>
+                    <div id="map" class="w-full h-96 rounded-lg overflow-hidden shadow-sm"></div>
+                    <p class="mt-2 text-sm text-gray-500">Click on the map or search to set city location</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label for="latitude" class="block text-sm font-medium text-gray-700 mb-2">
+                                Latitude
+                            </label>
+                            <input type="text" 
+                                   name="latitude" 
+                                   id="latitude" 
+                                   value="{{ old('latitude') }}" 
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
+                                   placeholder="Select on map"
+                                   readonly>
+                            @error('latitude')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="longitude" class="block text-sm font-medium text-gray-700 mb-2">
+                                Longitude
+                            </label>
+                            <input type="text" 
+                                   name="longitude" 
+                                   id="longitude" 
+                                   value="{{ old('longitude') }}" 
+                                   class="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
+                                   placeholder="Select on map"
+                                   readonly>
+                            @error('longitude')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-100">
+                    <a href="{{ route('admin.cities.index') }}" 
+                       class="px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                        Cancel
+                    </a>
+                    <button type="submit" 
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-sm">
+                        Create City
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <form action="{{ route('admin.cities.store') }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-6">
-            @csrf
-
-            <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">City Name <span class="text-red-500">*</span></label>
-                <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-input rounded-md shadow-sm w-full @error('name') border-red-500 @enderror" required>
-                @error('name')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea name="description" id="description" rows="4" class="form-textarea rounded-md shadow-sm w-full @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
-                @error('description')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="image" class="block text-sm font-medium text-gray-700 mb-1">City Image</label>
-                <input type="file" name="image" id="image" class="form-input rounded-md shadow-sm w-full @error('image') border-red-500 @enderror" accept="image/*">
-                <p class="text-xs text-gray-500 mt-1">Upload a high-quality image of the city (JPEG, PNG, or GIF).</p>
-                @error('image')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                <div id="map" class="w-full h-96 rounded-lg border border-gray-300 mb-2"></div>
-                <p class="text-sm text-gray-500 mb-2">Click on the map to select the city location or search for a place.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="latitude" class="block text-sm font-medium text-gray-700 mb-1">Latitude</label>
-                        <input type="text" name="latitude" id="latitude" value="{{ old('latitude') }}" class="form-input rounded-md shadow-sm w-full @error('latitude') border-red-500 @enderror" readonly>
-                        @error('latitude')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="longitude" class="block text-sm font-medium text-gray-700 mb-1">Longitude</label>
-                        <input type="text" name="longitude" id="longitude" value="{{ old('longitude') }}" class="form-input rounded-md shadow-sm w-full @error('longitude') border-red-500 @enderror" readonly>
-                        @error('longitude')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-4 border-t border-gray-200">
-                <div class="flex justify-end">
-                    <a href="{{ route('admin.cities.index') }}" class="bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded shadow mr-2">Cancel</a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded shadow">Create City</button>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 @endsection
@@ -100,9 +160,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize the map
-        const map = L.map('map').setView([34.0209, -6.8416], 8); // Default center (Rabat, Morocco)
+        const map = L.map('map').setView([34.0209, -6.8416], 8); // Default center (Morocco)
 
-        // Add OpenStreetMap tiles
+        // Add OpenStreetMap tiles with custom styling
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
@@ -110,12 +170,13 @@
         // Initialize marker variable
         let marker;
 
-        // Add geocoder control
+        // Add geocoder control with custom styling
         const geocoder = L.Control.geocoder({
             defaultMarkGeocode: false,
             placeholder: 'Search for a location...',
             errorMessage: 'Nothing found.',
-            showResultIcons: true
+            showResultIcons: true,
+            collapsed: false
         })
         .on('markgeocode', function(e) {
             const latlng = e.geocode.center;
@@ -161,6 +222,78 @@
             marker = L.marker(latlng).addTo(map);
             map.setView(latlng, 13);
         }
+
+        // File input handling
+        const fileInput = document.getElementById('image');
+        const fileLabel = document.getElementById('fileLabel');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const uploadIcon = document.getElementById('upload-icon');
+        
+        function handleFileSelect(file) {
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                    uploadIcon.classList.add('hidden');
+                    fileLabel.textContent = file.name;
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            handleFileSelect(file);
+        });
+
+        // Add drag and drop functionality
+        const dropZone = document.querySelector('label[for="image"]');
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(e) {
+            dropZone.classList.add('border-blue-400', 'bg-blue-50');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('border-blue-400', 'bg-blue-50');
+        }
+
+        function handleDrop(e) {
+            preventDefaults(e);
+            unhighlight(e);
+            
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files && files.length > 0) {
+                const file = files[0];
+                fileInput.files = files;
+                handleFileSelect(file);
+            }
+        }
+
+        // Add event listeners to the drop zone
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        dropZone.addEventListener('drop', handleDrop, false);
     });
 </script>
 @endpush
