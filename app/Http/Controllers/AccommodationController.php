@@ -33,10 +33,10 @@ class AccommodationController extends BaseController
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhereHas('city', function ($cityQuery) use ($search) {
-                      $cityQuery->where('name', 'like', "%{$search}%");
-                  });
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhereHas('city', function ($cityQuery) use ($search) {
+                        $cityQuery->where('name', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -55,34 +55,57 @@ class AccommodationController extends BaseController
     }
 
     /**
+     * Show a test form for debugging form submission
+     */
+    public function testForm()
+    {
+        $cities = City::orderBy('name')->get();
+        return view('dashboard.admin.accommodations.test-form', compact('cities'));
+    }
+
+    /**
      * Store a newly created accommodation in storage.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'type' => 'required|string|in:hotel,apartment,riad,guesthouse,other',
-            'price_range' => 'required|string|in:budget,mid-range,luxury',
-            'price_min' => 'required|numeric|min:0',
-            'price_max' => 'required|numeric|min:0|gte:price_min',
-            'city_id' => 'required|exists:cities,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'address' => 'required|string',
-            'phone' => 'nullable|string',
-            'email' => 'nullable|email',
-            'website' => 'nullable|url',
-        ]);
+        try {
+            // Log the input data for debugging
+            \Log::info('Accommodation form data received:', $request->all());
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('accommodations', 'public');
-            $validated['image'] = $imagePath;
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'type' => 'required|string|in:hotel,apartment,riad,guesthouse,other',
+                'price_range' => 'required|string|in:budget,mid-range,luxury',
+                'price_min' => 'required|numeric|min:0',
+                'price_max' => 'required|numeric|min:0|gte:price_min',
+                'city_id' => 'required|exists:cities,id',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'address' => 'required|string',
+                'phone' => 'nullable|string',
+                'email' => 'nullable|email',
+                'website' => 'nullable|url',
+            ]);
+
+            \Log::info('Accommodation validation passed');
+
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('accommodations', 'public');
+                $validated['image'] = $imagePath;
+                \Log::info('Image uploaded to: ' . $imagePath);
+            }
+
+            $accommodation = Accommodation::create($validated);
+            \Log::info('Accommodation created with ID: ' . $accommodation->id);
+
+            return redirect()->route('admin.accommodations.index')
+                ->with('success', 'Accommodation created successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Error creating accommodation: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'An error occurred while creating the accommodation: ' . $e->getMessage()]);
         }
-
-        Accommodation::create($validated);
-
-        return redirect()->route('admin.accommodations.index')
-            ->with('success', 'Accommodation created successfully.');
     }
 
     /**

@@ -185,6 +185,7 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
     // Accommodations Management
     Route::get('accommodations', [AccommodationController::class, 'index'])->name('accommodations.index');
     Route::get('accommodations/create', [AccommodationController::class, 'create'])->name('accommodations.create');
+    Route::get('accommodations/test-form', [AccommodationController::class, 'testForm'])->name('accommodations.test-form');
     Route::post('accommodations', [AccommodationController::class, 'store'])->name('accommodations.store');
     Route::get('accommodations/{accommodation}', [AccommodationController::class, 'show'])->name('accommodations.show');
     Route::get('accommodations/{accommodation}/edit', [AccommodationController::class, 'edit'])->name('accommodations.edit');
