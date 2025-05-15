@@ -175,9 +175,12 @@
     <div class="mt-8 bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Teams Management</h3>
-            <a href="{{ url('/admin/teams/create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Add New Team
-            </a>
+            <div class="flex items-center space-x-4">
+                <a href="{{ url('/admin/teams') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">View all</a>
+                <a href="{{ url('/admin/teams/create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Add New Team
+                </a>
+            </div>
         </div>
         <div class="overflow-x-auto">
             <table class="min-w-full">
@@ -251,13 +254,8 @@
                     <div>
                         @if(isset($teams) && method_exists($teams, 'total'))
                         <p class="text-sm text-gray-700">
-                            Showing <span class="font-medium">{{ $teams->firstItem() ?? 0 }}</span> to <span class="font-medium">{{ $teams->lastItem() ?? 0 }}</span> of <span class="font-medium">{{ $teams->total() ?? 0 }}</span> teams
+                            Total Teams: <span class="font-medium">{{ $teams->total() ?? 0 }}</span>
                         </p>
-                        @endif
-                    </div>
-                    <div>
-                        @if(isset($teams) && method_exists($teams, 'links'))
-                            {{ $teams->links() }}
                         @endif
                     </div>
                 </div>
@@ -344,28 +342,24 @@
     </div>
 
     <!-- Recent Activity / Content Updates -->
-    <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2"> {{-- Example: 2 columns layout --}}
-
+    <div class="mt-8 grid grid-cols-1 gap-6"> {{-- Changed to single column since we're removing Quick Stats --}}
         <!-- Recent Content Updates Table -->
         <div class="bg-white shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Content Updates</h3>
-                {{-- Optional: Link to a full activity log --}}
-                <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">View all</a>
             </div>
             <ul class="divide-y divide-gray-200">
-                {{-- Loop through recent items (e.g., $recentUpdates) --}}
-                {{-- Example Item 1: New Team --}}
+                @forelse($recentUpdates ?? [] as $update)
                 <li>
-                    <a href="#" class="block hover:bg-gray-50"> {{-- Link to the item or edit page --}}
+                    <a href="{{ $update->url ?? '#' }}" class="block hover:bg-gray-50">
                         <div class="px-4 py-4 sm:px-6">
                             <div class="flex items-center justify-between">
                                 <p class="text-sm font-medium text-indigo-600 truncate">
-                                    New Team Added: "Portugal"
+                                    {{ $update->title ?? 'Update' }}
                                 </p>
                                 <div class="ml-2 flex-shrink-0 flex">
-                                    <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                                        Team
+                                    <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $update->type_color ?? 'bg-gray-100 text-gray-800' }}">
+                                        {{ $update->type ?? 'Update' }}
                                     </p>
                                 </div>
                             </div>
@@ -374,128 +368,28 @@
                                     <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                     </svg>
-                                    <p>Admin User</p> {{-- Show who made the change --}}
+                                    <p>{{ $update->user->name ?? 'System' }}</p>
                                 </div>
                                 <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                                     <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
                                     </svg>
                                     <p>
-                                        Added <time datetime="2025-04-12">Apr 12, 2025</time> {{-- Show timestamp --}}
+                                        {{ $update->action ?? 'Updated' }} <time datetime="{{ $update->created_at }}">{{ $update->created_at->format('M d, Y') }}</time>
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </li>
-                {{-- Example Item 2: New Article --}}
-                <li>
-                    <a href="#" class="block hover:bg-gray-50"> {{-- Link to the item or edit page --}}
-                        <div class="px-4 py-4 sm:px-6">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm font-medium text-indigo-600 truncate">
-                                    New Article: "Marrakech Stadium Nears Completion"
-                                </p>
-                                <div class="ml-2 flex-shrink-0 flex">
-                                    <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                        Article
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="mt-2 sm:flex sm:justify-between">
-                                <div class="sm:flex items-center text-sm text-gray-500">
-                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                                    </svg>
-                                    <p>Content Editor</p> {{-- Show who made the change --}}
-                                </div>
-                                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                                    </svg>
-                                    <p>
-                                        Published <time datetime="2025-04-10">Apr 10, 2025</time> {{-- Show timestamp --}}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                {{-- Example Item 3: City Update --}}
-                <li>
-                    <a href="#" class="block hover:bg-gray-50">
-                        <div class="px-4 py-4 sm:px-6">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm font-medium text-indigo-600 truncate">
-                                    City Updated: Casablanca details revised
-                                </p>
-                                <div class="ml-2 flex-shrink-0 flex">
-                                    <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
-                                        City
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="mt-2 sm:flex sm:justify-between">
-                                <div class="sm:flex items-center text-sm text-gray-500">
-                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                                    </svg>
-                                    <p>Another Admin</p>
-                                </div>
-                                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                                    </svg>
-                                    <p>
-                                        Updated <time datetime="2025-04-08">Apr 8, 2025</time>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                {{-- Add more items here dynamically --}}
-                @if(false) {{-- Replace false with check if $recentUpdates is empty --}}
+                @empty
                 <li>
                     <div class="px-4 py-4 sm:px-6 text-center text-gray-500">
                         No recent updates found.
                     </div>
                 </li>
-                @endif
+                @endforelse
             </ul>
-        </div>
-
-        <!-- Quick Stats / Other Info -->
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-            <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Quick Stats</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">Overview of site content.</p>
-            </div>
-            <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-                <dl class="sm:divide-y sm:divide-gray-200">
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">Total Accommodations Listed</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $accommodationCount ?? '0' }}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">Total Teams</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $teamCount ?? '0' }}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">Registered Users</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $userCount ?? 'N/A' }}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">Pending Approvals</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $pendingCount ?? '0' }}</dd>
-                    </div>
-                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-sm font-medium text-gray-500">Last System Update</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ $lastUpdate ?? 'April 13, 2025' }}</dd>
-                    </div>
-                    {{-- Add more relevant quick stats --}}
-                </dl>
-            </div>
         </div>
     </div>
 </div>
