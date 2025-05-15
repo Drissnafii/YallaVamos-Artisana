@@ -6,6 +6,13 @@
 
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <style>
+        .leaflet-control-geocoder {
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -95,6 +102,7 @@
 
 @push('scripts')
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize the map
@@ -109,6 +117,28 @@
 
         // Initialize marker with existing location
         let marker = L.marker([initialLat, initialLng]).addTo(map);
+
+        // Add geocoder control
+        const geocoder = L.Control.geocoder({
+            defaultMarkGeocode: false,
+            placeholder: 'Search for a location...',
+            errorMessage: 'Nothing found.',
+            showResultIcons: true
+        })
+        .on('markgeocode', function(e) {
+            const latlng = e.geocode.center;
+            
+            // Update form inputs
+            document.getElementById('latitude').value = latlng.lat.toFixed(7);
+            document.getElementById('longitude').value = latlng.lng.toFixed(7);
+
+            // Update marker position
+            marker.setLatLng(latlng);
+
+            // Center map on result
+            map.setView(latlng, 13);
+        })
+        .addTo(map);
 
         // Handle map click events
         map.on('click', function(e) {

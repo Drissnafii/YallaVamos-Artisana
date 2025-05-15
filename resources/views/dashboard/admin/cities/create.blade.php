@@ -6,6 +6,13 @@
 
 @push('styles')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <style>
+        .leaflet-control-geocoder {
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -89,10 +96,11 @@
 
 @push('scripts')
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize the map
-        const map = L.map('map').setView([25.276987, 55.296249], 8); // Default center (Dubai)
+        const map = L.map('map').setView([34.0209, -6.8416], 8); // Default center (Rabat, Morocco)
 
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -101,6 +109,32 @@
 
         // Initialize marker variable
         let marker;
+
+        // Add geocoder control
+        const geocoder = L.Control.geocoder({
+            defaultMarkGeocode: false,
+            placeholder: 'Search for a location...',
+            errorMessage: 'Nothing found.',
+            showResultIcons: true
+        })
+        .on('markgeocode', function(e) {
+            const latlng = e.geocode.center;
+            
+            // Update form inputs
+            document.getElementById('latitude').value = latlng.lat.toFixed(7);
+            document.getElementById('longitude').value = latlng.lng.toFixed(7);
+
+            // Update or create marker
+            if (marker) {
+                marker.setLatLng(latlng);
+            } else {
+                marker = L.marker(latlng).addTo(map);
+            }
+
+            // Center map on result
+            map.setView(latlng, 13);
+        })
+        .addTo(map);
 
         // Handle map click events
         map.on('click', function(e) {
