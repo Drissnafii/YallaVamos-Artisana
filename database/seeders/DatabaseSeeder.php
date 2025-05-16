@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             StadiumsTableSeeder::class,
             TeamsTableSeeder::class,
             MatchesTableSeeder::class,
+            UpdateStadiumCoordinatesSeeder::class,
         ]);
     }
 }
