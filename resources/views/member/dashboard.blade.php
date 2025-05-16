@@ -3,719 +3,845 @@
 @section('title', 'Member Dashboard')
 
 @section('full-width-content')
-<!-- Hero Section with Background Image -->
-<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 h-96 overflow-hidden w-full">
-    @if(Auth::user()->background_image)
-        <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background" class="absolute inset-0 object-cover w-full h-full">
-        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-gray-800/40 backdrop-blur-sm"></div>
-    @else
-        <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern" class="absolute inset-0 object-cover w-full h-full">
-        <div class="absolute inset-0 bg-gradient-to-r from-gray-900/60 to-gray-800/50 backdrop-blur-sm"></div>
-    @endif
+    <!-- Hero Section with Background Image -->
+    <div class="relative bg-gradient-to-r from-gray-900 to-gray-800 h-96 overflow-hidden w-full">
+        @if(Auth::user()->background_image)
+            <img src="{{ Storage::url(Auth::user()->background_image) }}" alt="Profile Background"
+                class="absolute inset-0 object-cover w-full h-full">
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/50 to-gray-800/40 backdrop-blur-sm"></div>
+        @else
+            <img src="{{ asset('images/world-cup-pattern.png') }}" alt="World Cup Pattern"
+                class="absolute inset-0 object-cover w-full h-full">
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/60 to-gray-800/50 backdrop-blur-sm"></div>
+        @endif
 
-    <!-- Container for profile image and text content -->
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center pb-8 relative z-10">
-        <div class="flex items-center gap-6 ml-8">
-            <!-- Circular profile image -->
-            <div>
-                <div class="w-32 h-32 rounded-full overflow-hidden shadow-xl border-2 border-white transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
-                    <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}" alt="Profile Photo" class="w-full h-full object-cover">
+        <!-- Container for profile image and text content -->
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center pb-8 relative z-10">
+            <div class="flex items-center gap-6 ml-8">
+                <!-- Circular profile image -->
+                <div>
+                    <div
+                        class="w-32 h-32 rounded-full overflow-hidden shadow-xl border-2 border-white transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer">
+                        <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}"
+                            alt="Profile Photo" class="w-full h-full object-cover">
+                    </div>
                 </div>
-            </div>
 
-            <!-- Text content -->
-            <div>
-                <p class="text-white/90 text-sm font-medium mb-1 drop-shadow-md">{{ now()->format('l, d F Y') }}</p>
-                <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">Hello, {{ Auth::user()->name }}</h1>
-                <p class="text-white/90 drop-shadow-md">Welcome to your World Cup 2030 Dashboard</p>
+                <!-- Text content -->
+                <div>
+                    <p class="text-white/90 text-sm font-medium mb-1 drop-shadow-md">{{ now()->format('l, d F Y') }}</p>
+                    <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">Hello, {{ Auth::user()->name }}</h1>
+                    <p class="text-white/90 drop-shadow-md">Welcome to your World Cup 2030 Dashboard</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('content')
-<!-- Main Content -->
-</div> <!-- Closing the container div from the hero section -->
+    <!-- Main Content -->
+    </div> <!-- Closing the container div from the hero section -->
 
-<!-- Quick Actions - Simplified container with gradient blur effects -->
-<div class="relative z-30 mt-10">
-    <!-- Content container -->
-    <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-5 py-2 w-[calc(100%-2rem)] max-w-5xl mx-auto">
-        <!-- Create Article - Green -->
-        <a href="http://127.0.0.1:8000/member/articles/create" class="group relative flex items-center justify-center h-24" title="Create Article">
-            <div class="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 rounded-full transform transition-all duration-300 group-hover:scale-110"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-green-100 to-green-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <!-- Label that appears on hover -->
-            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-green-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
-                Create Article
-            </div>
-            <div class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-            </div>
-        </a>
+    <!-- Quick Actions - Simplified container with gradient blur effects -->
+    <div class="relative z-30 mt-10">
+        <!-- Content container -->
+        <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-5 py-2 w-[calc(100%-2rem)] max-w-5xl mx-auto">
+            <!-- Create Article - Green -->
+            <a href="http://127.0.0.1:8000/member/articles/create"
+                class="group relative flex items-center justify-center h-24" title="Create Article">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 rounded-full transform transition-all duration-300 group-hover:scale-110">
+                </div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-green-100 to-green-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                </div>
+                <!-- Label that appears on hover -->
+                <div
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-green-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
+                    Create Article
+                </div>
+                <div
+                    class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-green-600" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </div>
+            </a>
 
-        <!-- Manage Favorites - Amber -->
-        <a href="http://127.0.0.1:8000/member/favorites" class="group relative flex items-center justify-center h-24" title="Manage Favorites">
-            <div class="absolute inset-0 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full transform transition-all duration-300 group-hover:scale-110"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <!-- Label that appears on hover -->
-            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-amber-500 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
-                Manage Favorites
-            </div>
-            <div class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                </svg>
-            </div>
-        </a>
+            <!-- Manage Favorites - Amber -->
+            <a href="http://127.0.0.1:8000/member/favorites" class="group relative flex items-center justify-center h-24"
+                title="Manage Favorites">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-amber-50 to-amber-100 rounded-full transform transition-all duration-300 group-hover:scale-110">
+                </div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                </div>
+                <!-- Label that appears on hover -->
+                <div
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-amber-500 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
+                    Manage Favorites
+                </div>
+                <div
+                    class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-amber-500" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z">
+                        </path>
+                    </svg>
+                </div>
+            </a>
 
-        <!-- Edit Profile - Blue -->
-        <a href="http://127.0.0.1:8000/member/profile" class="group relative flex items-center justify-center h-24" title="Edit Profile">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full transform transition-all duration-300 group-hover:scale-110"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <!-- Label that appears on hover -->
-            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
-                Edit Profile
-            </div>
-            <div class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-            </div>
-        </a>
+            <!-- Edit Profile - Blue -->
+            <a href="http://127.0.0.1:8000/member/profile" class="group relative flex items-center justify-center h-24"
+                title="Edit Profile">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full transform transition-all duration-300 group-hover:scale-110">
+                </div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                </div>
+                <!-- Label that appears on hover -->
+                <div
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
+                    Edit Profile
+                </div>
+                <div
+                    class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-600" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+            </a>
 
-        <!-- Browse Matches - Purple -->
-        <a href="http://127.0.0.1:8000/member/matches" class="group relative flex items-center justify-center h-24" title="Match Schedule">
-            <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full transform transition-all duration-300 group-hover:scale-110"></div>
-            <div class="absolute inset-0 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <!-- Label that appears on hover -->
-            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
-                Match Schedule
-            </div>
-            <div class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                </svg>
-            </div>
-        </a>
+            <!-- Browse Matches - Purple -->
+            <a href="http://127.0.0.1:8000/member/matches" class="group relative flex items-center justify-center h-24"
+                title="Match Schedule">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-purple-50 to-purple-100 rounded-full transform transition-all duration-300 group-hover:scale-110">
+                </div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                </div>
+                <!-- Label that appears on hover -->
+                <div
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-10 transition-all duration-300 shadow-md">
+                    Match Schedule
+                </div>
+                <div
+                    class="relative z-10 h-16 w-16 rounded-full bg-white shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-purple-600" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+        <!-- Bottom gradient blur -->
+        <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-red-400/30 via-red-500/40 to-transparent"
+            style="filter: blur(0.5rem);"></div>
     </div>
 
-    <!-- Bottom gradient blur -->
-    <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-red-400/30 via-red-500/40 to-transparent" style="filter: blur(0.5rem);"></div>
-</div>
+    <!-- Add padding to the bottom of your content to make room for the fixed quick actions -->
+    <div class="pb-24"></div>
 
-<!-- Add padding to the bottom of your content to make room for the fixed quick actions -->
-<div class="pb-24"></div>
-
-<!-- Material Design 3 Enhanced Dashboard Content -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- M3 App Bar -->
-    <header class="bg-primary-500 text-white shadow-md-2 sticky top-0 z-10 rounded-md-large mt-6 overflow-hidden">
-        <div class="px-4 sm:px-6">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-3">
-                    <button class="p-2 rounded-full hover:bg-white/10 transition-colors duration-200 ripple">
-                        <span class="material-symbols-outlined text-2xl">dashboard</span>
-                    </button>
-                    <h1 class="text-xl font-medium">Dashboard</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button class="p-2 rounded-full hover:bg-white/10 transition-colors duration-200 ripple">
-                        <span class="material-symbols-outlined">notifications</span>
-                    </button>
-                    <div class="h-10 w-10 rounded-full bg-white/20 overflow-hidden flex items-center justify-center cursor-pointer">
-                        <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}" alt="Profile" class="h-full w-full object-cover" />
+    <!-- Material Design 3 Enhanced Dashboard Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- M3 App Bar -->
+        <header class="bg-primary-500 text-white shadow-md-2 sticky top-0 z-10 rounded-md-large mt-6 overflow-hidden">
+            <div class="px-4 sm:px-6">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-3">
+                        <button class="p-2 rounded-full hover:bg-white/10 transition-colors duration-200 ripple">
+                            <span class="material-symbols-outlined text-2xl">dashboard</span>
+                        </button>
+                        <h1 class="text-xl font-medium">Dashboard</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 rounded-full hover:bg-white/10 transition-colors duration-200 ripple">
+                            <span class="material-symbols-outlined">notifications</span>
+                        </button>
+                        <div
+                            class="h-10 w-10 rounded-full bg-white/20 overflow-hidden flex items-center justify-center cursor-pointer">
+                            <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}"
+                                alt="Profile" class="h-full w-full object-cover" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Stats Summary Cards - Material Design 3 Style -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        <!-- Card 1: Stats Overview -->
-        <div class="bg-surface-light rounded-md-large p-6 shadow-md-2 hover:shadow-md-3 transition-all duration-300 border border-gray-100 state-change">
-            <div class="flex items-center gap-4 mb-4">
-                <div class="w-12 h-12 flex items-center justify-center rounded-full bg-primary-100">
-                    <span class="material-symbols-outlined text-2xl text-primary-500">dashboard</span>
+        <!-- Stats Summary Cards - Material Design 3 Style -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <!-- Card 1: Stats Overview -->
+            <div
+                class="bg-surface-light rounded-md-large p-6 shadow-md-2 hover:shadow-md-3 transition-all duration-300 border border-gray-100 state-change">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-full bg-primary-100">
+                        <span class="material-symbols-outlined text-2xl text-primary-500">dashboard</span>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-lg font-medium text-gray-900">Overview</h2>
-                    <p class="text-sm text-gray-600">Your activity</p>
+
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <div class="flex flex-col items-center justify-center p-3 bg-surface-variant rounded-md-medium">
+                        <span class="text-sm text-gray-600 mb-1">Favorites</span>
+                        <span class="text-2xl font-bold text-primary-700">
+                            {{ Auth::user()->favoriteCities->count() +
+        Auth::user()->favoriteStadiums->count() +
+        Auth::user()->favoriteTeams->count() +
+        Auth::user()->favoriteMatches->count() }}
+                        </span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-3 bg-surface-variant rounded-md-medium">
+                        <span class="text-sm text-gray-600 mb-1">Articles</span>
+                        <span class="text-2xl font-bold text-primary-700">{{ Auth::user()->articles->count() }}</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center p-3 bg-surface-variant rounded-md-medium">
+                        <span class="text-sm text-gray-600 mb-1">Matches</span>
+                        <span
+                            class="text-2xl font-bold text-primary-700">{{ Auth::user()->favoriteMatches->count() }}</span>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="grid grid-cols-3 gap-3 mb-6">
-                <div class="flex flex-col items-center justify-center p-3 bg-surface-variant rounded-md-medium">
-                    <span class="text-sm text-gray-600 mb-1">Favorites</span>
-                    <span class="text-2xl font-bold text-primary-700">0</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-3 bg-surface-variant rounded-md-medium">
-                    <span class="text-sm text-gray-600 mb-1">Articles</span>
-                    <span class="text-2xl font-bold text-primary-700">0</span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-3 bg-surface-variant rounded-md-medium">
-                    <span class="text-sm text-gray-600 mb-1">Matches</span>
-                    <span class="text-2xl font-bold text-primary-700">0</span>
-                </div>
-            </div>
-            
-            <div class="flex justify-center">
-                <button class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-primary-50 text-primary-700 border border-primary-100 rounded-md-medium hover:bg-primary-100 transition-colors duration-200 ripple">
-                    <span>View Statistics</span>
-                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Card 2: Articles Status -->
-        <div class="bg-surface-light rounded-md-large p-6 shadow-md-2 hover:shadow-md-3 transition-all duration-300 border border-gray-100 state-change">
-            <div class="flex items-center gap-4 mb-4">
-                <div class="w-12 h-12 flex items-center justify-center rounded-full bg-secondary-100">
-                    <span class="material-symbols-outlined text-2xl text-secondary-500">article</span>
-                </div>
-                <div>
-                    <h2 class="text-lg font-medium text-gray-900">Articles</h2>
-                    <p class="text-sm text-gray-600">Your publications</p>
+
+                <div class="flex justify-center">
+                    <button
+                        class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-primary-50 text-primary-700 border border-primary-100 rounded-md-medium hover:bg-primary-100 transition-colors duration-200 ripple">
+                        <span>View Statistics</span>
+                    </button>
                 </div>
             </div>
-            
-            <div class="mb-6">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-sm text-gray-600">Articles published this month</span>
-                    <span class="text-sm font-medium bg-secondary-100 text-secondary-700 px-2 py-1 rounded-md-medium">0/5</span>
+
+            <!-- Card 2: Articles Status -->
+            <div
+                class="bg-surface-light rounded-md-large p-6 shadow-md-2 hover:shadow-md-3 transition-all duration-300 border border-gray-100 state-change">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 flex items-center justify-center rounded-full bg-secondary-100">
+                        <span class="material-symbols-outlined text-2xl text-secondary-500">article</span>
+                    </div>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
-                    <div class="bg-secondary-500 h-2 rounded-full" style="width: 0%; transition: width 1.5s ease-in-out;"></div>
+
+                @php
+                    $currentMonth = now()->month;
+                    $articlesThisMonth = Auth::user()->articles()
+                        ->whereMonth('created_at', $currentMonth)
+                        ->count();
+                    $maxArticlesPerMonth = 5;
+                    $progressPercentage = min(($articlesThisMonth / $maxArticlesPerMonth) * 100, 100);
+                @endphp
+
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm text-gray-600">Articles published this month</span>
+                        <span
+                            class="text-sm font-medium bg-secondary-100 text-secondary-700 px-2 py-1 rounded-md-medium">{{ $articlesThisMonth }}/{{ $maxArticlesPerMonth }}</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-secondary-500 h-2 rounded-full"
+                            style="width: {{ $progressPercentage }}%; transition: width 1.5s ease-in-out;"></div>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button
+                        class="flex-1 flex justify-center items-center gap-2 px-4 py-2.5 bg-surface-variant text-gray-700 rounded-md-medium hover:bg-gray-200 transition-colors duration-200 ripple">
+                        <span>My Articles</span>
+                    </button>
+                    <button
+                        class="flex-1 flex justify-center items-center gap-2 px-4 py-2.5 bg-secondary-100 text-secondary-700 rounded-md-medium hover:bg-secondary-200 transition-colors duration-200 ripple">
+                        <span>Create</span>
+                    </button>
                 </div>
             </div>
-            
-            <div class="flex gap-3">
-                <button class="flex-1 flex justify-center items-center gap-2 px-4 py-2.5 bg-surface-variant text-gray-700 rounded-md-medium hover:bg-gray-200 transition-colors duration-200 ripple">
-                    <span>My Articles</span>
-                    <span class="material-symbols-outlined text-sm">visibility</span>
-                </button>
-                <button class="flex-1 flex justify-center items-center gap-2 px-4 py-2.5 bg-secondary-100 text-secondary-700 rounded-md-medium hover:bg-secondary-200 transition-colors duration-200 ripple">
-                    <span>Create</span>
-                    <span class="material-symbols-outlined text-sm">add</span>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Card 3: Upcoming Matches -->
-        <div class="bg-surface-light rounded-md-large p-6 shadow-md-2 hover:shadow-md-3 transition-all duration-300 border border-gray-100 state-change">
-            <div class="flex items-center gap-4 mb-4">
-                <div class="w-12 h-12 flex items-center justify-center rounded-full bg-amber-100">
-                    <span class="material-symbols-outlined text-2xl text-amber-600">sports_soccer</span>
+
+            <!-- Card 3: Upcoming Matches -->
+            <div
+                class="bg-surface-light rounded-md-large p-6 shadow-md-2 hover:shadow-md-3 transition-all duration-300 border border-gray-100 state-change">
+                <div class="flex items-center gap-4 mb-4">
+                    <div>
+                        <h2 class="text-lg font-medium text-gray-900">Upcoming Matches</h2>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-lg font-medium text-gray-900">Upcoming Matches</h2>
-                    <p class="text-sm text-gray-600">Your calendar</p>
-                </div>
-            </div>
-            
-            <div class="bg-surface-variant p-4 rounded-md-medium mb-6 text-center">
-                <p class="text-gray-600">No upcoming matches</p>
-                <p class="text-sm text-gray-500 mt-1">Add matches to your favorites</p>
-            </div>
-            
-            <div class="flex justify-center">
-                <button class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-amber-50 text-amber-700 border border-amber-100 rounded-md-medium hover:bg-amber-100 transition-colors duration-200 ripple">
-                    <span>View All Matches</span>
-                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Main Content Area (2-column layout) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
-        <!-- Main Content Column (8/12) -->
-        <div class="lg:col-span-8 space-y-6">
-            <!-- User Profile Card - Material Design 3 Style -->
-            <div class="bg-surface-light rounded-md-large p-6 shadow-md-2 border border-gray-100 hover:shadow-md-3 transition-all duration-300 state-change">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-                    <div class="flex items-center gap-4">
-                        <div class="relative">
-                            <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-primary-200">
-                                <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}" alt="User Profile" class="w-full h-full object-cover">
+
+                @php
+                    $favoriteMatchIds = Auth::user()->favoriteMatches()->pluck('match_id');
+                    $upcomingMatches = App\Models\MatchX::whereIn('id', $favoriteMatchIds)
+                        ->where('date', '>=', now())
+                        ->orderBy('date')
+                        ->take(2)
+                        ->with(['team1', 'team2', 'stadium.city'])
+                        ->get();
+                @endphp
+
+                @if($upcomingMatches->count() > 0)
+                    <div class="space-y-3 mb-6">
+                        @foreach($upcomingMatches as $match)
+                            <div class="bg-surface-variant p-3 rounded-md-medium">
+                                <div class="text-xs font-medium text-gray-500 mb-1">{{ $match->date->format('d M Y') }} •
+                                    {{ $match->time }}
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-1">
+                                        <span class="font-medium text-sm">{{ $match->team1->name }}</span>
+                                        <span class="text-xs text-gray-600">vs</span>
+                                        <span class="font-medium text-sm">{{ $match->team2->name }}</span>
+                                    </div>
+                                    <div class="text-xs text-gray-600">{{ $match->stadium->name }}</div>
+                                </div>
                             </div>
-                            <div class="absolute bottom-0 right-0 bg-green-500 w-4 h-4 rounded-full border-2 border-white"></div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="bg-surface-variant p-4 rounded-md-medium mb-6 text-center">
+                        <p class="text-gray-600">No upcoming matches</p>
+                        <p class="text-sm text-gray-500 mt-1">Add matches to your favorites</p>
+                    </div>
+                @endif
+
+                <div class="flex justify-center">
+                    <a href="{{ route('member.matches.index') }}"
+                        class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-amber-50 text-amber-700 border border-amber-100 rounded-md-medium hover:bg-amber-100 transition-colors duration-200 ripple">
+                        <span>View All Matches</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area (2-column layout) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
+            <!-- Main Content Column (8/12) -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- User Profile Card - Material Design 3 Style -->
+                <div
+                    class="bg-surface-light rounded-md-large p-6 shadow-md-2 border border-gray-100 hover:shadow-md-3 transition-all duration-300 state-change">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                        <div class="flex items-center gap-4">
+                            <div class="relative">
+                                <div class="w-16 h-16 rounded-full overflow-hidden ring-2 ring-primary-200">
+                                    <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-profile.png') }}"
+                                        alt="User Profile" class="w-full h-full object-cover">
+                                </div>
+                                <div
+                                    class="absolute bottom-0 right-0 bg-green-500 w-4 h-4 rounded-full border-2 border-white">
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-medium text-gray-900">{{ Auth::user()->name }}</h3>
+                                <p class="text-sm text-gray-600">{{ Auth::user()->email }}</p>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <span class="px-2 py-0.5 bg-primary-100 text-primary-700 text-xs rounded-full">
+                                        Member
+                                    </span>
+                                    <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">
+                                        For 3 months
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <div>
-                            <h3 class="text-xl font-medium text-gray-900">{{ Auth::user()->name }}</h3>
-                            <p class="text-sm text-gray-600">{{ Auth::user()->email }}</p>
-                            <div class="flex flex-wrap gap-2 mt-2">
-                                <span class="px-2 py-0.5 bg-primary-100 text-primary-700 text-xs rounded-full">
-                                    Member
-                                </span>
-                                <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">
-                                    For 3 months
-                                </span>
+                            <button
+                                class="flex items-center gap-2 px-5 py-2 bg-primary-500 text-white rounded-md-medium shadow-md-1 hover:shadow-md-2 transition-all duration-200 ripple">
+                                <span class="material-symbols-outlined text-sm">edit</span>
+                                <span>Edit Profile</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Matches Section -->
+                <div
+                    class="bg-surface-light rounded-md-large shadow-md-2 border border-gray-100 overflow-hidden hover:shadow-md-3 transition-all duration-300 state-change">
+                    <div class="border-b border-gray-100">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-xl font-medium text-gray-900">Upcoming Matches</h2>
+                                <a href="#"
+                                    class="text-sm font-medium text-primary-600 hover:text-primary-700 flex items-center gap-1">
+                                    View All
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button class="flex items-center gap-2 px-5 py-2 bg-primary-500 text-white rounded-md-medium shadow-md-1 hover:shadow-md-2 transition-all duration-200 ripple">
-                            <span class="material-symbols-outlined text-sm">edit</span>
-                            <span>Edit Profile</span>
+
+                    <div class="p-6">
+                        <div class="bg-amber-50 rounded-md-medium p-4 mb-6 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-amber-600">info</span>
+                            <p class="text-amber-800 text-sm">Click on a match to add it to your favorites</p>
+                        </div>
+
+                        <!-- Match cards with Material Design 3 style -->
+                        <div class="space-y-4">
+                            <!-- Sample match card - can be repeated for each match -->
+                            <div
+                                class="bg-surface-light rounded-md-medium shadow-md-1 hover:shadow-md-2 transition-all duration-200 overflow-hidden cursor-pointer border border-gray-100 group">
+                                <div class="flex">
+                                    <div class="w-1 bg-gray-200 group-hover:bg-amber-200 transition-colors duration-300">
+                                    </div>
+                                    <div class="p-4 flex-grow">
+                                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                                            <div class="flex items-center gap-3">
+                                                <div
+                                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-100 text-primary-800 font-medium text-sm">
+                                                    1</div>
+                                                <div>
+                                                    <div class="text-xs font-medium text-gray-500">May 16, 2025 - 15:00
+                                                    </div>
+                                                    <div class="font-medium text-base">Team A vs Team B</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-row sm:flex-col items-start sm:items-end gap-2">
+                                                <div class="text-xs px-2 py-1 bg-primary-100 text-primary-800 rounded-full">
+                                                    Upcoming
+                                                </div>
+                                                <div class="text-sm">National Stadium</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center text-xs text-gray-500 mt-3">
+                                            <div>Marrakesh</div>
+                                            <div
+                                                class="favorite-toggle flex items-center text-gray-400 group-hover:text-amber-400 transition-colors gap-1">
+                                                <span class="material-symbols-outlined text-sm">star</span>
+                                                <span>Add to favorites</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Second sample match -->
+                            <div
+                                class="bg-surface-light rounded-md-medium shadow-md-1 hover:shadow-md-2 transition-all duration-200 overflow-hidden cursor-pointer border border-gray-100 group">
+                                <div class="flex">
+                                    <div class="w-1 bg-gray-200 group-hover:bg-amber-200 transition-colors duration-300">
+                                    </div>
+                                    <div class="p-4 flex-grow">
+                                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                                            <div class="flex items-center gap-3">
+                                                <div
+                                                    class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-100 text-primary-800 font-medium text-sm">
+                                                    2</div>
+                                                <div>
+                                                    <div class="text-xs font-medium text-gray-500">May 18, 2025 - 18:30
+                                                    </div>
+                                                    <div class="font-medium text-base">Team C vs Team D</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-row sm:flex-col items-start sm:items-end gap-2">
+                                                <div class="text-xs px-2 py-1 bg-primary-100 text-primary-800 rounded-full">
+                                                    Upcoming
+                                                </div>
+                                                <div class="text-sm">Olympic Stadium</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center text-xs text-gray-500 mt-3">
+                                            <div>Casablanca</div>
+                                            <div
+                                                class="favorite-toggle flex items-center text-gray-400 group-hover:text-amber-400 transition-colors gap-1">
+                                                <span class="material-symbols-outlined text-sm">star</span>
+                                                <span>Add to favorites</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Section -->
+                <div
+                    class="bg-surface-light rounded-md-large shadow-md-2 border border-gray-100 overflow-hidden hover:shadow-md-3 transition-all duration-300 state-change">
+                    <div class="border-b border-gray-100">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-xl font-medium text-gray-900">Recent Activity</h2>
+                                <a href="#"
+                                    class="text-sm font-medium text-primary-600 hover:text-primary-700 flex items-center gap-1">
+                                    View All
+                                    <span class="material-symbols-outlined text-sm">chevron_right</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <!-- Activity Timeline -->
+                        <div
+                            class="relative pl-8 space-y-8 before:absolute before:inset-y-0 before:left-3 before:w-0.5 before:bg-gray-200">
+                            <!-- Activity Item 1 -->
+                            <div class="relative">
+                                <div
+                                    class="absolute -left-8 mt-1.5 h-6 w-6 rounded-full bg-primary-100 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-sm text-primary-600">login</span>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-900">Account Login</p>
+                                    <p class="text-sm text-gray-600 mt-1">You logged in from a new device</p>
+                                    <p class="text-xs text-gray-500 mt-1">Today, 14:32</p>
+                                </div>
+                            </div>
+
+                            <!-- Activity Item 2 -->
+                            <div class="relative">
+                                <div
+                                    class="absolute -left-8 mt-1.5 h-6 w-6 rounded-full bg-green-100 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-sm text-green-600">article</span>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-900">Article Published</p>
+                                    <p class="text-sm text-gray-600 mt-1">Your article "World Cup 2030 Preview" was
+                                        published</p>
+                                    <p class="text-xs text-gray-500 mt-1">Yesterday, 09:15</p>
+                                </div>
+                            </div>
+
+                            <!-- Activity Item 3 -->
+                            <div class="relative">
+                                <div
+                                    class="absolute -left-8 mt-1.5 h-6 w-6 rounded-full bg-amber-100 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-sm text-amber-600">star</span>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-900">Match Added to Favorites</p>
+                                    <p class="text-sm text-gray-600 mt-1">You added "Team A vs Team B" to your favorites</p>
+                                    <p class="text-xs text-gray-500 mt-1">May 14, 2025</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Column (4/12) -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- Quick Stats Cards - Material Design 3 Style -->
+                <div
+                    class="bg-white rounded-xl p-6 shadow-md-2 border border-gray-100 hover:shadow-md-3 transition-all duration-300 relative overflow-hidden group state-change">
+                    <!-- Enhanced background effect -->
+                    <div
+                        class="absolute top-0 right-0 w-40 h-40 -mr-12 -mt-12 bg-amber-100/30 rounded-full opacity-70 transition-all duration-500 group-hover:bg-amber-200/60 group-hover:scale-125">
+                    </div>
+
+                    <div class="relative">
+                        <!-- Improved header section with better spacing -->
+                        <div class="flex items-center mb-5">
+                            <div
+                                class="p-3 rounded-full bg-amber-50 mr-4 shadow-sm group-hover:bg-amber-100 transition-all duration-300">
+                                <span class="material-symbols-outlined text-xl text-amber-600">star</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Favorites</p>
+                                <p class="text-3xl font-bold text-gray-800">
+                                    {{ Auth::user()->favoriteCities->count() +
+        Auth::user()->favoriteStadiums->count() +
+        Auth::user()->favoriteTeams->count() +
+        Auth::user()->favoriteMatches->count() }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced stat cards with hover effects -->
+                        <div class="grid grid-cols-3 gap-3 mb-5">
+                            <div
+                                class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
+                                <p class="text-xs text-gray-600 mb-1">Cities</p>
+                                <p class="font-bold text-gray-800 text-lg">{{ Auth::user()->favoriteCities->count() }}</p>
+                            </div>
+                            <div
+                                class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
+                                <p class="text-xs text-gray-600 mb-1">Stadiums</p>
+                                <p class="font-bold text-gray-800 text-lg">{{ Auth::user()->favoriteStadiums->count() }}</p>
+                            </div>
+                            <div
+                                class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
+                                <p class="text-xs text-gray-600 mb-1">Matches</p>
+                                <p class="font-bold text-gray-800 text-lg">{{ Auth::user()->favoriteMatches->count() }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Improved action button -->
+                        <a href="http://127.0.0.1:8000/member/favorites"
+                            class="inline-flex items-center px-4 py-2 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-colors duration-300 font-medium text-sm ripple">
+                            Manage your favorites
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Notifications Card -->
+                <div
+                    class="bg-surface-light rounded-md-large p-6 shadow-md-2 border border-gray-100 hover:shadow-md-3 transition-all duration-300 state-change">
+                    <div class="flex items-center justify-between mb-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-purple-100">
+                                <img src="{{ asset('images/notifications.png') }}" alt="Notifications" class="w-6 h-6">
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900">Notifications</h3>
+                        </div>
+                        <span class="text-xs font-medium bg-purple-100 text-purple-700 px-2 py-1 rounded-full">3 New</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Notification Item 1 -->
+                        <div
+                            class="p-3 bg-purple-50 rounded-md-medium hover:bg-purple-100 transition-colors duration-200 cursor-pointer">
+                            <div class="flex items-start gap-3">
+                                <img src="{{ asset('images/events.png') }}" alt="Event" class="w-5 h-5 mt-0.5">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">New match scheduled</p>
+                                    <p class="text-xs text-gray-600 mt-1">Team A vs Team B - May 16, 2025</p>
+                                    <p class="text-xs text-gray-500 mt-1">10 minutes ago</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notification Item 2 -->
+                        <div
+                            class="p-3 bg-surface-variant rounded-md-medium hover:bg-gray-200 transition-colors duration-200 cursor-pointer">
+                            <div class="flex items-start gap-3">
+                                <img src="{{ asset('images/article.png') }}" alt="Article" class="w-5 h-5 mt-0.5">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Article approved</p>
+                                    <p class="text-xs text-gray-600 mt-1">Your article has been approved and published</p>
+                                    <p class="text-xs text-gray-500 mt-1">Yesterday</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notification Item 3 -->
+                        <div
+                            class="p-3 bg-surface-variant rounded-md-medium hover:bg-gray-200 transition-colors duration-200 cursor-pointer">
+                            <div class="flex items-start gap-3">
+                                <img src="{{ asset('images/profile01.png') }}" alt="Profile" class="w-5 h-5 mt-0.5">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Profile updated</p>
+                                    <p class="text-xs text-gray-600 mt-1">Your profile information has been updated</p>
+                                    <p class="text-xs text-gray-500 mt-1">2 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <button
+                            class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-purple-50 text-purple-700 border border-purple-100 rounded-md-medium hover:bg-purple-100 transition-colors duration-200 ripple">
+                            <span>View All Notifications</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- World Cup Countdown Card -->
+                <div
+                    class="bg-surface-light rounded-md-large p-6 shadow-md-2 border border-gray-100 hover:shadow-md-3 transition-all duration-300 relative overflow-hidden state-change">
+                    <div class="absolute top-0 right-0 w-40 h-40 -mr-12 -mt-12 bg-blue-100/30 rounded-full opacity-70">
+                    </div>
+
+                    <div class="relative">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100">
+                                <img src="{{ asset('images/timer.png') }}" alt="Timer" class="w-6 h-6">
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900">World Cup Countdown</h3>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-md-medium p-4 text-center mb-5">
+                            <p class="text-sm text-blue-800 mb-2">Time until World Cup 2030 Opening Ceremony</p>
+                            <div class="grid grid-cols-4 gap-2" id="worldcup-countdown">
+                                <div class="bg-white p-2 rounded-md shadow-sm">
+                                    <p class="text-2xl font-bold text-blue-700" id="countdown-days">0</p>
+                                    <p class="text-xs text-gray-600">Days</p>
+                                </div>
+                                <div class="bg-white p-2 rounded-md shadow-sm">
+                                    <p class="text-2xl font-bold text-blue-700" id="countdown-hours">0</p>
+                                    <p class="text-xs text-gray-600">Hours</p>
+                                </div>
+                                <div class="bg-white p-2 rounded-md shadow-sm">
+                                    <p class="text-2xl font-bold text-blue-700" id="countdown-minutes">0</p>
+                                    <p class="text-xs text-gray-600">Minutes</p>
+                                </div>
+                                <div class="bg-white p-2 rounded-md shadow-sm">
+                                    <p class="text-2xl font-bold text-blue-700" id="countdown-seconds">0</p>
+                                    <p class="text-xs text-gray-600">Seconds</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-2">Opening Ceremony: June 13, 2030</p>
+                        </div>
+
+                        <button
+                            class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-blue-500 text-white rounded-md-medium hover:bg-blue-600 transition-colors duration-200 ripple">
+                            <span>View Tournament Details</span>
                         </button>
                     </div>
                 </div>
             </div>
-            
-            <!-- Upcoming Matches Section -->
-            <div class="bg-surface-light rounded-md-large shadow-md-2 border border-gray-100 overflow-hidden hover:shadow-md-3 transition-all duration-300 state-change">
-                <div class="border-b border-gray-100">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-xl font-medium text-gray-900">Upcoming Matches</h2>
-                            <a href="#" class="text-sm font-medium text-primary-600 hover:text-primary-700 flex items-center gap-1">
-                                View All
-                                <span class="material-symbols-outlined text-sm">chevron_right</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-6">
-                    <div class="bg-amber-50 rounded-md-medium p-4 mb-6 flex items-center gap-3">
-                        <span class="material-symbols-outlined text-amber-600">info</span>
-                        <p class="text-amber-800 text-sm">Click on a match to add it to your favorites</p>
-                    </div>
-                    
-                    <!-- Match cards with Material Design 3 style -->
-                    <div class="space-y-4">
-                        <!-- Sample match card - can be repeated for each match -->
-                        <div class="bg-surface-light rounded-md-medium shadow-md-1 hover:shadow-md-2 transition-all duration-200 overflow-hidden cursor-pointer border border-gray-100 group">
-                            <div class="flex">
-                                <div class="w-1 bg-gray-200 group-hover:bg-amber-200 transition-colors duration-300"></div>
-                                <div class="p-4 flex-grow">
-                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-100 text-primary-800 font-medium text-sm">1</div>
-                                            <div>
-                                                <div class="text-xs font-medium text-gray-500">May 16, 2025 - 15:00</div>
-                                                <div class="font-medium text-base">Team A vs Team B</div>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-row sm:flex-col items-start sm:items-end gap-2">
-                                            <div class="text-xs px-2 py-1 bg-primary-100 text-primary-800 rounded-full">
-                                                Upcoming
-                                            </div>
-                                            <div class="text-sm">National Stadium</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between items-center text-xs text-gray-500 mt-3">
-                                        <div>Marrakesh</div>
-                                        <div class="favorite-toggle flex items-center text-gray-400 group-hover:text-amber-400 transition-colors gap-1">
-                                            <span class="material-symbols-outlined text-sm">star</span>
-                                            <span>Add to favorites</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Second sample match -->
-                        <div class="bg-surface-light rounded-md-medium shadow-md-1 hover:shadow-md-2 transition-all duration-200 overflow-hidden cursor-pointer border border-gray-100 group">
-                            <div class="flex">
-                                <div class="w-1 bg-gray-200 group-hover:bg-amber-200 transition-colors duration-300"></div>
-                                <div class="p-4 flex-grow">
-                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-100 text-primary-800 font-medium text-sm">2</div>
-                                            <div>
-                                                <div class="text-xs font-medium text-gray-500">May 18, 2025 - 18:30</div>
-                                                <div class="font-medium text-base">Team C vs Team D</div>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-row sm:flex-col items-start sm:items-end gap-2">
-                                            <div class="text-xs px-2 py-1 bg-primary-100 text-primary-800 rounded-full">
-                                                Upcoming
-                                            </div>
-                                            <div class="text-sm">Olympic Stadium</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between items-center text-xs text-gray-500 mt-3">
-                                        <div>Casablanca</div>
-                                        <div class="favorite-toggle flex items-center text-gray-400 group-hover:text-amber-400 transition-colors gap-1">
-                                            <span class="material-symbols-outlined text-sm">star</span>
-                                            <span>Add to favorites</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Recent Activity Section -->
-            <div class="bg-surface-light rounded-md-large shadow-md-2 border border-gray-100 overflow-hidden hover:shadow-md-3 transition-all duration-300 state-change">
-                <div class="border-b border-gray-100">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-xl font-medium text-gray-900">Recent Activity</h2>
-                            <a href="#" class="text-sm font-medium text-primary-600 hover:text-primary-700 flex items-center gap-1">
-                                View All
-                                <span class="material-symbols-outlined text-sm">chevron_right</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="p-6">
-                    <!-- Activity Timeline -->
-                    <div class="relative pl-8 space-y-8 before:absolute before:inset-y-0 before:left-3 before:w-0.5 before:bg-gray-200">
-                        <!-- Activity Item 1 -->
-                        <div class="relative">
-                            <div class="absolute -left-8 mt-1.5 h-6 w-6 rounded-full bg-primary-100 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-sm text-primary-600">login</span>
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-900">Account Login</p>
-                                <p class="text-sm text-gray-600 mt-1">You logged in from a new device</p>
-                                <p class="text-xs text-gray-500 mt-1">Today, 14:32</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Activity Item 2 -->
-                        <div class="relative">
-                            <div class="absolute -left-8 mt-1.5 h-6 w-6 rounded-full bg-green-100 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-sm text-green-600">article</span>
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-900">Article Published</p>
-                                <p class="text-sm text-gray-600 mt-1">Your article "World Cup 2030 Preview" was published</p>
-                                <p class="text-xs text-gray-500 mt-1">Yesterday, 09:15</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Activity Item 3 -->
-                        <div class="relative">
-                            <div class="absolute -left-8 mt-1.5 h-6 w-6 rounded-full bg-amber-100 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-sm text-amber-600">star</span>
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-900">Match Added to Favorites</p>
-                                <p class="text-sm text-gray-600 mt-1">You added "Team A vs Team B" to your favorites</p>
-                                <p class="text-xs text-gray-500 mt-1">May 14, 2025</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-        
-        <!-- Sidebar Column (4/12) -->
-        <div class="lg:col-span-4 space-y-6">
-            <!-- Quick Stats Cards - Material Design 3 Style -->
-            <div class="bg-white rounded-xl p-6 shadow-md-2 border border-gray-100 hover:shadow-md-3 transition-all duration-300 relative overflow-hidden group state-change">
-                <!-- Enhanced background effect -->
-                <div class="absolute top-0 right-0 w-40 h-40 -mr-12 -mt-12 bg-amber-100/30 rounded-full opacity-70 transition-all duration-500 group-hover:bg-amber-200/60 group-hover:scale-125"></div>
 
-                <div class="relative">
-                    <!-- Improved header section with better spacing -->
-                    <div class="flex items-center mb-5">
-                        <div class="p-3 rounded-full bg-amber-50 mr-4 shadow-sm group-hover:bg-amber-100 transition-all duration-300">
-                            <span class="material-symbols-outlined text-xl text-amber-600">star</span>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">Favorites</p>
-                            <p class="text-3xl font-bold text-gray-800">0</p>
-                        </div>
+        <!-- Footer Section -->
+        <footer class="mt-12 mb-6 text-center">
+            <div class="bg-surface-light rounded-md-large p-6 shadow-md-1 border border-gray-100">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="text-sm text-gray-600">
+                        &copy; 2025 World Cup 2030 Portal. All rights reserved.
                     </div>
-
-                    <!-- Enhanced stat cards with hover effects -->
-                    <div class="grid grid-cols-3 gap-3 mb-5">
-                        <div class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
-                            <p class="text-xs text-gray-600 mb-1">Cities</p>
-                            <p class="font-bold text-gray-800 text-lg">0</p>
-                        </div>
-                        <div class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
-                            <p class="text-xs text-gray-600 mb-1">Stadiums</p>
-                            <p class="font-bold text-gray-800 text-lg">0</p>
-                        </div>
-                        <div class="bg-gray-50 p-2.5 rounded-lg text-center hover:bg-amber-50 transition-colors duration-300">
-                            <p class="text-xs text-gray-600 mb-1">Matches</p>
-                            <p class="font-bold text-gray-800 text-lg">0</p>
-                        </div>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-gray-500 hover:text-primary-600 transition-colors duration-200">
+                            <span class="material-symbols-outlined">help</span>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-primary-600 transition-colors duration-200">
+                            <span class="material-symbols-outlined">settings</span>
+                        </a>
+                        <a href="#" class="text-gray-500 hover:text-primary-600 transition-colors duration-200">
+                            <span class="material-symbols-outlined">contact_support</span>
+                        </a>
                     </div>
-
-                    <!-- Improved action button -->
-                    <a href="http://127.0.0.1:8000/member/favorites" class="inline-flex items-center px-4 py-2 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-colors duration-300 font-medium text-sm ripple">
-                        Manage your favorites
-                        <span class="material-symbols-outlined text-sm ml-2">arrow_forward</span>
-                    </a>
                 </div>
             </div>
-            
-            <!-- Notifications Card -->
-            <div class="bg-surface-light rounded-md-large p-6 shadow-md-2 border border-gray-100 hover:shadow-md-3 transition-all duration-300 state-change">
-                <div class="flex items-center justify-between mb-5">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 flex items-center justify-center rounded-full bg-purple-100">
-                            <span class="material-symbols-outlined text-xl text-purple-600">notifications</span>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900">Notifications</h3>
-                    </div>
-                    <span class="text-xs font-medium bg-purple-100 text-purple-700 px-2 py-1 rounded-full">3 New</span>
-                </div>
-                
-                <div class="space-y-4">
-                    <!-- Notification Item 1 -->
-                    <div class="p-3 bg-purple-50 rounded-md-medium hover:bg-purple-100 transition-colors duration-200 cursor-pointer">
-                        <div class="flex items-start gap-3">
-                            <span class="material-symbols-outlined text-purple-600 mt-0.5">event</span>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">New match scheduled</p>
-                                <p class="text-xs text-gray-600 mt-1">Team A vs Team B - May 16, 2025</p>
-                                <p class="text-xs text-gray-500 mt-1">10 minutes ago</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Notification Item 2 -->
-                    <div class="p-3 bg-surface-variant rounded-md-medium hover:bg-gray-200 transition-colors duration-200 cursor-pointer">
-                        <div class="flex items-start gap-3">
-                            <span class="material-symbols-outlined text-gray-600 mt-0.5">article</span>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">Article approved</p>
-                                <p class="text-xs text-gray-600 mt-1">Your article has been approved and published</p>
-                                <p class="text-xs text-gray-500 mt-1">Yesterday</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Notification Item 3 -->
-                    <div class="p-3 bg-surface-variant rounded-md-medium hover:bg-gray-200 transition-colors duration-200 cursor-pointer">
-                        <div class="flex items-start gap-3">
-                            <span class="material-symbols-outlined text-gray-600 mt-0.5">person</span>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900">Profile updated</p>
-                                <p class="text-xs text-gray-600 mt-1">Your profile information has been updated</p>
-                                <p class="text-xs text-gray-500 mt-1">2 days ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-5">
-                    <button class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-purple-50 text-purple-700 border border-purple-100 rounded-md-medium hover:bg-purple-100 transition-colors duration-200 ripple">
-                        <span>View All Notifications</span>
-                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- World Cup Countdown Card -->
-            <div class="bg-surface-light rounded-md-large p-6 shadow-md-2 border border-gray-100 hover:shadow-md-3 transition-all duration-300 relative overflow-hidden state-change">
-                <div class="absolute top-0 right-0 w-40 h-40 -mr-12 -mt-12 bg-blue-100/30 rounded-full opacity-70"></div>
-                
-                <div class="relative">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-100">
-                            <span class="material-symbols-outlined text-xl text-blue-600">timer</span>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900">World Cup Countdown</h3>
-                    </div>
-                    
-                    <div class="bg-blue-50 rounded-md-medium p-4 text-center mb-5">
-                        <p class="text-sm text-blue-800 mb-2">Time until World Cup 2030</p>
-                        <div class="grid grid-cols-4 gap-2">
-                            <div class="bg-white p-2 rounded-md shadow-sm">
-                                <p class="text-2xl font-bold text-blue-700">1825</p>
-                                <p class="text-xs text-gray-600">Days</p>
-                            </div>
-                            <div class="bg-white p-2 rounded-md shadow-sm">
-                                <p class="text-2xl font-bold text-blue-700">12</p>
-                                <p class="text-xs text-gray-600">Hours</p>
-                            </div>
-                            <div class="bg-white p-2 rounded-md shadow-sm">
-                                <p class="text-2xl font-bold text-blue-700">45</p>
-                                <p class="text-xs text-gray-600">Minutes</p>
-                            </div>
-                            <div class="bg-white p-2 rounded-md shadow-sm">
-                                <p class="text-2xl font-bold text-blue-700">30</p>
-                                <p class="text-xs text-gray-600">Seconds</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-blue-500 text-white rounded-md-medium hover:bg-blue-600 transition-colors duration-200 ripple">
-                        <span>View Tournament Details</span>
-                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+        </footer>
     </div>
-    
-    <!-- Footer Section -->
-    <footer class="mt-12 mb-6 text-center">
-        <div class="bg-surface-light rounded-md-large p-6 shadow-md-1 border border-gray-100">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-sm text-gray-600">
-                    &copy; 2025 World Cup 2030 Portal. All rights reserved.
-                </div>
-                <div class="flex gap-4">
-                    <a href="#" class="text-gray-500 hover:text-primary-600 transition-colors duration-200">
-                        <span class="material-symbols-outlined">help</span>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-primary-600 transition-colors duration-200">
-                        <span class="material-symbols-outlined">settings</span>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-primary-600 transition-colors duration-200">
-                        <span class="material-symbols-outlined">contact_support</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
 
-<!-- Add Material Design 3 specific styles and scripts -->
-<script>
-    // Add ripple effect to buttons with ripple class
-    document.addEventListener('DOMContentLoaded', function() {
-        const rippleButtons = document.querySelectorAll('.ripple');
-        
-        rippleButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                const rect = button.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple-effect');
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
-                
-                button.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+    <!-- Add Material Design 3 specific styles and scripts -->
+    <script>
+        // Add ripple effect to buttons with ripple class
+        document.addEventListener('DOMContentLoaded', function () {
+            const rippleButtons = document.querySelectorAll('.ripple');
+
+            rippleButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    const rect = button.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple-effect');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+
+                    button.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
             });
+
+            // Simulate progress bar animation
+            setTimeout(() => {
+                const progressBars = document.querySelectorAll('.bg-secondary-500');
+                progressBars.forEach(bar => {
+                    bar.style.width = '40%';
+                });
+            }, 1000);
         });
-        
-        // Simulate progress bar animation
-        setTimeout(() => {
-            const progressBars = document.querySelectorAll('.bg-secondary-500');
-            progressBars.forEach(bar => {
-                bar.style.width = '40%';
-            });
-        }, 1000);
-    });
-</script>
+    </script>
 
-<style>
-    /* Additional Material Design 3 styles */
-    .ripple-effect {
-        position: absolute;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.7);
-        width: 100px;
-        height: 100px;
-        margin-top: -50px;
-        margin-left: -50px;
-        animation: ripple 0.6s linear;
-        transform: scale(0);
-        opacity: 1;
-        pointer-events: none;
-    }
-    
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
+    <style>
+        /* Additional Material Design 3 styles */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            width: 100px;
+            height: 100px;
+            margin-top: -50px;
+            margin-left: -50px;
+            animation: ripple 0.6s linear;
+            transform: scale(0);
+            opacity: 1;
+            pointer-events: none;
         }
-    }
-    
-    /* Material Design 3 state layer hover effects */
-    .state-change:hover {
-        box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-    }
-    
-    /* Material Design 3 typography scale */
-    .md-display-large {
-        font-size: 57px;
-        line-height: 64px;
-        letter-spacing: -0.25px;
-    }
-    
-    .md-display-medium {
-        font-size: 45px;
-        line-height: 52px;
-    }
-    
-    .md-display-small {
-        font-size: 36px;
-        line-height: 44px;
-    }
-    
-    .md-headline-large {
-        font-size: 32px;
-        line-height: 40px;
-    }
-    
-    .md-headline-medium {
-        font-size: 28px;
-        line-height: 36px;
-    }
-    
-    .md-headline-small {
-        font-size: 24px;
-        line-height: 32px;
-    }
-    
-    .md-body-large {
-        font-size: 16px;
-        line-height: 24px;
-        letter-spacing: 0.5px;
-    }
-    
-    .md-body-medium {
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: 0.25px;
-    }
-    
-    .md-body-small {
-        font-size: 12px;
-        line-height: 16px;
-        letter-spacing: 0.4px;
-    }
-    
-    /* Material Design 3 elevation */
-    .md-elevation-1 {
-        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.12), 
-                    0px 1px 2px 0px rgba(0, 0, 0, 0.14);
-    }
-    
-    .md-elevation-2 {
-        box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 
-                    0px 1px 2px 0px rgba(0, 0, 0, 0.3);
-    }
-    
-    .md-elevation-3 {
-        box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 
-                    0px 1px 3px 0px rgba(0, 0, 0, 0.3);
-    }
-    
-    .md-elevation-4 {
-        box-shadow: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 
-                    0px 2px 3px 0px rgba(0, 0, 0, 0.3);
-    }
-    
-    .md-elevation-5 {
-        box-shadow: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 
-                    0px 4px 4px 0px rgba(0, 0, 0, 0.3);
-    }
-</style>
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Material Design 3 state layer hover effects */
+        .state-change:hover {
+            box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+        }
+
+        /* Material Design 3 typography scale */
+        .md-display-large {
+            font-size: 57px;
+            line-height: 64px;
+            letter-spacing: -0.25px;
+        }
+
+        .md-display-medium {
+            font-size: 45px;
+            line-height: 52px;
+        }
+
+        .md-display-small {
+            font-size: 36px;
+            line-height: 44px;
+        }
+
+        .md-headline-large {
+            font-size: 32px;
+            line-height: 40px;
+        }
+
+        .md-headline-medium {
+            font-size: 28px;
+            line-height: 36px;
+        }
+
+        .md-headline-small {
+            font-size: 24px;
+            line-height: 32px;
+        }
+
+        .md-body-large {
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .md-body-medium {
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: 0.25px;
+        }
+
+        .md-body-small {
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.4px;
+        }
+
+        /* Material Design 3 elevation */
+        .md-elevation-1 {
+            box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.12),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.14);
+        }
+
+        .md-elevation-2 {
+            box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .md-elevation-3 {
+            box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
+                0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .md-elevation-4 {
+            box-shadow: 0px 6px 10px 4px rgba(0, 0, 0, 0.15),
+                0px 2px 3px 0px rgba(0, 0, 0, 0.3);
+        }
+
+        .md-elevation-5 {
+            box-shadow: 0px 8px 12px 6px rgba(0, 0, 0, 0.15),
+                0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <script src="{{ asset('js/worldcup-countdown.js') }}"></script>
 @endsection
