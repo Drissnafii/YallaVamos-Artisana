@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string|null $image
+ * @property int $id
+ */
 class Accommodation extends Model
 {
     protected $fillable = [

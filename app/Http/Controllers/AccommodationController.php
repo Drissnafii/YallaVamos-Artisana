@@ -96,7 +96,7 @@ class AccommodationController extends BaseController
             }
 
             $accommodation = Accommodation::create($validated);
-            \Log::info('Accommodation created with ID: ' . $accommodation->id);
+            \Log::info("Accommodation created with ID: {$accommodation->id}");
 
             return redirect()->route('admin.accommodations.index')
                 ->with('success', 'Accommodation created successfully.');
